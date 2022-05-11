@@ -18,6 +18,16 @@ class Menu extends Phaser.Scene {
             .on('pointerout', () => {
                 clickPlay.setStyle({fill: 'orange'})
             });
+            const howtoPlay = this.add.text(game.config.width / 2 - 120, game.config.height / 2 + 100, 'How To Play', { fontFamily: 'Segoe Script', fontSize: 40, color: 'orange' }).setInteractive()
+            .on('pointerdown', () =>  {
+                //selectSound.play();
+                this.scene.start('tutorialScene');})
+            .on('pointerover', () => {
+                howtoPlay.setStyle({fill: 'green'});
+            })
+            .on('pointerout', () => {
+                howtoPlay.setStyle({fill: 'orange'})
+            });
     }
     // update(){
 
