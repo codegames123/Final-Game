@@ -32,7 +32,7 @@ class Menu extends Phaser.Scene {
 
 
 
-        let topText = this.add.text(game.config.width / 2 - 600, game.config.height / 2, "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'green' }).setOrigin(1, 0);
+        const topText = this.add.text(game.config.width / 2 - 600, game.config.height / 2, "Text Here", { fontFamily: 'Segoe Script', fontSize: 40, color: 'black' }).setOrigin(1, 0);
         let middleText = this.add.text(0, h / 4 + 64, 'TEST 1').setOrigin(1, 0);
         let bottomText = this.add.text(w * 2, h - 128, 'SANIC DA SHREKHOG', {
             fontFamily: 'Futura',
@@ -88,21 +88,21 @@ class Menu extends Phaser.Scene {
         //     hold: 1500,
         //     paused: true
         // });
-        // let topTextTween = this.tweens.add({
-        //     delay: 305,
-        //     targets: topText,
-        //     x: game.config.width - 370,
-        //     ease: 'Linear',
-        //     duration: 250,
-        //     repeat: 0,
-        //     yoyo: true,
-        //     hold: 1400,
-        //     paused: true,
-        //     onComplete: function () {
-        //         this.scene.stop('menuScene');
-        //     },
-        //     onCompleteScope: this   // maintain scene context
-        // });
+        let topTextTween = this.tweens.add({
+            delay: 305,
+            targets: topText,
+            x: game.config.width - 370,
+            ease: 'Linear',
+            duration: 250,
+            repeat: 0,
+            yoyo: true,
+            hold: 1400,
+            paused: true,
+            onComplete: function () {
+                this.scene.stop('menuScene');
+            },
+            onCompleteScope: this   // maintain scene context
+        });
         // let middleTextTween = this.tweens.add({
         //     delay: 375,
         //     targets: middleText,
@@ -140,7 +140,7 @@ class Menu extends Phaser.Scene {
                 // yellowTween.play();
                 //bottomTextTween.play();
                 //redTween.play();
-                //topTextTween.play();
+                topTextTween.play();
                 //middleTextTween.play();
             })
             //selectSound.play();

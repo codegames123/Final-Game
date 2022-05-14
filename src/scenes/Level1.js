@@ -43,7 +43,8 @@ class Level1 extends Phaser.Scene {
       });
         //this.world.convertTilemapLayer(layer);
         //layer.resizeWorld();
-        let topText = this.add.text(game.config.width/2, game.config.height/2-300, "Level 1", {fontfamily: 'papyrus', fontSize: 40}).setOrigin(1, 0);
+        this.tweenPlay = true;
+        let topText = this.add.text(w/2, h/2-300, "Level 1", {fontfamily: 'papyrus', fontSize: 40}).setOrigin(1, 0);
         let topTextTween = this.tweens.add({
             delay: 375,
             targets: topText,
@@ -57,6 +58,7 @@ class Level1 extends Phaser.Scene {
             onComplete: function() {
                 //this.scene.start('Level1Scene');
                 topText.destroy();
+                this.tweenPlay= false;
             },
             onCompleteScope: this   // maintain scene context
         });
@@ -94,8 +96,8 @@ class Level1 extends Phaser.Scene {
         });
     }
     update() {
-
-        this.baby.update();
+        if(!this.tweenPlay)
+            this.baby.update();
 
         // //left/right movement
         // if (this.keyA.isDown) {
