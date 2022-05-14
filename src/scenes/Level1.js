@@ -1,11 +1,13 @@
 //var map;
 //var layer;
 //var cursors;
+
 class Level1 extends Phaser.Scene {
     constructor() {
         super("Level1Scene");
 
     }
+    
     preload() {
 
         this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
@@ -16,6 +18,15 @@ class Level1 extends Phaser.Scene {
         this.load.audio('lvl1_01', './assets/TechnoLVL1_01.wav');
     }
     create() {
+        // resize game 
+        //game.scale.resize(800, 600);
+        // define some dimensions
+
+        
+        const centerX = this.cameras.main.centerX;
+        const centerY = this.cameras.main.centerY;
+        const w = this.cameras.main.width;
+        const h = this.cameras.main.height;
         //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
         var map = this.make.tilemap({ key: 'map' });
         const tileset = map.addTilesetImage('ground_1x1');
@@ -32,6 +43,25 @@ class Level1 extends Phaser.Scene {
       });
         //this.world.convertTilemapLayer(layer);
         //layer.resizeWorld();
+        let topText = this.add.text(game.config.width/2, game.config.height/2-300, "Level 1", {fontfamily: 'papyrus', fontSize: 40}).setOrigin(1, 0);
+        let topTextTween = this.tweens.add({
+            delay: 375,
+            targets: topText,
+            y: h-200,
+            ease: 'Linear',
+            duration: 250,
+            repeat: 0,
+            yoyo: true,
+            hold: 2500,
+            paused: true,
+            onComplete: function() {
+                //this.scene.start('Level1Scene');
+                topText.destroy();
+            },
+            onCompleteScope: this   // maintain scene context
+        });
+
+        topTextTween.play();
 
         let song_01 = this.sound.add('lvl1_01', {loop:false, volume: 0.4});
         //this.baby = this.add.sprite(260, 70, 'sprite');
