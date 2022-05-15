@@ -50,6 +50,7 @@ class Menu extends Phaser.Scene {
             hold: 1600, // the number of ms to hold the tween before yoyo'ing 🚦🪀
             onYoyo: function () {
                 this.scene.launch('Level1Scene');   // launch next scene to run concurrently
+                this.scene.moveDown('Level1Scene');
             },
             onYoyoScope: this,  // maintain scene context
             paused: true
