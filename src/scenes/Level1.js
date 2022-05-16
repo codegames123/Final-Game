@@ -104,7 +104,7 @@ class Level1 extends Phaser.Scene {
         this.disk4 = this.physics.add.sprite(1050,130,'disk').setScale(0.03);
         this.disk5 = this.physics.add.sprite(1250,330,'disk').setScale(0.03);
 
-        //text UI
+        //text UI (it is in text for now, will implement a bar later in the future)
         this.progressUI = this.add.text(game.config.width/2 +308, game.config.height/2 - 200, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
         //this.add.text(game.config.width/2 +308, game.config.height/2 - 180, this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
         
