@@ -2,17 +2,16 @@ class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, layer) {
       super(scene, x, y, texture, frame);
         
-      // add object to existing scene
-        //this.player = scene.add.existing(this)
-        
-        
-
+        //initilizes player
         this.player = scene.physics.add.sprite(x,y,texture).setScale(0.35).setSize(100, 190).setOffset(50, 5);
         console.log("player:" + this.player);
+
         //scene.sys.displayList.add(this) 
         //scene.sys.updateList.add(this)
         //this.tilesLayer = layer;
         //scene.physics.add.collider(this.player, layer);
+
+        //for use other than the contructor's
         this.xaxis = x;
         this.yaxis = y;
         this.theTexture = texture;

@@ -128,7 +128,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.disk5, layer);
         this.physics.add.collider(this.enemy.getEnemy(), layer);
 
-        this.time.addEvent({ // delay for every 1 enemy takes a disk if collided with the player
+        this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
             delay: 1000, callback: () => {
                 if (this.checkOverlap(this.player.getPlayer(), this.enemy.getEnemy())) { // checks if player collided with enemy
                     this.songPopped = this.diskStack.pop(); // pops song and sets to this.songPopped
