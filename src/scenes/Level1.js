@@ -9,10 +9,10 @@ class Level1 extends Phaser.Scene {
     }
     preload() {
         this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
-        this.load.image('sprite', './assets/player1.png'); // temporary
+        this.load.image('sprite', './assets/Player_right.png'); // temporary
         this.load.image('enemy', './assets/baby_4.png'); // temporary
         this.load.image('background', './assets/menu_background.jpg'); //temporary
-        this.load.image('apple', './assets/apple_core_4.png'); //temporary
+        this.load.image('apple', './assets/disc.png'); //temporary
         this.load.tilemapTiledJSON('map', './assets/collision_test.json'); // temporary 
         this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01.wav');
         this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02.wav');
@@ -30,6 +30,8 @@ class Level1 extends Phaser.Scene {
          this.diskStack = [];//stack array for disks 
 
         //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
+
+        //temporary tilemap, will change using tilemap editor
         var map = this.make.tilemap({ key: 'map' });
         const tileset = map.addTilesetImage('ground_1x1');
         const layer = map.createLayer('Tile Layer 1', tileset);
@@ -96,11 +98,11 @@ class Level1 extends Phaser.Scene {
         this.maxDisktoCollect = 5;
 
         //disks
-        this.disk = this.physics.add.sprite(200,300,'apple');
-        this.disk2 = this.physics.add.sprite(500,200,'apple');
-        this.disk3 = this.physics.add.sprite(800,350,'apple');
-        this.disk4 = this.physics.add.sprite(1050,130,'apple');
-        this.disk5 = this.physics.add.sprite(1250,330,'apple');
+        this.disk = this.physics.add.sprite(200,300,'apple').setScale(0.03);
+        this.disk2 = this.physics.add.sprite(500,200,'apple').setScale(0.03);
+        this.disk3 = this.physics.add.sprite(800,350,'apple').setScale(0.03);
+        this.disk4 = this.physics.add.sprite(1050,130,'apple').setScale(0.03);
+        this.disk5 = this.physics.add.sprite(1250,330,'apple').setScale(0.03);
 
         //text UI
         this.progressUI = this.add.text(game.config.width/2 +308, game.config.height/2 - 200, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});

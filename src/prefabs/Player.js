@@ -3,7 +3,7 @@ class Player extends Phaser.GameObjects.Sprite {
       super(scene, x, y, texture, frame);
         
         //initilizes player
-        this.player = scene.physics.add.sprite(x,y,texture).setScale(0.35).setSize(100, 190).setOffset(50, 5);
+        this.player = scene.physics.add.sprite(x,y,texture).setScale(0.26).setSize(150, 330).setOffset(50, 5);//setSize(left-/right+,up+/down-)
         console.log("player:" + this.player);
 
         //scene.sys.displayList.add(this) 
