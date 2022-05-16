@@ -12,7 +12,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('sprite', './assets/Player_right.png'); // temporary
         this.load.image('enemy', './assets/baby_4.png'); // temporary
         this.load.image('background', './assets/menu_background.jpg'); //temporary
-        this.load.image('apple', './assets/disc.png'); //temporary
+        this.load.image('disk', './assets/disc.png'); //temporary
         this.load.tilemapTiledJSON('map', './assets/collision_test.json'); // temporary 
         this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01.wav');
         this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02.wav');
@@ -98,11 +98,11 @@ class Level1 extends Phaser.Scene {
         this.maxDisktoCollect = 5;
 
         //disks
-        this.disk = this.physics.add.sprite(200,300,'apple').setScale(0.03);
-        this.disk2 = this.physics.add.sprite(500,200,'apple').setScale(0.03);
-        this.disk3 = this.physics.add.sprite(800,350,'apple').setScale(0.03);
-        this.disk4 = this.physics.add.sprite(1050,130,'apple').setScale(0.03);
-        this.disk5 = this.physics.add.sprite(1250,330,'apple').setScale(0.03);
+        this.disk = this.physics.add.sprite(200,300,'disk').setScale(0.03);
+        this.disk2 = this.physics.add.sprite(500,200,'disk').setScale(0.03);
+        this.disk3 = this.physics.add.sprite(800,350,'disk').setScale(0.03);
+        this.disk4 = this.physics.add.sprite(1050,130,'disk').setScale(0.03);
+        this.disk5 = this.physics.add.sprite(1250,330,'disk').setScale(0.03);
 
         //text UI
         this.progressUI = this.add.text(game.config.width/2 +308, game.config.height/2 - 200, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
