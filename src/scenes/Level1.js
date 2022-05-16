@@ -112,11 +112,12 @@ class Level1 extends Phaser.Scene {
         
         //controls
         this.cursors = this.input.keyboard.createCursorKeys();
-        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A); 
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // for menu
 
         //collisions
         this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), layer);
@@ -231,6 +232,10 @@ class Level1 extends Phaser.Scene {
             console.log(this.diskStack);
             this.song_05.play(); 
             this.disk5.destroy();
+        }
+        
+        if (keyM.isDown) { // (temporary) if m is pressed, switches back to menu scene
+            this.scene.start('menuScene');
         }
 
         this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
