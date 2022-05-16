@@ -36,21 +36,21 @@ class Menu extends Phaser.Scene {
 
         // temporary tweens and tween names (will change soon)
         const topText = this.add.text(game.config.width / 2 - 600, game.config.height / 2, "Text Here", { fontFamily: 'Segoe Script', fontSize: 40, color: 'black' }).setOrigin(1, 0);
-        let middleText = this.add.text(0, h / 4 + 64, 'TEST 1').setOrigin(1, 0);
-        let bottomText = this.add.text(w * 2, h - 128, 'SANIC DA SHREKHOG', {
-            fontFamily: 'Futura',
-            fontSize: '24px',
-            color: '#000000'
-        }).setOrigin(1, 0);
+        // let middleText = this.add.text(0, h / 4 + 64, 'TEST 1').setOrigin(1, 0);
+        // let bottomText = this.add.text(w * 2, h - 128, 'SANIC DA SHREKHOG', {
+        //     fontFamily: 'Futura',
+        //     fontSize: '24px',
+        //     color: '#000000'
+        // }).setOrigin(1, 0);
 
         let blueTween = this.tweens.add({
             targets: this.curtains,
             y: 270,
             ease: 'Linear',
-            duration: 400,
+            duration: 200,
             repeat: 0,
             yoyo: true,
-            hold: 1600, // the number of ms to hold the tween before yoyo'ing 🚦🪀
+            hold: 1700, // the number of ms to hold the tween before yoyo'ing 🚦🪀
             onYoyo: function () {
                 this.scene.launch('Level1Scene');   // launch next scene to run concurrently
                 this.scene.moveDown('Level1Scene');
@@ -98,7 +98,7 @@ class Menu extends Phaser.Scene {
             targets: topText,
             x: game.config.width - 370,
             ease: 'Linear',
-            duration: 250,
+            duration: 150,
             repeat: 0,
             yoyo: true,
             hold: 1400,

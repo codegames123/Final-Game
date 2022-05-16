@@ -192,6 +192,7 @@ class Level1 extends Phaser.Scene {
             this.song_01.isCollected = true;
             console.log("collided"); //increments collected
             console.log(this.diskStack);
+            this.checkMusicPlayer();
             this.song_01.play();
             this.disk.destroy();
         }
@@ -202,6 +203,7 @@ class Level1 extends Phaser.Scene {
             console.log(this.numDiskCollected);
             console.log("collided"); 
             console.log(this.diskStack);
+            this.checkMusicPlayer()
             this.song_02.play(); 
             this.disk2.destroy();
         }
@@ -212,6 +214,7 @@ class Level1 extends Phaser.Scene {
             console.log(this.numDiskCollected);
             console.log("collided"); 
             console.log(this.diskStack);
+            this.checkMusicPlayer()
             this.song_03.play(); 
             this.disk3.destroy();
         }
@@ -222,6 +225,7 @@ class Level1 extends Phaser.Scene {
             console.log(this.numDiskCollected);
             console.log("collided"); 
             console.log(this.diskStack);
+            this.checkMusicPlayer()
             this.song_04.play(); 
             this.disk4.destroy();
         }
@@ -232,6 +236,7 @@ class Level1 extends Phaser.Scene {
             console.log(this.numDiskCollected);
             console.log("collided"); 
             console.log(this.diskStack);
+            this.checkMusicPlayer()
             this.song_05.play(); 
             this.disk5.destroy();
         }
@@ -244,6 +249,7 @@ class Level1 extends Phaser.Scene {
 
     }
 
+    // helper functions
     checkOverlap(object1,object2){ // checks overlaps of two objects
         return this.physics.overlap(object1, object2);
     }
@@ -254,6 +260,28 @@ class Level1 extends Phaser.Scene {
 
     getDistance (x1,y1,x2,y2) { // checks if enemy is in range of player
         return Phaser.Math.Distance.Between(x1,y1,x2,y2);
+    }
+    checkMusicPlayer() { // stops last song if a new disk is picked up
+        if(this.song_01.isPlaying) {
+            console.log('music 1 is playing');
+            this.song_01.stop();
+        }
+        if(this.song_02.isPlaying) {
+            console.log('music 2 is player');
+            this.song_02.stop();
+        }
+        if(this.song_03.isPlaying) {
+            console.log('music 3 is player');
+            this.song_03.stop();
+        }
+        if(this.song_04.isPlaying) {
+            console.log('music 4 is player');
+            this.song_04.stop();
+        }
+        if(this.song_05.isPlaying) {
+            console.log('music 5 is player');
+            this.song_05.stop();
+        }
     }
 
 }
