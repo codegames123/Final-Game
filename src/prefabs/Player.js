@@ -37,7 +37,7 @@ class Player extends Phaser.GameObjects.Sprite {
         //jump
         if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
             if(keyW.isDown || keySPACE.isDown)
-                this.player.setVelocityY(-350);
+                this.player.setVelocityY(-550);
         }
     }
 

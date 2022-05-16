@@ -37,6 +37,7 @@ class Level1 extends Phaser.Scene {
         map.setCollisionBetween(1, 12);
         layer.setCollisionByProperty({ collides: true });
 
+        //collision debugger
         const debugGraphics = this.add.graphics().setAlpha(0.45); // collision debugger for tilemap
         layer.renderDebug(debugGraphics, {
             tileColor: new Phaser.Display.Color(40, 255, 48, 255), // Color of non-colliding tiles (green)
@@ -44,6 +45,7 @@ class Level1 extends Phaser.Scene {
             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
       });
 
+        //sets tween 'Level 1'
         this.tweenPlay = true;
         let topText = this.add.text(w/2, h/2-300, "Level 1", {fontfamily: 'papyrus', fontSize: 40}).setOrigin(1, 0);
         let topTextTween = this.tweens.add({
@@ -67,95 +69,175 @@ class Level1 extends Phaser.Scene {
         topTextTween.play(); //plays tween "Level 1"
 
         //initilizes songs
-        this.song_01 = this.sound.add('lvl1_01', {loop:false, volume: 0.4});
-        let song_02 = this.sound.add('lvl1_02', {loop:false, volume: 0.4});
-        let song_03 = this.sound.add('lvl1_03', {loop:false, volume: 0.4});
-        let song_04 = this.sound.add('lvl1_04', {loop:false, volume: 0.4});
-        let song_05 = this.sound.add('lvl1_05', {loop:false, volume: 0.4});
-        let song_full = this.sound.add('lvl1_full', {loop:false, volume: 0.4});
+        this.song_01 = this.sound.add('lvl1_01', {loop:false, volume: 0.4}); 
+        this.song_01_isCollected = false;
+        this.song_02 = this.sound.add('lvl1_02', {loop:false, volume: 0.4});
+        this.song_02_isCollected = false;
+        this.song_03 = this.sound.add('lvl1_03', {loop:false, volume: 0.4});
+        this.song_03_isCollected = false;
+        this.song_04 = this.sound.add('lvl1_04', {loop:false, volume: 0.4});
+        this.song_04_isCollected = false;
+        this.song_05 = this.sound.add('lvl1_05', {loop:false, volume: 0.4});
+        this.song_05_isCollected = false;
+        this.song_full = this.sound.add('lvl1_full', {loop:false, volume: 0.4});
+        this.song_full_isCollected = false;
+   
+        //put in new player (scene,x,y,image, frame, layer)
+        this.player = new Player(this,80,300, 'sprite',0, layer);
 
-        //pushes songs into an array stack
-        // diskStack.push(song_01);
-        // diskStack.push(song_02);
-        // diskStack.push(song_03);
-        // diskStack.push(song_04);
-        // diskStack.push(song_05);
-        // diskStack.push(song_full);
-        // console.log(diskStack)
-            
-    
-        
-        //this.baby = this.add.sprite(260, 70, 'sprite');
-        //this.baby = this.physics.add.sprite(80, 300, 'sprite').setScale(0.2).setSize(220, 255).setOffset(25, 50);
-
-        this.player = new Player(this, 80, 300, 'sprite',0, layer);
-        this.disk = this.physics.add.sprite(200,300,'apple');
-
-        //this.player = (new Player(this, 80, 300, 'sprite',0));
-        //this.physics.add.sprite(80, 300, 'sprite').setScale(0.2).setSize(220, 255).setOffset(25, 50);
-        //this.player.setCollideWorldBounds(true);
-
-        //enemy
-        this.enemy = new Enemy(this, 300,200,'enemy', 0);
+        //puts in enemy (scene,x,y,image,frame)
+        this.enemy = new Enemy(this, 600,100,'enemy', 0);
         // this.enemy = this.physics.add.sprite(300, 200, 'enemy').setScale(0.2);
         // this.enemy.setImmovable(true);
         // this.enemy.setCollideWorldBounds(true);
         
+        //disk collection numbers
         this.numDiskCollected = 0;
-        this.maxDisktoCollect = 4;
+        this.maxDisktoCollect = 5;
+
+        //disks
+        this.disk = this.physics.add.sprite(200,300,'apple');
+        this.disk2 = this.physics.add.sprite(500,200,'apple');
+        this.disk3 = this.physics.add.sprite(800,350,'apple');
+        this.disk4 = this.physics.add.sprite(1050,130,'apple');
+        this.disk5 = this.physics.add.sprite(1250,330,'apple');
+
+        //text UI
+        this.progressUI = this.add.text(game.config.width/2 +308, game.config.height/2 - 200, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
+        //this.add.text(game.config.width/2 +308, game.config.height/2 - 180, this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
         
+        //camera settings
         //this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
         this.cameras.main.startFollow(this.player.getPlayer());
-
+        
+        //controls
         this.cursors = this.input.keyboard.createCursorKeys();
-
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+        //collisions
         this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), layer);
         this.physics.add.collider(this.disk, layer);
+        this.physics.add.collider(this.disk2, layer);
+        this.physics.add.collider(this.disk3, layer);
+        this.physics.add.collider(this.disk4, layer);
+        this.physics.add.collider(this.disk5, layer);
         this.physics.add.collider(this.enemy.getEnemy(), layer);
 
-        
-        // this.physics.add.overlap(this.player.getPlayer(), this.disk, () => {
-        //     diskStack.push(song_01); //pushes first song into stack array
-        //     console.log("collided");
-        //     console.log(diskStack);
-        //     song_01.play();
-        //     this.disk.destroy();
-        // });
+        this.time.addEvent({ // delay for every 1 enemy takes a disk if collided with the player
+            delay: 1000, callback: () => {
+                if (this.checkOverlap(this.player.getPlayer(), this.enemy.getEnemy())) { // checks if player collided with enemy
+                    this.songPopped = this.diskStack.pop(); // pops song and sets to this.songPopped
+
+                    if (this.songPopped === this.song_01) { // if song popped is first song
+                        console.log('disk 1 taken from enemy');
+                        this.song_01.stop();
+                        this.song_01_isCollected = false;
+                        this.numDiskCollected--;
+                    }
+                    if(this.songPopped === this.song_02) {// if song popped is second song
+                        console.log('disk 2 taken from enemy');
+                        this.song_02.stop();
+                        this.song_02_isCollected = false;
+                        this.numDiskCollected--;
+                    }
+                    if(this.songPopped === this.song_03) {// if song popped is third song
+                        console.log('disk 2 taken from enemy');
+                        this.song_03.stop();
+                        this.song_03_isCollected = false;
+                        this.numDiskCollected--;
+                    }
+                    if(this.songPopped === this.song_04) {// if song popped is forth song
+                        console.log('disk 2 taken from enemy');
+                        this.song_04.stop();
+                        this.song_04_isCollected = false;
+                        this.numDiskCollected--;
+                    }
+                    if(this.songPopped === this.song_05) {// if song popped is fifth song
+                        console.log('disk 2 taken from enemy');
+                        this.song_05.stop();
+                        this.song_05_isCollected = false;
+                        this.numDiskCollected--;
+                    }
+                    //console.log('collided with enemy');
+                    console.log(this.diskStack);
+                    console.log(this.numDiskCollected);
+                }
+            }, callbackScope: this, loop: true
+        });
     }
     update() {
+        this.progressUI.x = this.player.getPlayer().body.position.x + 170; // set so x position of UI follows player
+        this.progressUI.y = this.player.getPlayer().body.position.y - 230;// set so y position of UI follows player
+
         if (!this.tweenPlay) { // if tween isnt playing
             this.player.update(); // allows player movement
-
-            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) {
-                this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100);
+            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
+                this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                 //console.log('in range');
             }
         }
-
-        if (this.checkOverlap(this.player.getPlayer(), this.enemy.getEnemy())) // checks if player collided with enemy
-            console.log('collided with enemy');
-
-        if (this.physics.overlap(this.player.getPlayer(), this.disk)) { // if collided with first song
+        
+        if (this.checkOverlap(this.player.getPlayer(), this.disk)) { // if collided with first song, plays and destroys
             this.diskStack.push(this.song_01); //pushes first song into stack array
-            console.log("collided");
+            console.log(this.diskStack);
+            this.numDiskCollected++;
+            console.log(this.numDiskCollected);
+            this.song_01.isCollected = true;
+            console.log("collided"); //increments collected
             console.log(this.diskStack);
             this.song_01.play();
             this.disk.destroy();
         }
+        if (this.checkOverlap(this.player.getPlayer(), this.disk2)) { // if collided with second song, plays and destroys
+            this.diskStack.push(this.song_02); //pushes second song into stack array
+            console.log(this.diskStack);
+            this.numDiskCollected++; //increments collected
+            console.log(this.numDiskCollected);
+            console.log("collided"); 
+            console.log(this.diskStack);
+            this.song_02.play(); 
+            this.disk2.destroy();
+        }
+        if (this.checkOverlap(this.player.getPlayer(), this.disk3)) { // if collided with third song, plays and destroys
+            this.diskStack.push(this.song_03); //pushes second song into stack array
+            console.log(this.diskStack);
+            this.numDiskCollected++; //increments collected
+            console.log(this.numDiskCollected);
+            console.log("collided"); 
+            console.log(this.diskStack);
+            this.song_03.play(); 
+            this.disk3.destroy();
+        }
+        if (this.checkOverlap(this.player.getPlayer(), this.disk4)) { // if collided with forth song, plays and destroys
+            this.diskStack.push(this.song_04); //pushes second song into stack array
+            console.log(this.diskStack);
+            this.numDiskCollected++; //increments collected
+            console.log(this.numDiskCollected);
+            console.log("collided"); 
+            console.log(this.diskStack);
+            this.song_04.play(); 
+            this.disk4.destroy();
+        }
+        if (this.checkOverlap(this.player.getPlayer(), this.disk5)) { // if collided with fifth song, plays and destroys
+            this.diskStack.push(this.song_05); //pushes second song into stack array
+            console.log(this.diskStack);
+            this.numDiskCollected++; //increments collected
+            console.log(this.numDiskCollected);
+            console.log("collided"); 
+            console.log(this.diskStack);
+            this.song_05.play(); 
+            this.disk5.destroy();
+        }
+
+        this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
 
     }
 
-    checkOverlap(object1,object2){ // checks overlaps
-        // let boundA = player.getBounds();
-        // let boundB = enemy.getBounds();
-        
-        // return Phaser.Geom.Intersects.RectangleToRectangle(boundA, boundB);
+    checkOverlap(object1,object2){ // checks overlaps of two objects
         return this.physics.overlap(object1, object2);
     }
 
