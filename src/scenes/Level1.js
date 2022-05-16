@@ -121,15 +121,6 @@ class Level1 extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // for menu
 
-        //collisions
-        this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), layer);
-        this.physics.add.collider(this.disk, layer);
-        this.physics.add.collider(this.disk2, layer);
-        this.physics.add.collider(this.disk3, layer);
-        this.physics.add.collider(this.disk4, layer);
-        this.physics.add.collider(this.disk5, layer);
-        this.physics.add.collider(this.enemy.getEnemy(), layer);
-
         this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
             delay: 1000, callback: () => {
                 if (this.checkOverlap(this.player.getPlayer(), this.enemy.getEnemy())) { // checks if player collided with enemy
@@ -140,37 +131,56 @@ class Level1 extends Phaser.Scene {
                         this.song_01.stop();
                         this.song_01_isCollected = false;
                         this.numDiskCollected--;
+                        this.disk = this.physics.add.sprite(200,300,'disk').setScale(0.03);
                     }
                     if(this.songPopped === this.song_02) {// if song popped is second song
                         console.log('disk 2 taken from enemy');
                         this.song_02.stop();
                         this.song_02_isCollected = false;
                         this.numDiskCollected--;
+                        this.disk2 = this.physics.add.sprite(500,200,'disk').setScale(0.03);
                     }
                     if(this.songPopped === this.song_03) {// if song popped is third song
-                        console.log('disk 2 taken from enemy');
+                        console.log('disk 3 taken from enemy');
                         this.song_03.stop();
                         this.song_03_isCollected = false;
                         this.numDiskCollected--;
+                        this.disk3 = this.physics.add.sprite(800,350,'disk').setScale(0.03);
                     }
                     if(this.songPopped === this.song_04) {// if song popped is forth song
-                        console.log('disk 2 taken from enemy');
+                        console.log('disk 4 taken from enemy');
                         this.song_04.stop();
                         this.song_04_isCollected = false;
                         this.numDiskCollected--;
+                        this.disk4 = this.physics.add.sprite(1050,130,'disk').setScale(0.03);
                     }
                     if(this.songPopped === this.song_05) {// if song popped is fifth song
-                        console.log('disk 2 taken from enemy');
+                        console.log('disk 5 taken from enemy');
                         this.song_05.stop();
                         this.song_05_isCollected = false;
                         this.numDiskCollected--;
+                        this.disk5 = this.physics.add.sprite(1250,330,'disk').setScale(0.03);
                     }
                     //console.log('collided with enemy');
+                    this.physics.add.collider(this.disk, layer);
+                    this.physics.add.collider(this.disk2, layer);
+                    this.physics.add.collider(this.disk3, layer);
+                    this.physics.add.collider(this.disk4, layer);
+                    this.physics.add.collider(this.disk5, layer);
                     console.log(this.diskStack);
                     console.log(this.numDiskCollected);
                 }
             }, callbackScope: this, loop: true
         });
+
+        //collisions
+        this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), layer);
+        this.physics.add.collider(this.disk, layer);
+        this.physics.add.collider(this.disk2, layer);
+        this.physics.add.collider(this.disk3, layer);
+        this.physics.add.collider(this.disk4, layer);
+        this.physics.add.collider(this.disk5, layer);
+        this.physics.add.collider(this.enemy.getEnemy(), layer);
     }
     update() {
         this.progressUI.x = this.player.getPlayer().body.position.x + 170; // set so x position of UI follows player
