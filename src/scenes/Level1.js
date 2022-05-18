@@ -16,12 +16,12 @@ class Level1 extends Phaser.Scene {
         this.load.image('disk', './assets/disc.png'); //temporary
         this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
         this.load.tilemapTiledJSON('map', './assets/collision_test.json'); // temporary 
-        this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01.wav');
-        this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02.wav');
-        this.load.audio('lvl1_03', './assets/music/TechnoLVL1_03.wav');
-        this.load.audio('lvl1_04', './assets/music/TechnoLVL1_04.wav');
-        this.load.audio('lvl1_05', './assets/music/TechnoLVL1_05.wav');
-        this.load.audio('lvl1_full', './assets/music/TechnoLVL1_full.wav');
+        this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01_fixed.wav');
+        this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02_fixed.wav');
+        this.load.audio('lvl1_03', './assets/music/TechnoLVL1_03_fixed.wav');
+        this.load.audio('lvl1_04', './assets/music/TechnoLVL1_04_fixed.wav');
+        this.load.audio('lvl1_05', './assets/music/TechnoLVL1_05_fixed.wav');
+        this.load.audio('lvl1_full', './assets/music/TechnoLVL1_full_fixed.wav');
     }
     create() {
         const centerX = this.cameras.main.centerX;
@@ -73,17 +73,17 @@ class Level1 extends Phaser.Scene {
         topTextTween.play(); //plays tween "Level 1"
 
         //initilizes songs
-        this.song_01 = this.sound.add('lvl1_01', {loop:false, volume: 0.4}); 
+        this.song_01 = this.sound.add('lvl1_01', {loop:false}); 
         this.song_01_isCollected = false;
-        this.song_02 = this.sound.add('lvl1_02', {loop:false, volume: 0.4});
+        this.song_02 = this.sound.add('lvl1_02', {loop:false});
         this.song_02_isCollected = false;
-        this.song_03 = this.sound.add('lvl1_03', {loop:false, volume: 0.4});
+        this.song_03 = this.sound.add('lvl1_03', {loop:false});
         this.song_03_isCollected = false;
-        this.song_04 = this.sound.add('lvl1_04', {loop:false, volume: 0.4});
+        this.song_04 = this.sound.add('lvl1_04', {loop:false});
         this.song_04_isCollected = false;
-        this.song_05 = this.sound.add('lvl1_05', {loop:false, volume: 0.4});
+        this.song_05 = this.sound.add('lvl1_05', {loop:false});
         this.song_05_isCollected = false;
-        this.song_full = this.sound.add('lvl1_full', {loop:false, volume: 0.4});
+        this.song_full = this.sound.add('lvl1_full', {loop:false});
         this.song_full_isCollected = false;
    
         //put in new player (scene,x,y,image, frame, layer)
@@ -148,6 +148,7 @@ class Level1 extends Phaser.Scene {
             delay: 200, callback: () => {
                 if (this.checkOverlap(this.player.getPlayer(), this.enemyFire)) {
                     this.checkPlaying();
+                    this.enemyFire.setVisible(false);
                     console.log('collided with bullet');
                     this.physics.add.collider(this.disk, this.layer);
                     this.physics.add.collider(this.disk2, this.layer);
@@ -296,37 +297,34 @@ class Level1 extends Phaser.Scene {
             console.log('disk 1 taken from enemy');
             this.song_01.stop();
             this.song_01_isCollected = false;
-            this.numDiskCollected--;
             this.disk = this.physics.add.sprite(200, 300, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_02) {// if song popped is second song
             console.log('disk 2 taken from enemy');
             this.song_02.stop();
             this.song_02_isCollected = false;
-            this.numDiskCollected--;
             this.disk2 = this.physics.add.sprite(500, 200, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_03) {// if song popped is third song
             console.log('disk 3 taken from enemy');
             this.song_03.stop();
             this.song_03_isCollected = false;
-            this.numDiskCollected--;
             this.disk3 = this.physics.add.sprite(800, 350, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_04) {// if song popped is forth song
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
             this.song_04_isCollected = false;
-            this.numDiskCollected--;
             this.disk4 = this.physics.add.sprite(1050, 130, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
             this.song_05_isCollected = false;
-            this.numDiskCollected--;
             this.disk5 = this.physics.add.sprite(1250, 330, 'disk').setScale(0.03);
         }
+        if(this.numDiskCollected > 0)
+            this.numDiskCollected--;
 
     }
     checkMusicPlayer() { // stops last song if a new disk is picked up
