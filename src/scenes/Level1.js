@@ -1,7 +1,8 @@
 //var map;
 //var layer;
 //var cursors;
-
+//var enemyFire;
+var shootTime = 0;
 class Level1 extends Phaser.Scene {
     constructor() {
         super("Level1Scene");
@@ -13,6 +14,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('enemy', './assets/baby_4.png'); // temporary
         this.load.image('background', './assets/menu_background.jpg'); //temporary
         this.load.image('disk', './assets/disc.png'); //temporary
+        this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
         this.load.tilemapTiledJSON('map', './assets/collision_test.json'); // temporary 
         this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01.wav');
         this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02.wav');
@@ -34,14 +36,14 @@ class Level1 extends Phaser.Scene {
         //temporary tilemap, will change using tilemap editor
         var map = this.make.tilemap({ key: 'map' });
         const tileset = map.addTilesetImage('ground_1x1');
-        const layer = map.createLayer('Tile Layer 1', tileset);
+        this.layer = map.createLayer('Tile Layer 1', tileset);
 
         map.setCollisionBetween(1, 12);
-        layer.setCollisionByProperty({ collides: true });
+        this.layer.setCollisionByProperty({ collides: true });
 
         //collision debugger
         const debugGraphics = this.add.graphics().setAlpha(0.45); // collision debugger for tilemap
-        layer.renderDebug(debugGraphics, {
+        this.layer.renderDebug(debugGraphics, {
             tileColor: new Phaser.Display.Color(40, 255, 48, 255), // Color of non-colliding tiles (green)
             collidingTileColor: new Phaser.Display.Color(90), // Color of colliding tiles (the platforms, red)
             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
@@ -85,10 +87,31 @@ class Level1 extends Phaser.Scene {
         this.song_full_isCollected = false;
    
         //put in new player (scene,x,y,image, frame, layer)
-        this.player = new Player(this,80,300, 'sprite',0, layer);
+        this.player = new Player(this,80,300, 'sprite',0, this.layer);
 
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600,100,'enemy', 0);
+        //this.enemyProjectile = this.physics.add.sprite()
+
+        //this.enemyFire = new ProjectilesGroup(this);
+
+
+
+         this.enemyFire = this.physics.add.group();
+         //enemyFire.enableBody = true;
+         //this.enemyFire.createMultiple(5, 'enemyShoot');
+         this.enemyFire.createMultiple({
+            frameQuantity: 30,
+            active: false,
+            visible: false,
+            key: 'enemyShoot'
+        })
+        
+        //this.enemyFire.check
+        //this.enemyFire.setAll('outOfBoundsKill',true); 
+        this.fireRate = 200;
+        this.nextFire = 0;
+        
         // this.enemy = this.physics.add.sprite(300, 200, 'enemy').setScale(0.2);
         // this.enemy.setImmovable(true);
         // this.enemy.setCollideWorldBounds(true);
@@ -121,52 +144,36 @@ class Level1 extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // for menu
 
+        this.time.addEvent({ // delay for every 0.2 second, player loses a disk if collided with the mute projectile
+            delay: 200, callback: () => {
+                if (this.checkOverlap(this.player.getPlayer(), this.enemyFire)) {
+                    this.checkPlaying();
+                    console.log('collided with bullet');
+                    this.physics.add.collider(this.disk, this.layer);
+                    this.physics.add.collider(this.disk2, this.layer);
+                    this.physics.add.collider(this.disk3, this.layer);
+                    this.physics.add.collider(this.disk4, this.layer);
+                    this.physics.add.collider(this.disk5, this.layer);
+                    console.log(this.diskStack);
+                    console.log(this.numDiskCollected);
+                }
+
+            }, callbackScope: this, loop: true
+        });
         this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
             delay: 1000, callback: () => {
+                if (this.checkOverlap(this.player.getPlayer(), this.enemyFire)) {
+                        console.log('collided with bullet');
+                }
                 if (this.checkOverlap(this.player.getPlayer(), this.enemy.getEnemy())) { // checks if player collided with enemy
-                    this.songPopped = this.diskStack.pop(); // pops song and sets to this.songPopped
+                    this.checkPlaying();
+                    console.log('collided with enemy');
 
-                    if (this.songPopped === this.song_01) { // if song popped is first song
-                        console.log('disk 1 taken from enemy');
-                        this.song_01.stop();
-                        this.song_01_isCollected = false;
-                        this.numDiskCollected--;
-                        this.disk = this.physics.add.sprite(200,300,'disk').setScale(0.03);
-                    }
-                    if(this.songPopped === this.song_02) {// if song popped is second song
-                        console.log('disk 2 taken from enemy');
-                        this.song_02.stop();
-                        this.song_02_isCollected = false;
-                        this.numDiskCollected--;
-                        this.disk2 = this.physics.add.sprite(500,200,'disk').setScale(0.03);
-                    }
-                    if(this.songPopped === this.song_03) {// if song popped is third song
-                        console.log('disk 3 taken from enemy');
-                        this.song_03.stop();
-                        this.song_03_isCollected = false;
-                        this.numDiskCollected--;
-                        this.disk3 = this.physics.add.sprite(800,350,'disk').setScale(0.03);
-                    }
-                    if(this.songPopped === this.song_04) {// if song popped is forth song
-                        console.log('disk 4 taken from enemy');
-                        this.song_04.stop();
-                        this.song_04_isCollected = false;
-                        this.numDiskCollected--;
-                        this.disk4 = this.physics.add.sprite(1050,130,'disk').setScale(0.03);
-                    }
-                    if(this.songPopped === this.song_05) {// if song popped is fifth song
-                        console.log('disk 5 taken from enemy');
-                        this.song_05.stop();
-                        this.song_05_isCollected = false;
-                        this.numDiskCollected--;
-                        this.disk5 = this.physics.add.sprite(1250,330,'disk').setScale(0.03);
-                    }
-                    //console.log('collided with enemy');
-                    this.physics.add.collider(this.disk, layer);
-                    this.physics.add.collider(this.disk2, layer);
-                    this.physics.add.collider(this.disk3, layer);
-                    this.physics.add.collider(this.disk4, layer);
-                    this.physics.add.collider(this.disk5, layer);
+                    this.physics.add.collider(this.disk, this.layer);
+                    this.physics.add.collider(this.disk2, this.layer);
+                    this.physics.add.collider(this.disk3, this.layer);
+                    this.physics.add.collider(this.disk4, this.layer);
+                    this.physics.add.collider(this.disk5, this.layer);
                     console.log(this.diskStack);
                     console.log(this.numDiskCollected);
                 }
@@ -174,13 +181,13 @@ class Level1 extends Phaser.Scene {
         });
 
         //collisions
-        this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), layer);
-        this.physics.add.collider(this.disk, layer);
-        this.physics.add.collider(this.disk2, layer);
-        this.physics.add.collider(this.disk3, layer);
-        this.physics.add.collider(this.disk4, layer);
-        this.physics.add.collider(this.disk5, layer);
-        this.physics.add.collider(this.enemy.getEnemy(), layer);
+        this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), this.layer);
+        this.physics.add.collider(this.disk, this.layer);
+        this.physics.add.collider(this.disk2, this.layer);
+        this.physics.add.collider(this.disk3, this.layer);
+        this.physics.add.collider(this.disk4, this.layer);
+        this.physics.add.collider(this.disk5, this.layer);
+        this.physics.add.collider(this.enemy.getEnemy(), this.layer);
     }
     update() {
         this.progressUI.x = this.player.getPlayer().body.position.x + 170; // set so x position of UI follows player
@@ -190,10 +197,10 @@ class Level1 extends Phaser.Scene {
             this.player.update(); // allows player movement
             if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
                 this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                this.enemyShoot();
                 //console.log('in range');
             }
         }
-        
         if (this.checkOverlap(this.player.getPlayer(), this.disk)) { // if collided with first song, plays and destroys
             this.diskStack.push(this.song_01); //pushes first song into stack array
             console.log(this.diskStack);
@@ -267,9 +274,60 @@ class Level1 extends Phaser.Scene {
     enemyFollows (enemy, player, speed) { // enemy follows the player
         this.physics.moveToObject(enemy, player, speed);
     }
-
+    enemyShoot() {
+        if(this.time.now > shootTime) {
+            shootTime = this.time.now + 900;
+            this.enemyFires = this.enemyFire.getFirstDead();
+            if(this.enemyFires) {
+                console.log('fire');
+                this.enemyFires.body.reset(this.enemy.getEnemy().x, this.enemy.getEnemy().y);
+                this.enemyFires.setVisible(true);
+                this.physics.moveToObject(this.enemyFires, this.player.getPlayer(), 400);  
+            }
+        }
+        
+    }
     getDistance (x1,y1,x2,y2) { // checks if enemy is in range of player
         return Phaser.Math.Distance.Between(x1,y1,x2,y2);
+    }
+    checkPlaying() {
+        this.songPopped = this.diskStack.pop(); // pops song and sets to this.songPopped
+        if (this.songPopped === this.song_01) { // if song popped is first song
+            console.log('disk 1 taken from enemy');
+            this.song_01.stop();
+            this.song_01_isCollected = false;
+            this.numDiskCollected--;
+            this.disk = this.physics.add.sprite(200, 300, 'disk').setScale(0.03);
+        }
+        if (this.songPopped === this.song_02) {// if song popped is second song
+            console.log('disk 2 taken from enemy');
+            this.song_02.stop();
+            this.song_02_isCollected = false;
+            this.numDiskCollected--;
+            this.disk2 = this.physics.add.sprite(500, 200, 'disk').setScale(0.03);
+        }
+        if (this.songPopped === this.song_03) {// if song popped is third song
+            console.log('disk 3 taken from enemy');
+            this.song_03.stop();
+            this.song_03_isCollected = false;
+            this.numDiskCollected--;
+            this.disk3 = this.physics.add.sprite(800, 350, 'disk').setScale(0.03);
+        }
+        if (this.songPopped === this.song_04) {// if song popped is forth song
+            console.log('disk 4 taken from enemy');
+            this.song_04.stop();
+            this.song_04_isCollected = false;
+            this.numDiskCollected--;
+            this.disk4 = this.physics.add.sprite(1050, 130, 'disk').setScale(0.03);
+        }
+        if (this.songPopped === this.song_05) {// if song popped is fifth song
+            console.log('disk 5 taken from enemy');
+            this.song_05.stop();
+            this.song_05_isCollected = false;
+            this.numDiskCollected--;
+            this.disk5 = this.physics.add.sprite(1250, 330, 'disk').setScale(0.03);
+        }
+
     }
     checkMusicPlayer() { // stops last song if a new disk is picked up
         if(this.song_01.isPlaying) {
