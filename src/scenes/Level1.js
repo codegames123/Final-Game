@@ -91,15 +91,10 @@ class Level1 extends Phaser.Scene {
 
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600,100,'enemy', 0);
-        //this.enemyProjectile = this.physics.add.sprite()
 
-        //this.enemyFire = new ProjectilesGroup(this);
-
-
-
+        //enemy shooting system
          this.enemyFire = this.physics.add.group();
-         //enemyFire.enableBody = true;
-         //this.enemyFire.createMultiple(5, 'enemyShoot');
+         //this.enemyFire = new ProjectilesGroup(this);
          this.enemyFire.createMultiple({
             frameQuantity: 30,
             active: false,
@@ -107,8 +102,6 @@ class Level1 extends Phaser.Scene {
             key: 'enemyShoot'
         })
         
-        //this.enemyFire.check
-        //this.enemyFire.setAll('outOfBoundsKill',true); 
         this.fireRate = 200;
         this.nextFire = 0;
         
@@ -128,12 +121,16 @@ class Level1 extends Phaser.Scene {
         this.disk5 = this.physics.add.sprite(1250,330,'disk').setScale(0.03);
 
         //text UI (it is in text for now, will implement a bar later in the future)
-        this.progressUI = this.add.text(game.config.width/2 +308, game.config.height/2 - 200, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
-        //this.add.text(game.config.width/2 +308, game.config.height/2 - 180, this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
+        this.progressUI = this.add.text(game.config.width/2 +150, game.config.height/2 - 260, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
+       
+        // keeps text on top right when player is moving
+        this.progressUI.scrollFactorX = 0; 
+        this.progressUI.scrollFactorY = 0;
         
         //camera settings
-        //this.cameras.main.setBounds(0, 0, game.config.width, game.config.height);
+        this.cameras.main.setBounds(0, 0, 1600, 575);
         this.cameras.main.startFollow(this.player.getPlayer());
+        
         
         //controls
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -163,9 +160,6 @@ class Level1 extends Phaser.Scene {
         });
         this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
             delay: 1000, callback: () => {
-                if (this.checkOverlap(this.player.getPlayer(), this.enemyFire)) {
-                        console.log('collided with bullet');
-                }
                 if (this.checkOverlap(this.player.getPlayer(), this.enemy.getEnemy())) { // checks if player collided with enemy
                     this.checkPlaying();
                     console.log('collided with enemy');
@@ -191,9 +185,6 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
     }
     update() {
-        this.progressUI.x = this.player.getPlayer().body.position.x + 170; // set so x position of UI follows player
-        this.progressUI.y = this.player.getPlayer().body.position.y - 230;// set so y position of UI follows player
-
         if (!this.tweenPlay) { // if tween isnt playing
             this.player.update(); // allows player movement
             if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
