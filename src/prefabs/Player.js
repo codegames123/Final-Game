@@ -5,7 +5,6 @@ class Player extends Phaser.GameObjects.Sprite {
         //initilizes player
         this.player = scene.physics.add.sprite(x,y,texture).setScale(0.19).setSize(150, 330).setOffset(50, 5);//setSize(left-/right+,up+/down-)
         console.log("player:" + this.player);
-
         //scene.sys.displayList.add(this) 
         //scene.sys.updateList.add(this)
         //this.tilesLayer = layer;
@@ -23,20 +22,28 @@ class Player extends Phaser.GameObjects.Sprite {
         return this.player;
     }
 
+    setup(){
+        this.player.body.setMaxVelocity(300);
+        this.physics.world.setGravityY(1000);
+    }
+
     update() {
+        this.player.body.setDamping(true);
+        this.player.body.setDrag(0.3); //0-1; smaller = faster deceleration
         //left/right movement
         if (keyA.isDown) {
-            this.player.setVelocityX(-150);
+            this.player.setAccelerationX(-150);
         }else if (keyD.isDown) {
-            this.player.setVelocityX(150);
-        }else {
-            this.player.setVelocityX(0);
+            this.player.setAccelerationX(150);
+        }
+        else {
+            this.player.setAccelerationX(0); //stop accel, initiate drag
         }
 
         //jump
         if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
             if(keyW.isDown || keySPACE.isDown)
-                this.player.setVelocityY(-550);
+                this.player.setAccelerationY(-550);
         }
     }
 
