@@ -32,23 +32,24 @@ class Player extends Phaser.GameObjects.Sprite {
         
         //left/right movement
         if (keyA.isDown) {
-            this.player.setAccelerationX(-200);
+            this.player.setAccelerationX(-250);
             this.player.setFlip(true,false);
         }else if (keyD.isDown) {
             this.player.resetFlip();
-            this.player.setAccelerationX(200);
+            this.player.setAccelerationX(250);
         }
         else {
             this.player.setAccelerationX(0); //stop accel, initiate drag
-            this.player.body.setDragX(600); //0-1; smaller = faster deceleration
+            this.player.body.setDragX(800); //0-1; smaller = faster deceleration
         }
 
         //jump
         if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
+            //reset y velocity if on ground
+            this.player.setAccelerationY(0);
             if(keyW.isDown || keySPACE.isDown)
                 this.player.setVelocityY(-900); // will adjust according to the level design
-
-        }   
+                this.player.setAccelerationY(1200);
+        }       
     }
-
 }
