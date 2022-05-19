@@ -29,7 +29,9 @@ class Level1 extends Phaser.Scene {
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
 
-         this.diskStack = [];//stack array for disks 
+        this.physics.world.gravity.y = 1500;
+
+        this.diskStack = [];//stack array for disks 
 
         //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
 
@@ -121,17 +123,24 @@ class Level1 extends Phaser.Scene {
         this.disk5 = this.physics.add.sprite(1250,330,'disk').setScale(0.03);
 
         //text UI (it is in text for now, will implement a bar later in the future)
-        this.progressUI = this.add.text(game.config.width/2 +150, game.config.height/2 - 260, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
+        // this.progressUI = this.add.text(game.config.width/2 +150, game.config.height/2 - 260, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
        
-        // keeps text on top right when player is moving
-        this.progressUI.scrollFactorX = 0; 
-        this.progressUI.scrollFactorY = 0;
+        // // keeps text on top right when player is moving
+        // this.progressUI.scrollFactorX = 0; 
+        // this.progressUI.scrollFactorY = 0;
         
         //camera settings
         this.cameras.main.setBounds(0, 0, 1600, 575);
         this.cameras.main.startFollow(this.player.getPlayer());
-        
-        
+
+        //progress bar
+        this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
+        this.setValue(this.progressBar, 0); // setValue(this, width);
+        this.progressBar.scrollFactorX = 0;
+        this.progressBar.scrollFactorY = 0;
+
+         
+
         //controls
         this.cursors = this.input.keyboard.createCursorKeys();
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A); 
@@ -184,6 +193,29 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.disk5, this.layer);
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
     }
+
+    makeBar(x, y,color) {
+        //draw the bar
+        let bar = this.add.graphics();
+
+        //color the bar
+        bar.fillStyle(color, 1);
+
+        //fill the bar with a rectangle
+        bar.fillRect(0, 0, 200, 50);
+        
+        //position the bar
+        bar.x = x;
+        bar.y = y;
+
+        //return the bar
+        return bar;
+    }
+    setValue(bar,percentage) {
+        //scale the bar
+        bar.scaleX = percentage/100;
+    }
+
     update() {
         if (!this.tweenPlay) { // if tween isnt playing
             this.player.update(); // allows player movement
@@ -193,6 +225,20 @@ class Level1 extends Phaser.Scene {
                 //console.log('in range');
             }
         }
+
+        if(this.numDiskCollected == 5) {
+            this.setValue(this.progressBar,100);
+         }else if(this.numDiskCollected == 4) {
+            this.setValue(this.progressBar, 80);
+         }else if(this.numDiskCollected == 3) {
+            this.setValue(this.progressBar, 60);
+         }else if(this.numDiskCollected == 2) {
+            this.setValue(this.progressBar,40);
+        }else if(this.numDiskCollected == 1) {
+            this.setValue(this.progressBar,20);
+        }else
+            this.setValue(this.progressBar,0);
+
         if (this.checkOverlap(this.player.getPlayer(), this.disk)) { // if collided with first song, plays and destroys
             this.diskStack.push(this.song_01); //pushes first song into stack array
             console.log(this.diskStack);
@@ -254,7 +300,7 @@ class Level1 extends Phaser.Scene {
             this.scene.start('menuScene');
         }
 
-        this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
+        //this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
 
     }
 
@@ -274,7 +320,8 @@ class Level1 extends Phaser.Scene {
                 console.log('fire');
                 this.enemyFires.body.reset(this.enemy.getEnemy().x, this.enemy.getEnemy().y);
                 this.enemyFires.setVisible(true);
-                this.physics.moveToObject(this.enemyFires, this.player.getPlayer(), 400);  
+                this.physics.moveToObject(this.enemyFires, this.player.getPlayer(), 300);
+                this.enemyFires.body.gravity.y = -1500; 
             }
         }
         
