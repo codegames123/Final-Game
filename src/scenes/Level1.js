@@ -29,7 +29,8 @@ class Level1 extends Phaser.Scene {
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
 
-        this.physics.world.gravity.y = 1500;
+        //sets the gravity of the world
+        this.physics.world.gravity.y = 2000;
 
         this.diskStack = [];//stack array for disks 
 
@@ -193,8 +194,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.disk5, this.layer);
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
     }
-
-    makeBar(x, y,color) {
+    makeBar(x, y, color) {
         //draw the bar
         let bar = this.add.graphics();
 
@@ -202,8 +202,10 @@ class Level1 extends Phaser.Scene {
         bar.fillStyle(color, 1);
 
         //fill the bar with a rectangle
+        bar.lineStyle(4, 'black', 1);
         bar.fillRect(0, 0, 200, 50);
-        
+        bar.strokeRect(0, 0, 200, 50);
+
         //position the bar
         bar.x = x;
         bar.y = y;
@@ -214,7 +216,13 @@ class Level1 extends Phaser.Scene {
     setValue(bar,percentage) {
         //scale the bar
         bar.scaleX = percentage/100;
+
     }
+    setColor(bar, color)
+    {
+        bar.fillStyle(color, 1);
+    } 
+
 
     update() {
         if (!this.tweenPlay) { // if tween isnt playing
@@ -225,19 +233,35 @@ class Level1 extends Phaser.Scene {
                 //console.log('in range');
             }
         }
-
-        if(this.numDiskCollected == 5) {
-            this.setValue(this.progressBar,100);
-         }else if(this.numDiskCollected == 4) {
+        //progress bar options
+        if (this.numDiskCollected == 5) {
+            this.setColor(this.progressBar, 0x2ECC71);
+            this.progressBar.fillRect(0, 0, 200, 50);
+            this.progressBar.strokeRect(0, 0, 200, 50);
+            this.setValue(this.progressBar, 100);
+        } else if (this.numDiskCollected == 4) {
+            this.setColor(this.progressBar, 0x44BF6B);
+            this.progressBar.fillRect(0, 0, 200, 50);
+            this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 80);
-         }else if(this.numDiskCollected == 3) {
+        } else if (this.numDiskCollected == 3) {
+            this.setColor(this.progressBar, 0x5FAE64);
+            this.progressBar.fillRect(0, 0, 200, 50);
+            this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 60);
-         }else if(this.numDiskCollected == 2) {
-            this.setValue(this.progressBar,40);
-        }else if(this.numDiskCollected == 1) {
-            this.setValue(this.progressBar,20);
-        }else
-            this.setValue(this.progressBar,0);
+        } else if (this.numDiskCollected == 2) {
+            this.setColor(this.progressBar, 0x928F58);
+            this.progressBar.fillRect(0, 0, 200, 50);
+            this.progressBar.strokeRect(0, 0, 200, 50);
+            this.setValue(this.progressBar, 40);
+        } else if (this.numDiskCollected == 1) {
+            this.setColor(this.progressBar, 0xC46F4B);
+            this.progressBar.fillRect(0, 0, 200, 50);
+            this.progressBar.strokeRect(0, 0, 200, 50);
+            this.setValue(this.progressBar, 20);
+        } else
+            this.setValue(this.progressBar, 0); 
+
 
         if (this.checkOverlap(this.player.getPlayer(), this.disk)) { // if collided with first song, plays and destroys
             this.diskStack.push(this.song_01); //pushes first song into stack array
@@ -321,7 +345,7 @@ class Level1 extends Phaser.Scene {
                 this.enemyFires.body.reset(this.enemy.getEnemy().x, this.enemy.getEnemy().y);
                 this.enemyFires.setVisible(true);
                 this.physics.moveToObject(this.enemyFires, this.player.getPlayer(), 300);
-                this.enemyFires.body.gravity.y = -1500; 
+                this.enemyFires.body.gravity.y = -2000; 
             }
         }
         
