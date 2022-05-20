@@ -94,6 +94,7 @@ class Level1 extends Phaser.Scene {
 
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600,100,'enemy', 0);
+        this.enemy2 = new Enemy(this, 1250, 200, 'enemy', 0 );
 
         //enemy shooting system
          this.enemyFire = this.physics.add.group();
@@ -121,8 +122,28 @@ class Level1 extends Phaser.Scene {
         this.disk2 = this.physics.add.sprite(500,200,'disk').setScale(0.03);
         this.disk3 = this.physics.add.sprite(800,350,'disk').setScale(0.03);
         this.disk4 = this.physics.add.sprite(1050,130,'disk').setScale(0.03);
-        this.disk5 = this.physics.add.sprite(1250,330,'disk').setScale(0.03);
+        this.disk5 = this.physics.add.sprite(1250,100,'disk').setScale(0.03);
+        this.diskCompleted = this.physics.add.sprite(1300, 300, 'disk').setScale(0.03);
+        this.diskCompleted.setActive(false);
+        this.diskCompleted.setVisible(false);
 
+        this.level1CompletedText = this.add.text(game.config.width / 2- 150, game.config.height / 2, 'Level 1 Completed!', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' })
+        this.level1CompletedText.scrollFactorX = 0;
+        this.level1CompletedText.scrollFactorY = 0;
+        this.level1CompletedText.setVisible(false);
+        this.nextLevelText = this.add.text(game.config.width / 2-100, game.config.height/2 + 50, 'Next Level?', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' }).setInteractive()
+        .on('pointerdown', () => {
+            this.scene.start('Level2Scene');
+        })
+        .on('pointerover', () => {
+            this.nextLevelText.setStyle({ fill: 'green' });
+        })
+        .on('pointerout', () => {
+            this.nextLevelText.setStyle({ fill: 'orange' })
+        });;
+        this.nextLevelText.scrollFactorX = 0;
+        this.nextLevelText.scrollFactorY = 0;
+        this.nextLevelText.setVisible(false);
         //text UI (it is in text for now, will implement a bar later in the future)
         // this.progressUI = this.add.text(game.config.width/2 +150, game.config.height/2 - 260, 'Disk Collected ' + this.numDiskCollected, {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
        
@@ -139,8 +160,6 @@ class Level1 extends Phaser.Scene {
         this.setValue(this.progressBar, 0); // setValue(this, width);
         this.progressBar.scrollFactorX = 0;
         this.progressBar.scrollFactorY = 0;
-
-         
 
         //controls
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -184,7 +203,7 @@ class Level1 extends Phaser.Scene {
                 }
             }, callbackScope: this, loop: true
         });
-
+         
         //collisions
         this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), this.layer);
         this.physics.add.collider(this.disk, this.layer);
@@ -192,7 +211,9 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.disk3, this.layer);
         this.physics.add.collider(this.disk4, this.layer);
         this.physics.add.collider(this.disk5, this.layer);
+        this.physics.add.collider(this.diskCompleted, this.layer);
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
+        this.physics.add.collider(this.enemy2.getEnemy(), this.layer);
     }
     makeBar(x, y, color) {
         //draw the bar
@@ -227,18 +248,27 @@ class Level1 extends Phaser.Scene {
     update() {
         if (!this.tweenPlay) { // if tween isnt playing
             this.player.update(); // allows player movement
+
             if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
                 this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
-                this.enemyShoot();
+                this.enemyShoot(this.enemy.getEnemy());
                 //console.log('in range');
             }
+            // if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy2.getEnemy().x, this.enemy2.getEnemy().y) < 200) { // gets distance of player and enemy
+            //     this.enemyFollows(this.enemy2.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+            //     this.enemyShoot(this.enemy2.getEnemy());
+            //     //console.log('in range');
+            // }
         }
+
         //progress bar options
         if (this.numDiskCollected == 5) {
             this.setColor(this.progressBar, 0x2ECC71);
             this.progressBar.fillRect(0, 0, 200, 50);
             this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 100);
+            this.diskCompleted.setActive(true);
+            this.diskCompleted.setVisible(true);
         } else if (this.numDiskCollected == 4) {
             this.setColor(this.progressBar, 0x44BF6B);
             this.progressBar.fillRect(0, 0, 200, 50);
@@ -319,6 +349,18 @@ class Level1 extends Phaser.Scene {
             this.song_05.play(); 
             this.disk5.destroy();
         }
+        if (this.checkOverlap(this.player.getPlayer(), this.diskCompleted) && this.numDiskCollected == this.maxDisktoCollect) { // if collided with fifth song, plays and destroys
+            this.checkMusicPlayer();
+            this.song_full.play();
+            this.diskCompleted.destroy();
+            this.level1CompletedText.setVisible(true);
+            this.nextLevelText.setVisible(true);
+
+        }
+        if(this.numDiskCollected < this.maxDisktoCollect) {
+            this.diskCompleted.setActive(false);
+            this.diskCompleted.setVisible(false);
+        }
         
         if (keyM.isDown) { // (temporary) if m is pressed, switches back to menu scene
             this.scene.start('menuScene');
@@ -336,13 +378,13 @@ class Level1 extends Phaser.Scene {
     enemyFollows (enemy, player, speed) { // enemy follows the player
         this.physics.moveToObject(enemy, player, speed);
     }
-    enemyShoot() {
+    enemyShoot(enemy) { // enemy shoots at player
         if(this.time.now > shootTime) {
             shootTime = this.time.now + 900;
             this.enemyFires = this.enemyFire.getFirstDead();
             if(this.enemyFires) {
                 console.log('fire');
-                this.enemyFires.body.reset(this.enemy.getEnemy().x, this.enemy.getEnemy().y);
+                this.enemyFires.body.reset(enemy.x, enemy.y);
                 this.enemyFires.setVisible(true);
                 this.physics.moveToObject(this.enemyFires, this.player.getPlayer(), 300);
                 this.enemyFires.body.gravity.y = -2000; 
@@ -353,7 +395,7 @@ class Level1 extends Phaser.Scene {
     getDistance (x1,y1,x2,y2) { // checks if enemy is in range of player
         return Phaser.Math.Distance.Between(x1,y1,x2,y2);
     }
-    checkPlaying() {
+    checkPlaying() { // song popping system
         this.songPopped = this.diskStack.pop(); // pops song and sets to this.songPopped
         if (this.songPopped === this.song_01) { // if song popped is first song
             console.log('disk 1 taken from enemy');
@@ -383,11 +425,10 @@ class Level1 extends Phaser.Scene {
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
             this.song_05_isCollected = false;
-            this.disk5 = this.physics.add.sprite(1250, 330, 'disk').setScale(0.03);
+            this.disk5 = this.physics.add.sprite(1250,100,'disk').setScale(0.03);
         }
         if(this.numDiskCollected > 0)
             this.numDiskCollected--;
-
     }
     checkMusicPlayer() { // stops last song if a new disk is picked up
         if(this.song_01.isPlaying) {
