@@ -13,7 +13,7 @@ let config = {
             }
         }
     },
-    scene: [Menu, Tutorial, Level1, Level2]
+    scene: [Load, Menu, Tutorial, Level1, Level2]
 };
 
 let game = new Phaser.Game(config);
