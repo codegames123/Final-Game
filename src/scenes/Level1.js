@@ -15,7 +15,7 @@ class Level1 extends Phaser.Scene {
         this.load.image('background', './assets/menu_background.jpg'); //temporary
         this.load.image('disk', './assets/disc.png'); //temporary
         this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
-        this.load.tilemapTiledJSON('map', './assets/collision_test.json'); // temporary 
+        this.load.tilemapTiledJSON('map', './assets/level1tilemap.json'); // temporary 
         this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01_fixed.wav');
         this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02_fixed.wav');
         this.load.audio('lvl1_03', './assets/music/TechnoLVL1_03_fixed.wav');
@@ -31,19 +31,23 @@ class Level1 extends Phaser.Scene {
 
         //sets the gravity of the world
         this.physics.world.gravity.y = 2000;
+        
 
         this.diskStack = [];//stack array for disks 
 
         //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
 
         //temporary tilemap, will change using tilemap editor
-        var map = this.make.tilemap({ key: 'map' });
-        const tileset = map.addTilesetImage('ground_1x1');
-        this.layer = map.createLayer('Tile Layer 1', tileset);
+        const map = this.make.tilemap({ key: 'map' });
+        const tileset = map.addTilesetImage('test_tiles', 'ground_1x1');
+        this.layer = map.createLayer('Ground', tileset);
 
-        map.setCollisionBetween(1, 12);
+        //map.setCollisionBetween(1, 12);
         this.layer.setCollisionByProperty({ collides: true });
 
+        // set world bounds (so collideWorldBounds works)
+        this.physics.world.bounds.setTo(0, 0, map.widthInPixels, map.heightInPixels);
+        
         //collision debugger
         const debugGraphics = this.add.graphics().setAlpha(0.45); // collision debugger for tilemap
         this.layer.renderDebug(debugGraphics, {
@@ -89,8 +93,10 @@ class Level1 extends Phaser.Scene {
         this.song_full = this.sound.add('lvl1_full', {loop:false});
         this.song_full_isCollected = false;
    
+        const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn");
         //put in new player (scene,x,y,image, frame, layer)
-        this.player = new Player(this,80,300, 'sprite',0, this.layer);
+        this.player = new Player(this,p1Spawn.x,p1Spawn.y, 'sprite',0, this.layer);
+        this.player.getPlayer().setCollideWorldBounds(true);
 
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600,100,'enemy', 0);
@@ -122,7 +128,7 @@ class Level1 extends Phaser.Scene {
         this.disk2 = this.physics.add.sprite(500,200,'disk').setScale(0.03);
         this.disk3 = this.physics.add.sprite(800,350,'disk').setScale(0.03);
         this.disk4 = this.physics.add.sprite(1050,130,'disk').setScale(0.03);
-        this.disk5 = this.physics.add.sprite(1250,100,'disk').setScale(0.03);
+        this.disk5 = this.physics.add.sprite(1250,340,'disk').setScale(0.03);
         this.diskCompleted = this.physics.add.sprite(1300, 300, 'disk').setScale(0.03);
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
@@ -152,7 +158,7 @@ class Level1 extends Phaser.Scene {
         // this.progressUI.scrollFactorY = 0;
         
         //camera settings
-        this.cameras.main.setBounds(0, 0, 1600, 575);
+        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player.getPlayer());
 
         //progress bar

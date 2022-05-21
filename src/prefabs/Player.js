@@ -23,7 +23,7 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     create(){
-        this.player.body.setMaxVelocity(250, 900);
+        this.player.body.setMaxVelocity(250, -1000);
         //this.physics.world.gravity.y = 3000;
         this.player.body.setDamping(true);
     }
@@ -44,9 +44,10 @@ class Player extends Phaser.GameObjects.Sprite {
         }
 
         //jump
-        if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
+        //if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
+        if(this.player.body.blocked.down){
             if(keyW.isDown || keySPACE.isDown)
-                this.player.setVelocityY(-1000); // will adjust according to the level design
+                this.player.body.setVelocityY(-1000); // will adjust according to the level design
 
         }   
     }
