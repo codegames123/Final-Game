@@ -2,9 +2,6 @@ class Tutorial extends Phaser.Scene {
     constructor() {
         super("tutorialScene");
     }
-    // preload(){
-
-    // }
     create(){
         this.add.text(game.config.width/2 - 230, game.config.height/2 - 260, "HOW TO PLAY", {fontFamily: 'Segoe Script', fontSize: 60})
         //click back to go back to menu

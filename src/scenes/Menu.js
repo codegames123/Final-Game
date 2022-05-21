@@ -2,11 +2,7 @@ class Menu extends Phaser.Scene {
     constructor() {
         super("menuScene");
     }
-
-    preload() {
-        this.load.image('menuBackground', './assets/menu_background.jpg');//temporary menu background (will change later)
-        this.load.image('curtains', './assets/curtains.png');//temporary tween
-    }
+    
     create() {
         const centerX = this.cameras.main.centerX;
         const centerY = this.cameras.main.centerY;
