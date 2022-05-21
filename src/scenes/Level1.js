@@ -8,6 +8,16 @@ class Level1 extends Phaser.Scene {
         super("Level1Scene");
 
     }
+    preload(){
+        //loads level 1 music
+        this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01_fixed.wav');
+        this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02_fixed.wav');
+        this.load.audio('lvl1_03', './assets/music/TechnoLVL1_03_fixed.wav');
+        this.load.audio('lvl1_04', './assets/music/TechnoLVL1_04_fixed.wav');
+        this.load.audio('lvl1_05', './assets/music/TechnoLVL1_05_fixed.wav');
+        this.load.audio('lvl1_full', './assets/music/TechnoLVL1_full_fixed.wav');
+        this.load.tilemapTiledJSON('map', './assets/level1tilemap.json'); // temporary 
+    }
     create() {
         const centerX = this.cameras.main.centerX;
         const centerY = this.cameras.main.centerY;

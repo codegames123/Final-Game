@@ -12,19 +12,12 @@ class Load extends Phaser.Scene {
         this.load.image('background', './assets/menu_background.jpg'); //temporary
         this.load.image('disk', './assets/disc.png'); //temporary
         this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
-        this.load.tilemapTiledJSON('map', './assets/level1tilemap.json'); // temporary 
-
-        //loads level 1 music
-        this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01_fixed.wav');
-        this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02_fixed.wav');
-        this.load.audio('lvl1_03', './assets/music/TechnoLVL1_03_fixed.wav');
-        this.load.audio('lvl1_04', './assets/music/TechnoLVL1_04_fixed.wav');
-        this.load.audio('lvl1_05', './assets/music/TechnoLVL1_05_fixed.wav');
-        this.load.audio('lvl1_full', './assets/music/TechnoLVL1_full_fixed.wav');
     }
 
     create(){
+        this.add.text(game.config.width/2, game.config.height/2, 'Loading...', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' });
         this.scene.start('menuScene');
+
     }
 
 }
