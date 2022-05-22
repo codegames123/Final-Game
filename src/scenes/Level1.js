@@ -85,10 +85,11 @@ class Level1 extends Phaser.Scene {
         //put in new player (scene,x,y,image, frame, layer)
         this.player = new Player(this,p1Spawn.x,p1Spawn.y, 'sprite',0, this.layer);
         this.player.getPlayer().setCollideWorldBounds(true);
+        this.player.getPlayer().body.setMaxVelocity(500, 1000);
 
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600,100,'enemy', 0);
-        this.enemy2 = new Enemy(this, 1250, 200, 'enemy', 0 );
+        //this.enemy2 = new Enemy(this, 1120, 100, 'enemy', 0 );
 
         //enemy shooting system
          this.enemyFire = this.physics.add.group();
@@ -99,6 +100,42 @@ class Level1 extends Phaser.Scene {
             visible: false,
             key: 'enemyShoot'
         })
+
+        
+         let graphics = this.add.graphics();
+         graphics.lineStyle(2, 0xFFFFFF, 0.75); 
+
+        //enemy path system
+        this.enemy2 = this.add.path(1192, 190); //(x,y)
+        this.enemy2.circleTo(70);
+        //this.enemy2.draw(graphics); // to see circle
+        let s = this.enemy2.getStartPoint();
+        this.enemy2 = this.add.follower(this.enemy2, s.x, s.y, 'enemy').setScale(0.2);
+        this.physics.world.enable(this.enemy2);
+        this.enemy2.body.setAllowGravity(false);
+        this.enemy2.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy2.startFollow({
+            duration: 15000,
+            from: 0,
+            to: 1,
+            rotateToPath: true,
+            startAt: 0,
+            repeat: -1
+        });
+
+        // //this.enemy2 = new Enemy(this, 1120, 100, 'enemy', 0 );
+        // this.enemy2 = this.add.follower(new Phaser.Curves.Path(1190,190).lineTo(1190,190),1190,190, 'enemy').setScale(0.2);
+        // this.physics.world.enable(this.enemy2);
+        // this.enemy2.body.setCircle(100);
+        // // this.enemy2.startFollow({
+        // //     duration: 15000,
+        // //     from: 0,
+        // //     to: 1,
+        // //     rotateToPath: true,
+        // //     startAt: 0,
+        // //     repeat: -1
+        // // });
+        
         
         this.fireRate = 200;
         this.nextFire = 0;
@@ -116,7 +153,7 @@ class Level1 extends Phaser.Scene {
         this.disk2 = this.physics.add.sprite(500,200,'disk').setScale(0.03);
         this.disk3 = this.physics.add.sprite(800,350,'disk').setScale(0.03);
         this.disk4 = this.physics.add.sprite(1050,130,'disk').setScale(0.03);
-        this.disk5 = this.physics.add.sprite(1250,340,'disk').setScale(0.03);
+        this.disk5 = this.physics.add.sprite(1150,100,'disk').setScale(0.03);
         this.diskCompleted = this.physics.add.sprite(1300, 300, 'disk').setScale(0.03);
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
@@ -150,6 +187,9 @@ class Level1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player.getPlayer());
 
         //progress bar
+        this.progressText = this.add.text(game.config.width/2 +25, game.config.height/2 - 250, 'Progress ', {fontFamily: 'Courier',fontSize: '25px',color: 'red',align: 'left'});
+        this.progressText.scrollFactorX = 0; 
+        this.progressText.scrollFactorY = 0;
         this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
         this.setValue(this.progressBar, 0); // setValue(this, width);
         this.progressBar.scrollFactorX = 0;
@@ -197,6 +237,23 @@ class Level1 extends Phaser.Scene {
                 }
             }, callbackScope: this, loop: true
         });
+
+        this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
+            delay: 1000, callback: () => {
+                if (this.checkOverlap(this.player.getPlayer(), this.enemy2)) { // checks if player collided with enemy
+                    this.checkPlaying();
+                    console.log('collided with enemy');
+
+                    this.physics.add.collider(this.disk, this.layer);
+                    this.physics.add.collider(this.disk2, this.layer);
+                    this.physics.add.collider(this.disk3, this.layer);
+                    this.physics.add.collider(this.disk4, this.layer);
+                    this.physics.add.collider(this.disk5, this.layer);
+                    console.log(this.diskStack);
+                    console.log(this.numDiskCollected);
+                }
+            }, callbackScope: this, loop: true
+        });
          
         //collisions
         this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), this.layer);
@@ -207,7 +264,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.disk5, this.layer);
         this.physics.add.collider(this.diskCompleted, this.layer);
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
-        this.physics.add.collider(this.enemy2.getEnemy(), this.layer);
+        this.physics.add.collider(this.enemy2, this.layer);
     }
     makeBar(x, y, color) {
         //draw the bar
@@ -218,8 +275,10 @@ class Level1 extends Phaser.Scene {
 
         //fill the bar with a rectangle
         bar.lineStyle(4, 'black', 1);
-        bar.fillRect(0, 0, 200, 50);
-        bar.strokeRect(0, 0, 200, 50);
+        bar.fillRoundedRect(0,0,200,50);
+        bar.strokeRoundedRect(0,0,200,50);
+        //bar.fillRect(0, 0, 200, 50);
+        //bar.strokeRect(0, 0, 200, 50);
 
         //position the bar
         bar.x = x;
@@ -240,7 +299,7 @@ class Level1 extends Phaser.Scene {
 
 
     update() {
-        if (!this.tweenPlay) { // if tween isnt playing
+        //if (!this.tweenPlay) { // if tween isnt playing
             this.player.update(); // allows player movement
 
             if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
@@ -253,35 +312,25 @@ class Level1 extends Phaser.Scene {
             //     this.enemyShoot(this.enemy2.getEnemy());
             //     //console.log('in range');
             // }
-        }
+       // }
 
         //progress bar options
         if (this.numDiskCollected == 5) {
             this.setColor(this.progressBar, 0x2ECC71);
-            this.progressBar.fillRect(0, 0, 200, 50);
-            this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 100);
             this.diskCompleted.setActive(true);
             this.diskCompleted.setVisible(true);
         } else if (this.numDiskCollected == 4) {
             this.setColor(this.progressBar, 0x44BF6B);
-            this.progressBar.fillRect(0, 0, 200, 50);
-            this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 80);
         } else if (this.numDiskCollected == 3) {
             this.setColor(this.progressBar, 0x5FAE64);
-            this.progressBar.fillRect(0, 0, 200, 50);
-            this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 60);
         } else if (this.numDiskCollected == 2) {
             this.setColor(this.progressBar, 0x928F58);
-            this.progressBar.fillRect(0, 0, 200, 50);
-            this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 40);
         } else if (this.numDiskCollected == 1) {
             this.setColor(this.progressBar, 0xC46F4B);
-            this.progressBar.fillRect(0, 0, 200, 50);
-            this.progressBar.strokeRect(0, 0, 200, 50);
             this.setValue(this.progressBar, 20);
         } else
             this.setValue(this.progressBar, 0); 
@@ -389,6 +438,7 @@ class Level1 extends Phaser.Scene {
     getDistance (x1,y1,x2,y2) { // checks if enemy is in range of player
         return Phaser.Math.Distance.Between(x1,y1,x2,y2);
     }
+
     checkPlaying() { // song popping system
         this.songPopped = this.diskStack.pop(); // pops song and sets to this.songPopped
         if (this.songPopped === this.song_01) { // if song popped is first song
@@ -413,13 +463,13 @@ class Level1 extends Phaser.Scene {
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
             this.song_04_isCollected = false;
-            this.disk4 = this.physics.add.sprite(1050, 130, 'disk').setScale(0.03);
+            this.disk4 = this.physics.add.sprite(1090, 190, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
             this.song_05_isCollected = false;
-            this.disk5 = this.physics.add.sprite(1250,100,'disk').setScale(0.03);
+            this.disk5 = this.physics.add.sprite(1150,100,'disk').setScale(0.03);
         }
         if(this.numDiskCollected > 0)
             this.numDiskCollected--;

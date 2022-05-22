@@ -14,7 +14,7 @@ class Load extends Phaser.Scene {
         this.load.image('disk', './assets/disc.png'); //temporary
         this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
 
-        //loads level 1 music
+        //level 1 music 
         this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01_fixed.wav');
         this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02_fixed.wav');
         this.load.audio('lvl1_03', './assets/music/TechnoLVL1_03_fixed.wav');
@@ -22,8 +22,9 @@ class Load extends Phaser.Scene {
         this.load.audio('lvl1_05', './assets/music/TechnoLVL1_05_fixed.wav');
         this.load.audio('lvl1_full', './assets/music/TechnoLVL1_full_fixed.wav');
 
+
         //prints message indicating player that game is loading
-        this.add.text(game.config.width/2 - 50, game.config.height/2, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '25px', color: 'white', align: 'left' });
+        this.add.text(game.config.width/2 - 40, game.config.height/2, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '25px', color: 'white', align: 'left' });
     }
 
     create(){
