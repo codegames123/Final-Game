@@ -13,9 +13,9 @@ let config = {
             }
         }
     },
-    scene: [Load, Menu, Tutorial, Level1, Level2]
+    scene: [Load, Start, Menu, Tutorial, Level1, Level2]
 };
 
 let game = new Phaser.Game(config);
 
-let keyA, keyS, keyD, keyW, keySPACE, keyM;
+let keyA, keyS, keyD, keyW, keySPACE, keyM, keyF;

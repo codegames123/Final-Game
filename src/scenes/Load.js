@@ -30,7 +30,7 @@ class Load extends Phaser.Scene {
 
     create(){
         
-        this.scene.start('menuScene');
+        this.scene.start('startScene');
 
     }
 
