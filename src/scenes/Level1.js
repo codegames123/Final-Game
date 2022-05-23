@@ -20,7 +20,6 @@ class Level1 extends Phaser.Scene {
         //sets the gravity of the world
         this.physics.world.gravity.y = 2000;
 
-
         this.diskStack = [];//stack array for disks 
 
         //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
@@ -58,7 +57,6 @@ class Level1 extends Phaser.Scene {
             hold: 2500,
             paused: true,
             onComplete: function () {
-                //this.scene.start('Level1Scene');
                 topText.destroy();
                 this.tweenPlay = false;
             },
@@ -85,7 +83,7 @@ class Level1 extends Phaser.Scene {
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);
         this.player.getPlayer().setCollideWorldBounds(true);
-        this.player.getPlayer().body.setMaxVelocity(350, 1000);
+        this.player.create(); // sets velocity
 
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600, 100, 'enemy', 0);

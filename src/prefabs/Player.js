@@ -22,12 +22,11 @@ class Player extends Phaser.GameObjects.Sprite {
         return this.player;
     }
     
-    // put to create() of the level.js files
-    // create(){ 
-    //     this.player.body.setMaxVelocity(250, -1000);
-    //     //this.physics.world.gravity.y = 3000;
-    //     this.player.body.setDamping(true);
-    // }
+    create(){ 
+        this.player.body.setMaxVelocity(350, 1000);
+        //this.physics.world.gravity.y = 3000; // i put the physics world gravity in level 1 line 21
+        //this.player.body.setDamping(true); // you could turn this back if you feel comfortable using it
+    }
 
     update() {
         //left/right movement
@@ -42,7 +41,6 @@ class Player extends Phaser.GameObjects.Sprite {
             this.player.body.setAccelerationX(0); //stop accel, initiate drag
             this.player.body.setDragX(1000); //0-1; smaller = faster deceleration
         }
-
         //jump
         //if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
         if(this.player.body.blocked.down){
