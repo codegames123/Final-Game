@@ -10,6 +10,12 @@ class Player extends Phaser.GameObjects.Sprite {
         //this.tilesLayer = layer;
         //scene.physics.add.collider(this.player, layer);
 
+        this.ACCELERATION = 700;
+        this.MAX_X_VEL = 400;   // pixels/second
+        this.MAX_Y_VEL = 2000;
+        this.DRAG = 1200;    
+        this.JUMP_VELOCITY = -650;
+
         //for use other than the contructor's
         this.xaxis = x;
         this.yaxis = y;
@@ -23,29 +29,29 @@ class Player extends Phaser.GameObjects.Sprite {
     }
     
     create(){ 
-        this.player.body.setMaxVelocity(350, 1000);
+        this.player.body.setMaxVelocity(this.MAX_X_VEL, this.MAX_Y_VEL);
         //this.physics.world.gravity.y = 3000; // i put the physics world gravity in level 1 line 21
-        //this.player.body.setDamping(true); // you could turn this back if you feel comfortable using it
+        //this.player.body.setDamping(true); // you could turn this back on if you feel comfortable using it
     }
 
     update() {
         //left/right movement
         if (keyA.isDown) {
-            this.player.setAccelerationX(-350);
+            this.player.body.setAccelerationX(-this.ACCELERATION);
             this.player.setFlip(true,false);
         }else if (keyD.isDown) {
             this.player.resetFlip();
-            this.player.setAccelerationX(350);
+            this.player.body.setAccelerationX(this.ACCELERATION);
         }
         else {
             this.player.body.setAccelerationX(0); //stop accel, initiate drag
-            this.player.body.setDragX(1000); //0-1; smaller = faster deceleration
+            this.player.body.setDragX(this.DRAG); //0-1; smaller = faster deceleration
         }
         //jump
         //if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
         if(this.player.body.blocked.down){
             if(keyW.isDown || keySPACE.isDown)
-                this.player.body.setVelocityY(-800); // will adjust according to the level design
+                this.player.body.setVelocityY(this.JUMP_VELOCITY);
 
         }   
     }
