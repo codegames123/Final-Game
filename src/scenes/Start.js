@@ -3,10 +3,11 @@ class Start extends Phaser.Scene {
         super("startScene");
     }
     create () {
+                 //this.scale.setGameSize(640, 480);
                 //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print
-                let txtTime = 10; //set timer duration
+                let txtTime = 60; //set timer duration
                 //28 chars allowed per line
-                let testStr = 'We lived in a world that was full of beautiful sounds. Noisy, tranquil, passionate. A variety like no other.@(...)@But the Muted Ones took it all away.@They weren\'t always called that, nor were they always the enemy.@Centuries ago, they were leaders of the world\'s musical genius. True innovators, they brought joy wherever they went with the sounds they created.@They were loved, respected.@But, of course, eventually war broke out.@Instruments were traded for weapons.@Where they were once called forth for their blissful tunes, they were now pushed to the margins in a pitiful conflict.@Too many died, and those who remained were too broken to try again.@Bitter, a faction formed among them, who rose to power and swore to never play music again.@The world was too cruel, they argued.@There\'s no point going back if it will just be ripped away again.@They embarked on a campaign to eliminate all the music in the world.@They had the technology to make it, and too the technology to destroy it.@Anywhere they saw music playing, they would shoot "muters" to silence the source.@And hence they came to be known as the Muted Ones.@@@You aren\'t much different from them.@You exist on the fringes of society, too.@But you remember the power of music.@You\'ve seen it soothe so many in the shadows.@Here you stand today, knowing this, ready to fight.@Take back the music.@Give it to the world.@Set us free from this blaring silence.' //create test string
+                let testStr = 'We lived in a world that was full of beautiful sounds. Noisy, tranquil, passionate. A variety like no other.@(...)@But the Muted Ones took it all away.@They weren\'t always called that, nor were they always the enemy.@Centuries ago, they were leaders of the world\'s musical genius. True innovators, they brought joy wherever they went with the sounds they created.@They were loved, respected.@But, of course, eventually war broke out.@Instruments were traded for weapons.@Where they were once called forth for their blissful tunes, they were now pushed to the margins in a pitiful conflict.@Too many died, and those who remained were too broken to try again.@Bitter, a faction formed among them, who rose to power and swore to never play music again.@The world was too cruel, they argued.@There\'s no point going back if it will just be ripped away again.@They embarked on a campaign to eliminate all the music in the world.@They had the technology to make it, and too the technology to destroy it.@Anywhere they saw music playing, they would shoot "muters" to silence the source.@And hence they came to be known as the Muted Ones.@@You aren\'t much different from them.@You exist on the fringes of society, too.@But you remember the power of music.@You\'ve seen it soothe so many in the shadows.@Here you stand today, knowing this, ready to fight.@Take back the music.@Give it to the world.@Set us free from this blaring silence.' //create test string
                 console.log(testStr.length);
                 let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                               ";
                 /*let testArr = []; //arrays for text and spaces
@@ -129,7 +130,7 @@ class Start extends Phaser.Scene {
                                 linePos++;
                             }
                             else if(newLine == true) {
-                                for(let i = 0; i<(29-linePos); i++)
+                                for(let i = 0; i<(45-linePos); i++)
                                 {
                                     this.add.text(leftOffset, downOffset, ' ', textConfig);
                                     leftOffset+=20;
