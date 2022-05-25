@@ -15,6 +15,11 @@ class Load extends Phaser.Scene {
         this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
 
         //music may take a while to load due to uncompressed wav format
+        
+        //dialogue music
+        this.load.audio('dialogueMusic', './assets/music/Menu_music 1.wav');
+        this.load.audio('menuMusic', './assets/music/Menu_music_fixed.wav');
+
         //level 1 music 
         this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01_fixed.wav');
         this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02_fixed.wav');

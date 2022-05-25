@@ -11,18 +11,19 @@ class Menu extends Phaser.Scene {
 
         this.curtains = this.add.sprite(w/2,h/2 -700,'curtains').setScale(1.5);
         let background = this.add.tileSprite(game.config.width / 2, game.config.height / 2, game.config.width + 1500, game.config.height, 'menuBackground');
-
+        this.menuSong = this.sound.add('menuMusic', { loop: true });
+        this.menuSong.play();
         //temporary tween testers
-        let gfx = this.make.graphics().fillStyle(0x0000ff).fillRect(0, 0, w, h);
-        gfx.generateTexture('bluerect', w, h);
-        // red rectangle
-        gfx = this.make.graphics().fillStyle(0xff0000).fillRect(0, 0, w / 3, h);
-        gfx.generateTexture('redrect', w / 3, h);
-        // yellow rectangle
-        gfx = this.make.graphics().fillStyle(0xffff00).fillRect(0, 0, w, h / 4);
-        gfx.generateTexture('yellowrect', w, h / 4);
-        // now clean up after ourselves
-        gfx.destroy();
+        // let gfx = this.make.graphics().fillStyle(0x0000ff).fillRect(0, 0, w, h);
+        // gfx.generateTexture('bluerect', w, h);
+        // // red rectangle
+        // gfx = this.make.graphics().fillStyle(0xff0000).fillRect(0, 0, w / 3, h);
+        // gfx.generateTexture('redrect', w / 3, h);
+        // // yellow rectangle
+        // gfx = this.make.graphics().fillStyle(0xffff00).fillRect(0, 0, w, h / 4);
+        // gfx.generateTexture('yellowrect', w, h / 4);
+        // // now clean up after ourselves
+        // gfx.destroy();
 
         // add graphics textures as images (so we can tween them) temporay for testing
         let blueRect = this.add.image(0, -h, 'bluerect').setOrigin(0);

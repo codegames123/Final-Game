@@ -2,7 +2,7 @@
 //var layer;
 //var cursors;
 //var enemyFire;
-var shootTime = 0;
+//var shootTime = 0;
 class Level1 extends Phaser.Scene {
     constructor() {
         super("Level1Scene");
@@ -10,6 +10,7 @@ class Level1 extends Phaser.Scene {
     }
     preload() {
         this.load.tilemapTiledJSON('map', './assets/level1tilemap.json'); // temporary 
+        this.load.image('crosshair', './assets/crosshair.png');
     }
     create() {
         const centerX = this.cameras.main.centerX;
@@ -43,18 +44,63 @@ class Level1 extends Phaser.Scene {
             faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
         });
 
-        //sets tween 'Level 1'
-        this.tweenPlay = true;
-        let topText = this.add.text(w / 2, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
-        let topTextTween = this.tweens.add({
+        //tween system
+        let gfx = this.make.graphics().fillStyle(0x0000ff).fillRect(0, 0, -w, h/4);
+        gfx.generateTexture('bluerect', -w, h/4);
+
+        gfx = this.make.graphics().fillStyle(0xffffff).fillRect(0, 0, w, h / 8);
+        gfx.generateTexture('whiterect');
+        gfx.destroy();
+
+        let whiteRect = this.add.image(w, h /2 , 'whiterect').setOrigin(0);
+        //let yellowRect2 = this.add.image(-w , h /2, 'yellowrect').setOrigin(0);
+        //let blueRect = this.add.image(w/2, h/2, 'bluerect');
+
+        let rectRightTween = this.tweens.add({
             delay: 375,
-            targets: topText,
-            y: h - 200,
+            targets: whiteRect,
+            x: w-390,
             ease: 'Linear',
             duration: 250,
             repeat: 0,
             yoyo: true,
-            hold: 2500,
+            hold: 1650,
+            paused: true,
+            onComplete: function () {
+                whiteRect.destroy();
+
+            },
+            onCompleteScope: this   // maintain scene context
+        });
+        // let rectLeftTween = this.tweens.add({
+        //     delay: 375,
+        //     targets: yellowRect2,
+        //     x: -w+320,
+        //     ease: 'Linear',
+        //     duration: 250,
+        //     repeat: 0,
+        //     yoyo: true,
+        //     hold: 1650,
+        //     paused: true,
+        //     onComplete: function () {
+        //         yellowRect2.destroy();
+
+        //     },
+        //     onCompleteScope: this   // maintain scene context
+        // });
+        //sets tween 'Level 1'
+        
+        //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
+        let topText = this.add.text(w + 300, h / 2 , "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
+        let topTextTween = this.tweens.add({
+            delay: 375,
+            targets: topText,
+            x: w-220,
+            ease: 'Linear',
+            duration: 250,
+            repeat: 0,
+            yoyo: true,
+            hold: 1650,
             paused: true,
             onComplete: function () {
                 topText.destroy();
@@ -62,9 +108,11 @@ class Level1 extends Phaser.Scene {
             },
             onCompleteScope: this   // maintain scene context
         });
-
         topTextTween.play(); //plays tween "Level 1"
-
+        rectRightTween.play();
+        this.tweenPlay = true;
+        //rectLeftTween.play();
+    
         //initilizes songs
         this.song_01 = this.sound.add('lvl1_01', { loop: false });
         this.song_01_isCollected = false;
@@ -85,6 +133,9 @@ class Level1 extends Phaser.Scene {
         this.player.getPlayer().setCollideWorldBounds(true);
         this.player.create(); // sets velocity
 
+        this.crosshair = this.add.image(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair');
+        this.crosshair.setVisible(false);
+
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600, 100, 'enemy', 0);
 
@@ -92,34 +143,56 @@ class Level1 extends Phaser.Scene {
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
 
         //second enemy but in sentry mode
-        this.enemy2 = this.add.path(1192, 190); //(x,y)
-        this.enemy2.circleTo(70);
-        //this.enemy2.draw(graphics); // to see circle
+        this.enemy2 = this.add.path(1060, 130);
+        this.enemy2.lineTo(1180,130);
+        this.enemy2.lineTo(1180,250);
+        this.enemy2.lineTo(1060,250);
+        this.enemy2.lineTo(1060,130);
+        this.enemy2.draw(graphics);
         let s = this.enemy2.getStartPoint();
-        this.enemy2 = this.add.follower(this.enemy2, s.x, s.y, 'enemy').setScale(0.2);
+        this.enemy2 = this.add.follower(this.enemy2,s.x,s.y,'enemy').setScale(0.2);
         this.physics.world.enable(this.enemy2);
         this.enemy2.body.setAllowGravity(false);
         this.enemy2.body.setSize(230, 300).setOffset(50, 5)
         this.enemy2.startFollow({
-            duration: 15000,
-            from: 0,
+            from: 0,         
             to: 1,
-            rotateToPath: true,
-            startAt: 0,
-            repeat: -1
+            delay: 0,
+            duration: 10000,
+            ease: 'Power0',
+            hold: 0,
+            repeat: -1,
+            yoyo: false,
+            rotateToPath: true
         });
+        // this.enemy2 = this.add.path(1192, 190); //(x,y)
+        // this.enemy2.circleTo(70);
+        // //this.enemy2.draw(graphics); // to see circle
+        // let s = this.enemy2.getStartPoint();
+        // this.enemy2 = this.add.follower(this.enemy2, s.x, s.y, 'enemy').setScale(0.2);
+        // this.physics.world.enable(this.enemy2);
+        // this.enemy2.body.setAllowGravity(false);
+        // this.enemy2.body.setSize(230, 300).setOffset(50, 5)
+        // this.enemy2.startFollow({
+        //     duration: 15000,
+        //     from: 0,
+        //     to: 1,
+        //     rotateToPath: true,
+        //     startAt: 0,
+        //     repeat: -1
+        // });
 
         //enemy shooting system
         this.enemyFire = this.physics.add.group();
         //this.enemyFire = new ProjectilesGroup(this);
         this.enemyFire.createMultiple({
-            frameQuantity: 30,
+            frameQuantity: 50,
             active: false,
             visible: false,
             key: 'enemyShoot'
         })
 
-        this.fireRate = 200;
+        this.fireRate = 0;
         this.nextFire = 0;
 
         //disk collection numbers
@@ -279,19 +352,23 @@ class Level1 extends Phaser.Scene {
 
     update() {
         if (!this.tweenPlay) { // if tween isnt playing
-        this.player.update(); // allows player movement
-
-        if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
-            this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
-            this.enemyShoot(this.enemy.getEnemy());
-            //console.log('in range');
+            this.player.update(); // allows player movement
+            if (!this.gameComplete) {
+                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyShoot(this.enemy.getEnemy());
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.2);
+                } else {
+                    this.crosshair.setVisible(false);
+                    //console.log('in range');
+                }
+            }
+            // if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy2.getEnemy().x, this.enemy2.getEnemy().y) < 200) { // gets distance of player and enemy
+            //     this.enemyFollows(this.enemy2.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+            //     this.enemyShoot(this.enemy2.getEnemy());
+            //     //console.log('in range');
+            // }
         }
-        // if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy2.getEnemy().x, this.enemy2.getEnemy().y) < 200) { // gets distance of player and enemy
-        //     this.enemyFollows(this.enemy2.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
-        //     this.enemyShoot(this.enemy2.getEnemy());
-        //     //console.log('in range');
-        // }
-         }
 
         //progress bar options
         if (this.numDiskCollected == 5) {
@@ -379,6 +456,7 @@ class Level1 extends Phaser.Scene {
             this.nextLevelText.setVisible(true);
             this.enemy.getEnemy().destroy();
             this.enemy2.destroy();
+            this.gameComplete = true;
 
         }
         if (this.numDiskCollected < this.maxDisktoCollect) {
@@ -403,10 +481,11 @@ class Level1 extends Phaser.Scene {
         this.physics.moveToObject(enemy, player, speed);
     }
     enemyShoot(enemy) { // enemy shoots at player
-        if (this.time.now > shootTime) {
-            shootTime = this.time.now + 900;
+        if (this.time.now > this.fireRate) {
+            this.fireRate = this.time.now + 1000;
             this.enemyFires = this.enemyFire.getFirstDead();
             if (this.enemyFires) {
+                this.crosshair.setVisible(true);
                 console.log('fire');
                 this.enemyFires.body.reset(enemy.x, enemy.y);
                 this.enemyFires.setVisible(true);
