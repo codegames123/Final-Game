@@ -17,16 +17,24 @@ class Load extends Phaser.Scene {
         //music may take a while to load due to uncompressed wav format
         
         //dialogue music
-        this.load.audio('dialogueMusic', './assets/music/Menu_music 1.wav');
-        this.load.audio('menuMusic', './assets/music/Menu_music_fixed.wav');
+        this.load.audio('dialogueMusic', './assets/Menu Music/Menu_music 1.wav');
+        this.load.audio('menuMusic', './assets/Menu Music/Menu_music_fixed.wav');
 
         //level 1 music 
-        this.load.audio('lvl1_01', './assets/music/TechnoLVL1_01_fixed.wav');
-        this.load.audio('lvl1_02', './assets/music/TechnoLVL1_02_fixed.wav');
-        this.load.audio('lvl1_03', './assets/music/TechnoLVL1_03_fixed.wav');
-        this.load.audio('lvl1_04', './assets/music/TechnoLVL1_04_fixed.wav');
-        this.load.audio('lvl1_05', './assets/music/TechnoLVL1_05_fixed.wav');
-        this.load.audio('lvl1_full', './assets/music/TechnoLVL1_full_fixed.wav');
+        this.load.audio('lvl1_01', './assets/Level1Music/TechnoLVL1_01_fixed.wav');
+        this.load.audio('lvl1_02', './assets/Level1Music/TechnoLVL1_02_fixed.wav');
+        this.load.audio('lvl1_03', './assets/Level1Music/TechnoLVL1_03_fixed.wav');
+        this.load.audio('lvl1_04', './assets/Level1Music/TechnoLVL1_04_fixed.wav');
+        this.load.audio('lvl1_05', './assets/Level1Music/TechnoLVL1_05_fixed.wav');
+        this.load.audio('lvl1_full', './assets/Level1Music/TechnoLVL1_full_fixed.wav');
+
+        //level 2 music
+        this.load.audio('lvl2_01', './assets/Level2Music/RockLVL2_01_fixed.wav');
+        this.load.audio('lvl2_02', './assets/Level2Music/RockLVL2_02_fixed.wav');
+        this.load.audio('lvl2_03', './assets/Level2Music/RockLVL2_03_fixed.wav');
+        this.load.audio('lvl2_04', './assets/Level2Music/RockLVL2_04_fixed.wav');
+        this.load.audio('lvl2_05', './assets/Level2Music/RockLVL2_05_fixed.wav');
+        this.load.audio('lvl2_full', './assets/Level1Music/RockLVL2_full_fixed.wav');
 
 
         //prints message indicating player that game is loading
