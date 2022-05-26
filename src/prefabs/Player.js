@@ -14,7 +14,7 @@ class Player extends Phaser.GameObjects.Sprite {
         this.MAX_X_VEL = 400;   // pixels/second
         this.MAX_Y_VEL = 1000; // <1000 so player doesn't fall go through platforms
         this.DRAG = 1200;    
-        this.JUMP_VELOCITY = -700;
+        this.JUMP_VELOCITY = -800;
 
         //for use other than the contructor's
         this.xaxis = x;
