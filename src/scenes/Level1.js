@@ -92,6 +92,8 @@ class Level1 extends Phaser.Scene {
         
         //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
         let topText = this.add.text(w + 300, h / 2 , "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
+        topText.setShadow(0, 3, '#FF47B6', true, true);
+        topText.setStroke('#10F9F9', 2);
         let topTextTween = this.tweens.add({
             delay: 375,
             targets: topText,
@@ -210,20 +212,24 @@ class Level1 extends Phaser.Scene {
         this.diskCompleted.setVisible(false);
 
         //Displays if level 1 completed
-        this.level1CompletedText = this.add.text(game.config.width / 2 - 150, game.config.height / 2, 'Level 1 Completed!', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' })
+        this.level1CompletedText = this.add.text(game.config.width / 2 - 150, game.config.height / 2, 'Level 1 Completed!', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' })
+        this.level1CompletedText.setShadow(0, 3, '#FF47B6', true, true);
+        this.level1CompletedText.setStroke('#10F9F9', 2);
         this.level1CompletedText.scrollFactorX = 0;
         this.level1CompletedText.scrollFactorY = 0;
         this.level1CompletedText.setVisible(false);
-        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level?', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' }).setInteractive()
+        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level?', { fontFamily: 'Courier', fontSize: '25px', color: 'black', align: 'left' }).setInteractive()
             .on('pointerdown', () => {
                 this.scene.start('Level2Scene');
             })
             .on('pointerover', () => {
-                this.nextLevelText.setStyle({ fill: 'green' });
+                this.nextLevelText.setStyle({ fill: 'white' });
             })
             .on('pointerout', () => {
-                this.nextLevelText.setStyle({ fill: 'orange' })
+                this.nextLevelText.setStyle({ fill: 'black' })
             });;
+        this.nextLevelText.setShadow(0, 3, '#FF47B6', true, true);
+        this.nextLevelText.setStroke('#10F9F9', 2);
         this.nextLevelText.scrollFactorX = 0;
         this.nextLevelText.scrollFactorY = 0;
         this.nextLevelText.setVisible(false);
@@ -260,7 +266,8 @@ class Level1 extends Phaser.Scene {
 
         this.time.addEvent({ // delay for every 0.2 second, player loses a disk if collided with the mute projectile
             delay: 400, callback: () => {
-                if (this.checkOverlap(this.player.getPlayer(), this.enemyFire)) {
+                //collisions only matter while the game is running.
+                if (this.checkOverlap(this.player.getPlayer(), this.enemyFire) && this.gameComplete == false) {
                     this.checkPlaying();
                     this.enemyFire.setVisible(false);
                     this.enemyFire.setActive(false);

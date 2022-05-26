@@ -6,6 +6,7 @@ class Load extends Phaser.Scene {
     preload() {
         //load atlases
         this.load.atlas('progress_atlas', './assets/progressBar.jpg', './assets/progressBar.json');
+        this.load.atlas('rockProg_atlas', './assets/rock_progBar.jpg', './assets/rock_progBar.json');
 
         //loads all sprites and background
         this.load.image('menuBackground', './assets/menu_background.jpg');//temporary menu background (will change later)
