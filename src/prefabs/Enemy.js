@@ -7,7 +7,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         
         
 
-        this.enemy = scene.physics.add.sprite(x,y,texture).setScale(0.2);
+        this.enemy = scene.physics.add.sprite(x,y,texture).setScale(0.25);
         //console.log("player:" + this.player);
         //scene.sys.displayList.add(this) 
         //scene.sys.updateList.add(this)

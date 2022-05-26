@@ -5,6 +5,7 @@ class Player extends Phaser.GameObjects.Sprite {
         //initilizes player
         this.player = scene.physics.add.sprite(x,y,texture).setScale(0.19).setSize(150, 330).setOffset(50, 5);//setSize(left-/right+,up+/down-)
         console.log("player:" + this.player);
+        this.playerWalkSound = scene.sound.add('playerWalkSound', { loop: true });
         //scene.sys.displayList.add(this) 
         //scene.sys.updateList.add(this)
         //this.tilesLayer = layer;
@@ -12,7 +13,7 @@ class Player extends Phaser.GameObjects.Sprite {
 
         this.ACCELERATION = 700;
         this.MAX_X_VEL = 400;   // pixels/second
-        this.MAX_Y_VEL = 1000; // <1000 so player doesn't fall go through platforms
+        this.MAX_Y_VEL = 800; // <1000 so player doesn't fall go through platforms
         this.DRAG = 1200;    
         this.JUMP_VELOCITY = -700;
 
@@ -30,6 +31,7 @@ class Player extends Phaser.GameObjects.Sprite {
     
     create(){ 
         this.player.body.setMaxVelocity(this.MAX_X_VEL, this.MAX_Y_VEL);
+        
         //this.physics.world.gravity.y = 3000; // i put the physics world gravity in level 1 line 21
         //this.player.body.setDamping(true); // you could turn this back on if you feel comfortable using it
     }
@@ -38,6 +40,7 @@ class Player extends Phaser.GameObjects.Sprite {
         //left/right movement
         if (keyA.isDown) {
             this.player.body.setAccelerationX(-this.ACCELERATION);
+            //this.playerWalkSound.play();
             this.player.setFlip(true,false);
         }else if (keyD.isDown) {
             this.player.resetFlip();
@@ -46,6 +49,12 @@ class Player extends Phaser.GameObjects.Sprite {
         else {
             this.player.body.setAccelerationX(0); //stop accel, initiate drag
             this.player.body.setDragX(this.DRAG); //0-1; smaller = faster deceleration
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyA) || Phaser.Input.Keyboard.JustDown(keyD)) { //plays player walking sound if a or d is just down
+            this.playerWalkSound.play();
+        }
+        if(Phaser.Input.Keyboard.JustUp(keyA) || Phaser.Input.Keyboard.JustUp(keyD)) { // stops if player no longer walking
+            this.playerWalkSound.stop();
         }
         //jump
         //if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {

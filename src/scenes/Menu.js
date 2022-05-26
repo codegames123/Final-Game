@@ -13,6 +13,7 @@ class Menu extends Phaser.Scene {
         let background = this.add.tileSprite(game.config.width / 2, game.config.height / 2, game.config.width + 1500, game.config.height, 'menuBackground');
         this.menuSong = this.sound.add('menuMusic', { loop: true });
         this.menuSong.play();
+        this.selectSound = this.sound.add('selectSound', { loop: false });
         //temporary tween testers
         // let gfx = this.make.graphics().fillStyle(0x0000ff).fillRect(0, 0, w, h);
         // gfx.generateTexture('bluerect', w, h);
@@ -120,9 +121,9 @@ class Menu extends Phaser.Scene {
         //click how to play to go to how to Tutorial scene
         const howtoPlay = this.add.text(game.config.width / 2 - 120, game.config.height / 2 + 100, 'How To Play', { fontFamily: 'Segoe Script', fontSize: 40, color: 'orange' }).setInteractive()
             .on('pointerdown', () => {
-                //selectSound.play();
-
+                this.selectSound.play();
                 this.scene.start('tutorialScene');
+                this.menuSong.stop();
             })
             .on('pointerover', () => {
                 howtoPlay.setStyle({ fill: 'green' });
@@ -134,8 +135,7 @@ class Menu extends Phaser.Scene {
         //click play for level 1 scene
         const clickPlay = this.add.text(game.config.width / 2 - 50, game.config.height / 2, 'Play', { fontFamily: 'Segoe Script', fontSize: 60, color: 'orange' }).setInteractive()
             .on('pointerdown', () => {
-                //this.scene.moveDown("menuScene");
-                // start all tweens
+                this.selectSound.play();
                 background.destroy();
                 howtoPlay.destroy();
                 clickPlay.destroy();
@@ -144,6 +144,7 @@ class Menu extends Phaser.Scene {
                 //bottomTextTween.play();
                 //redTween.play();
                 topTextTween.play();
+                this.menuSong.stop();
                 //middleTextTween.play();
             })
             //selectSound.play();

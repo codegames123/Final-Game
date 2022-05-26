@@ -9,7 +9,8 @@ class Load extends Phaser.Scene {
         this.load.image('curtains', './assets/curtains.png');//temporary tween
         this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
         this.load.image('sprite', './assets/Player_right.png'); // temporary
-        this.load.image('enemy', './assets/baby_4.png'); // temporary
+       // this.load.image('enemy', './assets/baby_4.png'); // temporary
+        this.load.atlas('enemy', './assets/muteman.png', './assets/muteman1.json');
         this.load.image('background', './assets/menu_background.jpg'); //temporary
         this.load.image('disk', './assets/disc.png'); //temporary
         this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
@@ -34,7 +35,15 @@ class Load extends Phaser.Scene {
         this.load.audio('lvl2_03', './assets/Level2Music/RockLVL2_03_fixed.wav');
         this.load.audio('lvl2_04', './assets/Level2Music/RockLVL2_04_fixed.wav');
         this.load.audio('lvl2_05', './assets/Level2Music/RockLVL2_05_fixed.wav');
-        this.load.audio('lvl2_full', './assets/Level1Music/RockLVL2_full_fixed.wav');
+        this.load.audio('lvl2_full', './assets/Level2Music/RockLVL2_full_fixed.wav');
+
+        //SFX
+        this.load.audio('collectSound', './assets/SFX/Collection_sfx.wav');
+        this.load.audio('EnemyShootSound', './assets/SFX/Enemy_shoot_sfx.wav');
+        this.load.audio('EnemyWalkSound', './assets/SFX/Enemy_walk.wav');
+        this.load.audio('stopMusicSound', './assets/SFX/Music_stop_sfx.wav');
+        this.load.audio('playerWalkSound', './assets/SFX/Player_walk.wav');
+        this.load.audio('selectSound', './assets/SFX/select_sound.wav');
 
 
         //prints message indicating player that game is loading
