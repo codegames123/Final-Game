@@ -12,7 +12,7 @@ class Start extends Phaser.Scene {
                 //28 chars allowed per line
                 let testStr = 'We lived in a world that was full of beautiful sounds. Noisy, tranquil, passionate. A variety like no other.@(...)@But the Muted Ones took it all away.@They weren\'t always called that, nor were they always the enemy.@Centuries ago, they were leaders of the world\'s musical genius. True innovators, they brought joy wherever they went with the sounds they created.@They were loved, respected.@But, of course, eventually war broke out.@Instruments were traded for weapons.@Where they were once called forth for their blissful tunes, they were now pushed to the margins in a pitiful conflict.@Too many died, and those who remained were too broken to try again.@Bitter, a faction formed among them, who rose to power and swore to never play music again.@The world was too cruel, they argued.@There\'s no point going back if it will just be ripped away again.@They embarked on a campaign to eliminate all the music in the world.@They had the technology to make it, and too the technology to destroy it.@Anywhere they saw music playing, they would shoot "muters" to silence the source.@And hence they came to be known as the Muted Ones.@@You aren\'t much different from them.@You exist on the fringes of society, too.@But you remember the power of music.@You\'ve seen it soothe so many in the shadows.@Here you stand today, knowing this, ready to fight.@Take back the music.@Give it to the world.@Set us free from this blaring silence.' //create test string
                 console.log(testStr.length);
-                let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                               ";
+                let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ";
                 /*let testArr = []; //arrays for text and spaces
                 let spaceArr = [];
                 for(let i = 0; i<testStr.length; i++) { //parse chars to arr
@@ -29,7 +29,7 @@ class Start extends Phaser.Scene {
                 let downOffset = 20; //y position of current line
                 let repeatTimes = 0; //times repeated
                 let spcRptTimes = 0; //above for space
-                let textConfig = {
+                this.textConfig = {
                     fontFamily: 'Courier',
                     fontSize: '24px',
                     backgroundColor: '#000000',
@@ -50,12 +50,8 @@ class Start extends Phaser.Scene {
                         top: 5, 
                         bottom: 5
                     }
-                }
-                
-                let textBox = this.add.rectangle(0,0,800,600);
-                textBox.isStroked = true;
-                textBox.strokeColor = '#ffffff';                    
-                    let timer = this.time.addEvent({
+                }                
+                    this.timer = this.time.addEvent({
                         delay: txtTime,                // ms
                         callback: () => {
                             leftOffset+=(20);
@@ -81,7 +77,7 @@ class Start extends Phaser.Scene {
                                 for(let i = 0; i<rightBTestNum-1; i++) {
                                     //replace problematic letters on current row w spaces
                                     leftOffset-=20;
-                                    this.add.text(leftOffset, downOffset, ' ', textConfig);
+                                    this.add.text(leftOffset, downOffset, ' ', this.textConfig);
                                 }
                                 //go to new row
                                 linePos=0;
@@ -96,7 +92,7 @@ class Start extends Phaser.Scene {
 
                                 //reprint those letters on the next row and add RBTN to repeattimes
                                 for(let i = 0; i<rightBTestNum+1; i++) {
-                                    this.add.text(leftOffset, downOffset, testStr.charAt(repeatTimes+rightBTestNum - i), textConfig);
+                                    this.add.text(leftOffset, downOffset, testStr.charAt(repeatTimes+rightBTestNum - i), this.textConfig);
                                 }
                                 repeatTimes-=rightBTestNum;
                             }
@@ -123,19 +119,19 @@ class Start extends Phaser.Scene {
                             }
                             if(!testStr.charAt(repeatTimes) && spcRptTimes<spaceStr.length && newLine == false) {
                                 text2Print = spaceStr.charAt(spcRptTimes);
-                                this.add.text(leftOffset,downOffset, text2Print, textConfig);
+                                this.add.text(leftOffset,downOffset, text2Print, this.textConfig);
                                 spcRptTimes ++;
                             }
                             else if(testStr.charAt(repeatTimes) && spcRptTimes<spaceStr.length && newLine == false) {
                                 text2Print = testStr.charAt(repeatTimes);
-                                this.add.text(leftOffset,downOffset, text2Print, textConfig);
+                                this.add.text(leftOffset,downOffset, text2Print, this.textConfig);
                                 repeatTimes ++;
                                 linePos++;
                             }
                             else if(newLine == true) {
                                 for(let i = 0; i<(45-linePos); i++)
                                 {
-                                    this.add.text(leftOffset, downOffset, ' ', textConfig);
+                                    this.add.text(leftOffset, downOffset, ' ', this.textConfig);
                                     leftOffset+=20;
                                 }
                                 repeatTimes++;
@@ -154,15 +150,32 @@ class Start extends Phaser.Scene {
                     downOffset = 20;
 
     }
-    //next steps: deal with words cutting off at right horizontal bounds
-    // maybe if (position is rightmost and current character isnt a space, then reset position to lower left)
     update() {
         if (keyF.isDown) { // (temporary) if m is pressed, switches back to menu scene
             this.scene.start('menuScene');
             this.dialogueMusic.stop();
         }
+                    //if dialog complete make a timer and prompt player to press f to continue
+                    if(this.timer.getOverallProgress() == 1)
+                    {
+                        let timerNext = this.time.addEvent ({
+                            delay: 1000,
+                            callback: () => {
+                                this.add.text(0, 270, '--------------------------------------------------\n\nPress F to begin your journey', {
+                                    fontFamily: 'Courier',
+                                    fontSize: '32px',
+                                    backgroundColor: '#000000',
+                                    color: '#FFFFFF',
+                                    align: 'center',
+                                    padding: {
+                                        top: 5, 
+                                        bottom: 5
+                                    }
+                                });
+                            },
+                            callbackScope: this,
+                            repeat: 0
+                        });
+                    }
     }
 }
-
-//need:
-//to figure out the text locations. Need to finish the above function but first need to make an object with font, size, etc. reference rocket patrol tutorial 

@@ -244,10 +244,10 @@ class Level1 extends Phaser.Scene {
         this.progressText.setStroke('#10F9F9', 2);
         this.progressText.scrollFactorX = 0;
         this.progressText.scrollFactorY = 0;
-        this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
+        /*this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
         this.setValue(this.progressBar, 0); // setValue(this, width);
         this.progressBar.scrollFactorX = 0;
-        this.progressBar.scrollFactorY = 0;
+        this.progressBar.scrollFactorY = 0;*/
 
         //controls
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -322,7 +322,7 @@ class Level1 extends Phaser.Scene {
 
         this.gameComplete = false;
     }
-    makeBar(x, y, color) {
+    /*makeBar(x, y, color) {
         //draw the bar
         let bar = this.add.graphics();
 
@@ -352,6 +352,7 @@ class Level1 extends Phaser.Scene {
     setColor(bar, color) {
         bar.fillStyle(color, 1);
     }
+    */
 
     update() {
         if (!this.tweenPlay) { // if tween isnt playing
