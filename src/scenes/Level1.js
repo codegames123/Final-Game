@@ -341,6 +341,7 @@ class Level1 extends Phaser.Scene {
         //return the bar
         return bar;
     }
+
     setValue(bar, percentage) {
         //scale the bar
         bar.scaleX = percentage / 100;
@@ -372,24 +373,20 @@ class Level1 extends Phaser.Scene {
 
         //progress bar options
         if (this.numDiskCollected == 5) {
-            this.setColor(this.progressBar, 0x2ECC71);
-            this.setValue(this.progressBar, 100);
+            this.progSprite1 = this.add.sprite(game.config.width / 2 + 240, 128, 'progress_atlas', 'progress_0006').setScale(.5);
             this.diskCompleted.setActive(true);
             this.diskCompleted.setVisible(true);
         } else if (this.numDiskCollected == 4) {
-            this.setColor(this.progressBar, 0x44BF6B);
-            this.setValue(this.progressBar, 80);
+            this.progSprite2 = this.add.sprite(game.config.width / 2 + 240, 128, 'progress_atlas', 'progress_0005').setScale(.5);
         } else if (this.numDiskCollected == 3) {
-            this.setColor(this.progressBar, 0x5FAE64);
-            this.setValue(this.progressBar, 60);
+            this.progSprite3 = this.add.sprite(game.config.width / 2 + 240, 128, 'progress_atlas', 'progress_0004').setScale(.5);
         } else if (this.numDiskCollected == 2) {
-            this.setColor(this.progressBar, 0x928F58);
-            this.setValue(this.progressBar, 40);
+            this.progSprite4 = this.add.sprite(game.config.width / 2 + 240, 128, 'progress_atlas', 'progress_0003').setScale(.5);
         } else if (this.numDiskCollected == 1) {
-            this.setColor(this.progressBar, 0xC46F4B);
-            this.setValue(this.progressBar, 20);
-        } else
-            this.setValue(this.progressBar, 0);
+            this.progSprite5 = this.add.sprite(game.config.width / 2 + 240, 128, 'progress_atlas', 'progress_0002').setScale(.5);
+        } else {
+            this.progSprite0 = this.add.sprite(game.config.width / 2 + 240, 128, 'progress_atlas', 'progress_0001').setScale(.5);
+        }
 
 
         if (this.checkOverlap(this.player.getPlayer(), this.disk)) { // if collided with first song, plays and destroys
