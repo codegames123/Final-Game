@@ -92,6 +92,8 @@ class Level1 extends Phaser.Scene {
         
         //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
         let topText = this.add.text(w + 300, h / 2 , "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
+        topText.setShadow(0, 3, '#FF47B6', true, true);
+        topText.setStroke('#10F9F9', 2);
         let topTextTween = this.tweens.add({
             delay: 375,
             targets: topText,
@@ -243,21 +245,25 @@ class Level1 extends Phaser.Scene {
         this.diskCompleted.setVisible(false);
 
         //Displays if level 1 completed
-        this.level1CompletedText = this.add.text(game.config.width / 2 - 150, game.config.height / 2, 'Level 1 Completed!', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' })
+        this.level1CompletedText = this.add.text(game.config.width / 2 - 150, game.config.height / 2, 'Level 1 Completed!', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' })
+        this.level1CompletedText.setShadow(0, 3, '#FF47B6', true, true);
+        this.level1CompletedText.setStroke('#10F9F9', 2);
         this.level1CompletedText.scrollFactorX = 0;
         this.level1CompletedText.scrollFactorY = 0;
         this.level1CompletedText.setVisible(false);
-        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level?', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' }).setInteractive()
+        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level?', { fontFamily: 'Courier', fontSize: '25px', color: 'black', align: 'left' }).setInteractive()
             .on('pointerdown', () => {
                 this.scene.start('Level2Scene');
                 this.song_full.stop();
             })
             .on('pointerover', () => {
-                this.nextLevelText.setStyle({ fill: 'green' });
+                this.nextLevelText.setStyle({ fill: 'white' });
             })
             .on('pointerout', () => {
-                this.nextLevelText.setStyle({ fill: 'orange' })
+                this.nextLevelText.setStyle({ fill: 'black' })
             });;
+        this.nextLevelText.setShadow(0, 3, '#FF47B6', true, true);
+        this.nextLevelText.setStroke('#10F9F9', 2);
         this.nextLevelText.scrollFactorX = 0;
         this.nextLevelText.scrollFactorY = 0;
         this.nextLevelText.setVisible(false);
@@ -274,13 +280,15 @@ class Level1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player.getPlayer());
 
         //progress bar
-        this.progressText = this.add.text(game.config.width / 2 + 25, game.config.height / 2 - 250, 'Progress ', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' });
+        this.progressText = this.add.text(game.config.width / 2 + 25, game.config.height / 2 - 250, 'Progress ', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' });
+        this.progressText.setShadow(0, 3, '#FF47B6', true, true);
+        this.progressText.setStroke('#10F9F9', 2);
         this.progressText.scrollFactorX = 0;
         this.progressText.scrollFactorY = 0;
-        this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
+        /*this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
         this.setValue(this.progressBar, 0); // setValue(this, width);
         this.progressBar.scrollFactorX = 0;
-        this.progressBar.scrollFactorY = 0;
+        this.progressBar.scrollFactorY = 0;*/
 
         //controls
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -320,10 +328,7 @@ class Level1 extends Phaser.Scene {
 
         this.gameComplete = false;
     }
-
-    
-
-    makeBar(x, y, color) {
+    /*makeBar(x, y, color) {
         //draw the bar
         let bar = this.add.graphics();
 
@@ -344,6 +349,7 @@ class Level1 extends Phaser.Scene {
         //return the bar
         return bar;
     }
+
     setValue(bar, percentage) {
         //scale the bar
         bar.scaleX = percentage / 100;
@@ -352,6 +358,7 @@ class Level1 extends Phaser.Scene {
     setColor(bar, color) {
         bar.fillStyle(color, 1);
     }
+    */
 
     update() {
         if (!this.tweenPlay) { // if tween isnt playing
@@ -374,25 +381,47 @@ class Level1 extends Phaser.Scene {
         }
 
         //progress bar options
+        //display appropriate progress sprite with opacity animation and destroy previous
+        //sprites on screen to save memory
+
         if (this.numDiskCollected == 5) {
-            this.setColor(this.progressBar, 0x2ECC71);
-            this.setValue(this.progressBar, 100);
+            this.progSprite1 = this.add.sprite(game.config.width / 2 + 240, 33, 'progress_atlas', 'progress_0006').setScale(.75, .5);
+            this.progSprite1.scrollFactorX = 0;
+            this.progSprite1.scrollFactorY = 0;
+            this.progSprite1.setAlpha(0.1);
+            this.progSprite2.destroy();
             this.diskCompleted.setActive(true);
             this.diskCompleted.setVisible(true);
         } else if (this.numDiskCollected == 4) {
-            this.setColor(this.progressBar, 0x44BF6B);
-            this.setValue(this.progressBar, 80);
+            this.progSprite2 = this.add.sprite(game.config.width / 2 + 240, 33, 'progress_atlas', 'progress_0005').setScale(.75, .5);
+            this.progSprite2.scrollFactorX = 0;
+            this.progSprite2.scrollFactorY = 0;
+            this.progSprite2.setAlpha(0.1);
+            this.progSprite3.destroy();
         } else if (this.numDiskCollected == 3) {
-            this.setColor(this.progressBar, 0x5FAE64);
-            this.setValue(this.progressBar, 60);
+            this.progSprite3 = this.add.sprite(game.config.width / 2 + 240, 33, 'progress_atlas', 'progress_0004').setScale(.75, .5);
+            this.progSprite3.scrollFactorX = 0;
+            this.progSprite3.scrollFactorY = 0;
+            this.progSprite3.setAlpha(0.1);
+            this.progSprite4.destroy();
         } else if (this.numDiskCollected == 2) {
-            this.setColor(this.progressBar, 0x928F58);
-            this.setValue(this.progressBar, 40);
+            this.progSprite4 = this.add.sprite(game.config.width / 2 + 240, 33, 'progress_atlas', 'progress_0003').setScale(.75, .5);
+            this.progSprite4.scrollFactorX = 0;
+            this.progSprite4.scrollFactorY = 0;
+            this.progSprite4.setAlpha(0.1);
+            this.progSprite5.destroy();
         } else if (this.numDiskCollected == 1) {
-            this.setColor(this.progressBar, 0xC46F4B);
-            this.setValue(this.progressBar, 20);
-        } else
-            this.setValue(this.progressBar, 0);
+            this.progSprite5 = this.add.sprite(game.config.width / 2 + 240, 33, 'progress_atlas', 'progress_0002').setScale(.75, .5);
+            this.progSprite5.scrollFactorX = 0;
+            this.progSprite5.scrollFactorY = 0;
+            this.progSprite5.setAlpha(0.1);
+            this.progSprite0.destroy();
+        } else {
+            this.progSprite0 = this.add.sprite(game.config.width / 2 + 240, 33, 'progress_atlas', 'progress_0001').setScale(.75, .5);
+            this.progSprite0.scrollFactorX = 0;
+            this.progSprite0.scrollFactorY = 0;
+            this.progSprite0.alpha = 0.1;
+        }
 
 
         if (this.checkOverlap(this.player.getPlayer(), this.disk)) { // if collided with first song, plays and destroys
