@@ -8,12 +8,7 @@ class Level2 extends Phaser.Scene {
         const centerY = this.cameras.main.centerY;
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
-        //progress bar
-        this.progressText = this.add.text(game.config.width / 2 + 25, game.config.height / 2 - 250, 'Progress ', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' });
-        this.progressText.setShadow(0, 3, '#3B413C', true, true);
-        this.progressText.setStroke('#C7C7A6', 2);
-        this.progressText.scrollFactorX = 0;
-        this.progressText.scrollFactorY = 0;
+
         /*this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
         this.setValue(this.progressBar, 0); // setValue(this, width);
         this.progressBar.scrollFactorX = 0;
@@ -241,15 +236,11 @@ class Level2 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player.getPlayer());
 
         //progress bar
-        this.progressText = this.add.text(game.config.width / 2 + 25, game.config.height / 2 - 250, 'Progress ', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' });
+        this.progressText = this.add.text(game.config.width / 2 + 25, game.config.height / 2 - 250, 'Progress ', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' });
+        this.progressText.setShadow(0, 3, '#3B413C', true, true);
+        this.progressText.setStroke('#C7C7A6', 2);
         this.progressText.scrollFactorX = 0;
         this.progressText.scrollFactorY = 0;
-        /*
-        this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
-        this.setValue(this.progressBar, 0); // setValue(this, width);
-        this.progressBar.scrollFactorX = 0;
-        this.progressBar.scrollFactorY = 0;
-        */
 
         //controls
         this.cursors = this.input.keyboard.createCursorKeys();
