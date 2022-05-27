@@ -2,7 +2,6 @@ class Load extends Phaser.Scene {
     constructor() {
         super('loadScene');
     }
-
     preload() {
         //load atlases
         this.load.atlas('progress_atlas', './assets/progressBar.jpg', './assets/progressBar.json');
@@ -13,6 +12,7 @@ class Load extends Phaser.Scene {
         this.load.image('curtains', './assets/curtains.png');//temporary tween
         this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
         this.load.image('sprite', './assets/Player_right.png'); // temporary
+        this.load.image('notes', './assets/noteParticle1.png');
        // this.load.image('enemy', './assets/baby_4.png'); // temporary
         this.load.atlas('enemy', './assets/muteman.png', './assets/muteman1.json');
         this.load.image('background', './assets/menu_background.jpg'); //temporary
@@ -51,7 +51,7 @@ class Load extends Phaser.Scene {
 
 
         //prints message indicating player that game is loading
-        this.add.text(game.config.width/2 - 40, game.config.height/2, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '25px', color: 'white', align: 'left' });
+        this.add.text(game.config.width/2 + 310, game.config.height/2 + 230, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '30px', color: 'white', align: 'left' });
     }
 
     create(){

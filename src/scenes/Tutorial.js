@@ -4,6 +4,7 @@ class Tutorial extends Phaser.Scene {
     }
     create(){
         this.add.text(game.config.width/2 - 230, game.config.height/2 - 260, "HOW TO PLAY", {fontFamily: 'Segoe Script', fontSize: 60});
+        this.selectSound = this.sound.add('selectSound', { loop: false });
             //this.scale.setGameSize(640, 480);
            //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print
            let txtTime = 60; //set timer duration
@@ -22,6 +23,19 @@ class Tutorial extends Phaser.Scene {
            for(let i = 0; i<spaceStr.length; i++) {
                spaceArr.push(spaceStr.charAt(i));
            }*/
+           //click back to go back to menu
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Segoe Script', fontSize: 60, color: 'orange' }).setInteractive()
+            .on('pointerdown', () =>  {
+                this.selectSound.play();
+                this.dialogueMusic.stop();
+                this.scene.start('menuScene');})
+            .on('pointerover', () => {
+                clickBack.setStyle({fill: 'green'});
+            })
+            .on('pointerout', () => {
+                clickBack.setStyle({fill: 'orange'})
+            });
+
            keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F); // for menu
            let linePos = 0; //position on current line
            let newLine = false;
@@ -149,16 +163,6 @@ class Tutorial extends Phaser.Scene {
                //timer 2: fill screen with spaces
                leftOffset = 20;
                downOffset = 120;  
-        //click back to go back to menu
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Segoe Script', fontSize: 60, color: 'orange' }).setInteractive()
-            .on('pointerdown', () =>  {
-                this.selectSound.play();
-                this.scene.start('menuScene');})
-            .on('pointerover', () => {
-                clickBack.setStyle({fill: 'green'});
-            })
-            .on('pointerout', () => {
-                clickBack.setStyle({fill: 'orange'})
-            });
+        
     }
 }

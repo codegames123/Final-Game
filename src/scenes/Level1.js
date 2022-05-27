@@ -89,6 +89,9 @@ class Level1 extends Phaser.Scene {
         //     onCompleteScope: this   // maintain scene context
         // });
         //sets tween 'Level 1'
+
+        
+
         
         //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
         let topText = this.add.text(w + 300, h / 2 , "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
@@ -275,6 +278,20 @@ class Level1 extends Phaser.Scene {
         // this.progressUI.scrollFactorX = 0; 
         // this.progressUI.scrollFactorY = 0;
 
+        //particle system
+        this.collectVfxManager = this.add.particles('notes');
+
+        this.collectVfxEffect = this.collectVfxManager.createEmitter({
+            follow: this.player.getPlayer(),
+            quantity: 7,
+            scale: { start: 1.5, end: 0.0 },  // start big, end small
+            speed: { min: 50, max: 100 }, // speed up
+            lifespan: 800,   // short lifespan
+            on: false   // do not immediately start, will trigger in collision
+        });
+
+        //this.powerUpVfxEffect.explode();
+
         //camera settings
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player.getPlayer());
@@ -460,7 +477,7 @@ class Level1 extends Phaser.Scene {
             this.checkPlayInc();
             console.log(this.numDiskCollected);
             console.log("collided");
-            console.log(this.diskStack);
+            console.log(this.diskStack); 
             this.song_04.play();
             this.disk4.destroy();
         }
@@ -470,7 +487,7 @@ class Level1 extends Phaser.Scene {
             this.checkPlayInc();
             console.log(this.numDiskCollected);
             console.log("collided");
-            console.log(this.diskStack);
+            console.log(this.diskStack); 
             this.song_05.play();
             this.disk5.destroy();
         }
@@ -482,6 +499,7 @@ class Level1 extends Phaser.Scene {
             this.nextLevelText.setVisible(true);
             this.collectSound.play();
             this.enemy.getEnemy().destroy();
+            this.collectVfxEffect.explode(); 
             this.enemy2.destroy();
             this.gameComplete = true;
 
@@ -508,6 +526,7 @@ class Level1 extends Phaser.Scene {
     checkPlayInc() { //checks and stops last song, plays collection sound, and increments
         this.checkMusicPlayer();
         this.collectSound.play();
+        this.collectVfxEffect.explode();
         this.numDiskCollected++;
     }
 
