@@ -6,6 +6,7 @@ class Load extends Phaser.Scene {
         //load atlases
         this.load.atlas('progress_atlas', './assets/progressBar.jpg', './assets/progressBar.json');
         this.load.atlas('rockProg_atlas', './assets/rock_progBar.jpg', './assets/rock_progBar.json');
+        this.load.atlas('crosshair', './assets/crosshairSprite.png', './assets/crosshairAnim.json');
 
         //loads all sprites and background
         this.load.image('menuBackground', './assets/menu_background.jpg');//temporary menu background (will change later)
@@ -13,6 +14,7 @@ class Load extends Phaser.Scene {
         this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
         this.load.image('sprite', './assets/Player_right.png'); // temporary
         this.load.image('notes', './assets/noteParticle1.png');
+        this.load.image('notes2', './assets/noteParticle2.png');
        // this.load.image('enemy', './assets/baby_4.png'); // temporary
         this.load.atlas('enemy', './assets/muteman.png', './assets/muteman1.json');
         this.load.image('background', './assets/menu_background.jpg'); //temporary

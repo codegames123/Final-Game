@@ -87,7 +87,7 @@ class Level2 extends Phaser.Scene {
         //sets tween 'Level 1'
         
         //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
-        let topText = this.add.text(w + 300, h / 2 , "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
+        let topText = this.add.text(w + 300, h / 2 , "Level 2", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
         let topTextTween = this.tweens.add({
             delay: 375,
             targets: topText,
@@ -123,17 +123,51 @@ class Level2 extends Phaser.Scene {
         this.song_full = this.sound.add('lvl2_full', { loop: false });
         this.song_full_isCollected = false;
 
+        //initilizes SFX
+        this.selectSound = this.sound.add('selectSound', { loop: false });
+        this.collectSound = this.sound.add('collectSound', {loop: false});
+        this.stopMusicSound = this.sound.add('stopMusicSound', { loop: false });
+        this.enemyShootSound = this.sound.add('EnemyShootSound', {loop: false});
+        
+        //initilizes Animations
+        this.anims.create({ 
+            key: 'crosshairAnim', 
+            frames: this.anims.generateFrameNames('crosshair', {      
+                prefix: 'crosshair',
+                start: 1,
+                end: 2,
+                suffix: '',
+                zeroPad: 4 
+            }), 
+            frameRate: 2,
+            repeat: -1 
+        });
+        this.anims.create({ 
+            key: 'enemyAnim', 
+            frames: this.anims.generateFrameNames('enemy', {      
+                prefix: 'muteman',
+                start: 1,
+                end: 8,
+                suffix: '',
+                zeroPad: 4 
+            }), 
+            frameRate: 10,
+            repeat: -1 
+        });
+
         //put in new player (scene,x,y,image, frame, layer)
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);
         this.player.getPlayer().setCollideWorldBounds(true);
         this.player.create(); // sets velocity
 
-        this.crosshair = this.add.image(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair');
+        this.crosshair = this.add.sprite(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair');
+        this.crosshair.play('crosshairAnim');
         this.crosshair.setVisible(false);
 
         //puts in enemy (scene,x,y,image,frame)
         this.enemy = new Enemy(this, 600, 100, 'enemy', 0);
+        this.enemy.getEnemy().play('enemyAnim');
 
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
@@ -231,6 +265,17 @@ class Level2 extends Phaser.Scene {
         // this.progressUI.scrollFactorX = 0; 
         // this.progressUI.scrollFactorY = 0;
 
+        this.collectVfxManager = this.add.particles('notes2');
+
+        this.collectVfxEffect = this.collectVfxManager.createEmitter({
+            follow: this.player.getPlayer(),
+            quantity: 7,
+            scale: { start: 1.5, end: 0.0 },  // start big, end small
+            speed: { min: 50, max: 100 }, // speed up
+            lifespan: 800,   // short lifespan
+            on: false   // do not immediately start, will trigger in collision
+        });
+
         //camera settings
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player.getPlayer());
@@ -251,34 +296,10 @@ class Level2 extends Phaser.Scene {
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // for menu
 
-        this.time.addEvent({ // delay for every 0.2 second, player loses a disk if collided with the mute projectile
-            delay: 400, callback: () => {
-                if (this.checkOverlap(this.player.getPlayer(), this.enemyFire)) {
-                    this.checkPlaying();
-                    this.enemyFire.setVisible(false);
-                    this.enemyFire.setActive(false);
-                    console.log('collided with bullet');
-                    this.physics.add.collider(this.disk, this.layer);
-                    this.physics.add.collider(this.disk2, this.layer);
-                    this.physics.add.collider(this.disk3, this.layer);
-                    this.physics.add.collider(this.disk4, this.layer);
-                    this.physics.add.collider(this.disk5, this.layer);
-                    console.log(this.diskStack);
-                    console.log(this.numDiskCollected);
-                }
-            }, callbackScope: this, loop: true
-        });
         this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
             delay: 1000, callback: () => {
                 if (this.checkOverlap(this.player.getPlayer(), this.enemy.getEnemy())) { // checks if player collided with enemy
-                    this.checkPlaying();
-                    console.log('collided with enemy');
-
-                    this.physics.add.collider(this.disk, this.layer);
-                    this.physics.add.collider(this.disk2, this.layer);
-                    this.physics.add.collider(this.disk3, this.layer);
-                    this.physics.add.collider(this.disk4, this.layer);
-                    this.physics.add.collider(this.disk5, this.layer);
+                    this.addColliders();
                 }
             }, callbackScope: this, loop: true
         });
@@ -286,14 +307,7 @@ class Level2 extends Phaser.Scene {
         this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
             delay: 1000, callback: () => {
                 if (this.checkOverlap(this.player.getPlayer(), this.enemy2)) { // checks if player collided with enemy
-                    this.checkPlaying();
-                    console.log('collided with enemy');
-
-                    this.physics.add.collider(this.disk, this.layer);
-                    this.physics.add.collider(this.disk2, this.layer);
-                    this.physics.add.collider(this.disk3, this.layer);
-                    this.physics.add.collider(this.disk4, this.layer);
-                    this.physics.add.collider(this.disk5, this.layer);
+                    this.addColliders();
                 }
             }, callbackScope: this, loop: true
         });
@@ -403,41 +417,39 @@ class Level2 extends Phaser.Scene {
 
         if (this.checkOverlap(this.player.getPlayer(), this.disk)) { // if collided with first song, plays and destroys
             this.diskStack.push(this.song_01); //pushes first song into stack array
-            this.numDiskCollected++;
-            this.checkMusicPlayer();
+            this.checkPlayInc();
             this.song_01.play();
             this.disk.destroy();
         }
         if (this.checkOverlap(this.player.getPlayer(), this.disk2)) { // if collided with second song, plays and destroys
             this.diskStack.push(this.song_02); //pushes second song into stack array
-            this.numDiskCollected++; //increments collected
-            this.checkMusicPlayer()
+            this.checkPlayInc();
             this.song_02.play();
             this.disk2.destroy();
         }
         if (this.checkOverlap(this.player.getPlayer(), this.disk3)) { // if collided with third song, plays and destroys
             this.diskStack.push(this.song_03); //pushes second song into stack array
-            this.numDiskCollected++; //increments collected
-            this.checkMusicPlayer()
+            this.checkPlayInc();
             this.song_03.play();
             this.disk3.destroy();
         }
         if (this.checkOverlap(this.player.getPlayer(), this.disk4)) { // if collided with forth song, plays and destroys
             this.diskStack.push(this.song_04); //pushes second song into stack array
-            this.numDiskCollected++; //increments collected
-            this.checkMusicPlayer()
+            this.checkPlayInc();
             this.song_04.play();
             this.disk4.destroy();
         }
         if (this.checkOverlap(this.player.getPlayer(), this.disk5)) { // if collided with fifth song, plays and destroys
             this.diskStack.push(this.song_05); //pushes second song into stack array
-            this.numDiskCollected++; //increments collected
-            this.checkMusicPlayer()
+            this.checkPlayInc();
             this.song_05.play();
             this.disk5.destroy();
         }
         if (this.checkOverlap(this.player.getPlayer(), this.diskCompleted) && this.numDiskCollected == this.maxDisktoCollect) { // if collided with fifth song, plays and destroys
             this.checkMusicPlayer();
+            this.checkMusicPlayer();
+            this.collectSound.play();
+            this.collectVfxEffect.explode();
             this.song_full.play();
             this.diskCompleted.destroy();
             this.level1CompletedText.setVisible(true);
@@ -452,6 +464,12 @@ class Level2 extends Phaser.Scene {
             this.diskCompleted.setVisible(false);
         }
 
+        if (this.checkOverlap(this.player.getPlayer(), this.enemyFires)) { // if collided with enemy projectile, destroys projectile and spawns disk at spot
+            this.enemyFires.destroy();
+            this.addColliders();
+
+        }
+
         if (keyM.isDown) { // (temporary) if m is pressed, switches back to menu scene
             this.scene.start('menuScene');
         }
@@ -459,8 +477,30 @@ class Level2 extends Phaser.Scene {
         //this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
 
     }
-
     // helper functions
+
+    checkPlayInc() { //checks and stops last song, plays collection sound, and increments
+        this.checkMusicPlayer();
+        this.collectSound.play();
+        this.collectVfxEffect.explode();
+        this.numDiskCollected++;
+    }
+
+    addColliders() { //calls checkPlaying() and adds collisions to the disk so they don't fall off the map
+        this.checkPlaying();
+        console.log('collided with enemy');
+        if (this.numDiskCollected > 0)
+            this.stopMusicSound.play();
+        this.physics.add.collider(this.disk, this.layer);
+        this.physics.add.collider(this.disk2, this.layer);
+        this.physics.add.collider(this.disk3, this.layer);
+        this.physics.add.collider(this.disk4, this.layer);
+        this.physics.add.collider(this.disk5, this.layer);
+        console.log(this.diskStack);
+        console.log(this.numDiskCollected);
+    }
+
+    
     checkOverlap(object1, object2) { // checks overlaps of two objects
         return this.physics.overlap(object1, object2);
     }

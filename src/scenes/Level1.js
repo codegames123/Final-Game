@@ -10,7 +10,7 @@ class Level1 extends Phaser.Scene {
     }
     preload() {
         this.load.tilemapTiledJSON('map', './assets/level1tilemap.json'); // temporary 
-        this.load.atlas('crosshair', './assets/crosshairSprite.png', './assets/crosshairAnim.json');
+        //this.load.atlas('crosshair', './assets/crosshairSprite.png', './assets/crosshairAnim.json');
     }
     create() {
         const centerX = this.cameras.main.centerX;
@@ -290,8 +290,6 @@ class Level1 extends Phaser.Scene {
             on: false   // do not immediately start, will trigger in collision
         });
 
-        //this.powerUpVfxEffect.explode();
-
         //camera settings
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.player.getPlayer());
@@ -504,7 +502,7 @@ class Level1 extends Phaser.Scene {
             this.gameComplete = true;
 
         }
-        if (this.checkOverlap(this.player.getPlayer(), this.enemyFires)) { // if collided with fifth song, plays and destroys
+        if (this.checkOverlap(this.player.getPlayer(), this.enemyFires)) { // if collided with enemy projectile, destroys projectile and spawns disk at spot
             this.enemyFires.destroy();
             this.addColliders();
 
