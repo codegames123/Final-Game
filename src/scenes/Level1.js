@@ -340,7 +340,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.disk5, this.layer);
         this.physics.add.collider(this.diskCompleted, this.layer);
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
-        //this.physics.add.collider(this.enemy2, this.layer);
+        this.physics.add.collider(this.enemy2, this.layer);
 
         this.gameComplete = false;
     }

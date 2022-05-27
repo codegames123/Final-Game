@@ -88,7 +88,7 @@ class Level2 extends Phaser.Scene {
         
         //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
         let topText = this.add.text(w + 300, h / 2 , "Level 2", { fontfamily: 'papyrus', fontSize: 40, color: 'white' }).setOrigin(1, 0);
-        topText.setShadow(0, 4, '#3B413C', true, true);
+        topText.setShadow(0, 3, '#3B413C', true, true);
         topText.setStroke('#4C0615', 2);
         let topTextTween = this.tweens.add({
             delay: 375,
