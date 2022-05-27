@@ -87,7 +87,9 @@ class Level2 extends Phaser.Scene {
         //sets tween 'Level 1'
         
         //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
-        let topText = this.add.text(w + 300, h / 2 , "Level 2", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
+        let topText = this.add.text(w + 300, h / 2 , "Level 2", { fontfamily: 'papyrus', fontSize: 40, color: 'white' }).setOrigin(1, 0);
+        topText.setShadow(0, 4, '#3B413C', true, true);
+        topText.setStroke('#4C0615', 2);
         let topTextTween = this.tweens.add({
             delay: 375,
             targets: topText,
@@ -282,7 +284,7 @@ class Level2 extends Phaser.Scene {
 
         //progress bar
         this.progressText = this.add.text(game.config.width / 2 + 25, game.config.height / 2 - 250, 'Progress ', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' });
-        this.progressText.setShadow(0, 3, '#3B413C', true, true);
+        this.progressText.setShadow(0, -4, '#3B413C', true, true);
         this.progressText.setStroke('#C7C7A6', 2);
         this.progressText.scrollFactorX = 0;
         this.progressText.scrollFactorY = 0;
@@ -384,6 +386,7 @@ class Level2 extends Phaser.Scene {
 
         if (this.numDiskCollected == 5) {
             this.progSprite1 = this.add.sprite(game.config.width / 2 + 240, 33, 'rockProg_atlas', 'rockProg_0006').setScale(.75, .5);
+            this.progSprite1.setAlpha(0.1);
             this.progSprite1.scrollFactorX = 0;
             this.progSprite1.scrollFactorY = 0;
             this.progSprite2.destroy();
@@ -391,26 +394,31 @@ class Level2 extends Phaser.Scene {
             this.diskCompleted.setVisible(true);
         } else if (this.numDiskCollected == 4) {
             this.progSprite2 = this.add.sprite(game.config.width / 2 + 240, 33, 'rockProg_atlas', 'rockProg_0005').setScale(.75, .5);
+            this.progSprite2.setAlpha(0.1);
             this.progSprite2.scrollFactorX = 0;
             this.progSprite2.scrollFactorY = 0;
             this.progSprite3.destroy();
         } else if (this.numDiskCollected == 3) {
             this.progSprite3 = this.add.sprite(game.config.width / 2 + 240, 33, 'rockProg_atlas', 'rockProg_0004').setScale(.75, .5);
+            this.progSprite3.setAlpha(0.1);
             this.progSprite3.scrollFactorX = 0;
             this.progSprite3.scrollFactorY = 0;
             this.progSprite4.destroy();
         } else if (this.numDiskCollected == 2) {
             this.progSprite4 = this.add.sprite(game.config.width / 2 + 240, 33, 'rockProg_atlas', 'rockProg_0003').setScale(.75, .5);
+            this.progSprite4.setAlpha(0.1);
             this.progSprite4.scrollFactorX = 0;
             this.progSprite4.scrollFactorY = 0;
             this.progSprite5.destroy();
         } else if (this.numDiskCollected == 1) {
             this.progSprite5 = this.add.sprite(game.config.width / 2 + 240, 33, 'rockProg_atlas', 'rockProg_0002').setScale(.75, .5);
+            this.progSprite5.setAlpha(0.1);
             this.progSprite5.scrollFactorX = 0;
             this.progSprite5.scrollFactorY = 0;
             this.progSprite0.destroy();
         } else {
             this.progSprite0 = this.add.sprite(game.config.width / 2 + 240, 33, 'rockProg_atlas', 'rockProg_0001').setScale(.75, .5);
+            this.progSprite0.setAlpha(0.1);
             this.progSprite0.scrollFactorX = 0;
             this.progSprite0.scrollFactorY = 0;
         }

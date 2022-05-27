@@ -313,6 +313,7 @@ class Level1 extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // for menu
+        keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L); // for next level (debugging)
 
         this.time.addEvent({ // delay for every 1 second, enemy takes a disk if collided with the player
             delay: 1000, callback: () => {
@@ -514,6 +515,9 @@ class Level1 extends Phaser.Scene {
 
         if (keyM.isDown) { // (temporary) if m is pressed, switches back to menu scene
             this.scene.start('menuScene');
+        }
+        if (keyL.isDown) {
+            this.scene.start('Level2Scene');
         }
 
         //this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
