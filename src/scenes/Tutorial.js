@@ -8,8 +8,6 @@ class Tutorial extends Phaser.Scene {
            //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print
            let txtTime = 60; //set timer duration
 
-           this.dialogueMusic = this.sound.add('dialogueMusic', { loop: false });
-           this.dialogueMusic.play();
            //28 chars allowed per line
            let testStr = 'As the bearer of this task, it is your job to collect the disks within the map. However, you must watch out for the enemies: The Muted Ones. Sometimes they\'ll hit you, sometimes they\'ll shoot. Make sure they don\'t steal the disks from you! Use WAD to move up, left, and right. Use the Space Bar to jump. When you collect all of the disks, you win the level.@Good luck.@We believe in you.'; //create test string
            console.log(testStr.length);
@@ -152,6 +150,7 @@ class Tutorial extends Phaser.Scene {
         //click back to go back to menu
         const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Segoe Script', fontSize: 60, color: 'orange' }).setInteractive()
             .on('pointerdown', () =>  {
+                this.selectSound = this.sound.add('selectSound', { loop: false });
                 this.selectSound.play();
                 this.scene.start('menuScene');})
             .on('pointerover', () => {
