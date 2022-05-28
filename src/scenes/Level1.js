@@ -124,7 +124,7 @@ class Level1 extends Phaser.Scene {
         this.anims.create({ 
             key: 'enemyAnim', 
             frames: this.anims.generateFrameNames('enemyRange', {      
-                prefix: 'muteman',
+                prefix: 'mute shooter',
                 start: 1,
                 end: 8,
                 suffix: '',
@@ -134,7 +134,6 @@ class Level1 extends Phaser.Scene {
             repeat: -1 
         });
 
-        
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);//put in new player (scene,x,y,image, frame, layer)
         this.player.getPlayer().setCollideWorldBounds(true);

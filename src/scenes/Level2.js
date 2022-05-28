@@ -125,7 +125,7 @@ class Level2 extends Phaser.Scene {
         this.anims.create({ 
             key: 'enemyAnim', 
             frames: this.anims.generateFrameNames('enemyRange', {      
-                prefix: 'muteman',
+                prefix: 'mute shooter',
                 start: 1,
                 end: 8,
                 suffix: '',
@@ -134,6 +134,7 @@ class Level2 extends Phaser.Scene {
             frameRate: 10,
             repeat: -1 
         });
+
 
         //put in new player (scene,x,y,image, frame, layer)
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
