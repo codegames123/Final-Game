@@ -10,7 +10,7 @@ class Tutorial extends Phaser.Scene {
            let txtTime = 60; //set timer duration
 
            //28 chars allowed per line
-           let testStr = 'As the bearer of this task, it is your job to collect the disks within the map. However, you must watch out for the enemies: The Muted Ones. Sometimes they\'ll hit you, sometimes they\'ll shoot. Make sure they don\'t steal the disks from you! Use WAD to move up, left, and right. Use the Space Bar to jump. When you collect all of the disks, you win the level.@Good luck.@We believe in you.'; //create test string
+           let testStr = 'Use WAD to move up, left, and right. Use the Space Bar to jump. When you collect all of the disks, you win the level.@@As the bearer of this task, it is your job to collect the disks within the map. However, you must watch out for the enemies: The Muted Ones. Sometimes they\'ll hit you, sometimes they\'ll shoot. Make sure they don\'t steal the disks from you!@Good luck.@We believe in you.'; //create test string
            console.log(testStr.length);
            let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ";
            /*let testArr = []; //arrays for text and spaces
