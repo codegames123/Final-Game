@@ -24,6 +24,7 @@ class Tutorial extends Phaser.Scene {
            //click back to go back to menu
 
            keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F); // for menu
+           
            let linePos = 0; //position on current line
            let newLine = false;
            let text2Print = ''; //text to print
