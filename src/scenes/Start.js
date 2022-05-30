@@ -5,24 +5,19 @@ class Start extends Phaser.Scene {
     create () {
                  //this.scale.setGameSize(640, 480);
                 //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print
-                let txtTime = 60; //set timer duration
+                this.txtTime = 60; //set timer duration
 
                 this.dialogueMusic = this.sound.add('dialogueMusic', { loop: false });
                 this.dialogueMusic.play();
                 //28 chars allowed per line
                 let testStr = 'We lived in a world that was full of beautiful sounds. Noisy, tranquil, passionate. A variety like no other.@(...)@But the Muted Ones took it all away.@They weren\'t always called that, nor were they always the enemy.@Centuries ago, they were leaders of the world\'s musical genius. True innovators, they brought joy wherever they went with the sounds they created.@They were loved, respected.@But, of course, eventually war broke out.@Instruments were traded for weapons.@Where they were once called forth for their blissful tunes, they were now pushed to the margins in a pitiful conflict.@Too many died, and those who remained were too broken to try again.@Bitter, a faction formed among them, who rose to power and swore to never play music again.@The world was too cruel, they argued.@There\'s no point going back if it will just be ripped away again.@They embarked on a campaign to eliminate all the music in the world.@They had the technology to make it, and too the technology to destroy it.@Anywhere they saw music playing, they would shoot "muters" to silence the source.@And hence they came to be known as the Muted Ones.@@You aren\'t much different from them.@You exist on the fringes of society, too.@But you remember the power of music.@You\'ve seen it soothe so many in the shadows.@Here you stand today, knowing this, ready to fight.@Take back the music.@Give it to the world.@Set us free from this blaring silence.' //create test string
                 console.log(testStr.length);
-                let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ";
-                /*let testArr = []; //arrays for text and spaces
-                let spaceArr = [];
-                for(let i = 0; i<testStr.length; i++) { //parse chars to arr
-                    testArr.push(testStr.charAt(i));
-                }
-                for(let i = 0; i<spaceStr.length; i++) {
-                    spaceArr.push(spaceStr.charAt(i));
-                }*/
+                let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ";
+                let spaceArr = []; //amount of spaces on current screen
                 keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F); // for menu
+                keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); //for speeding up text
                 let linePos = 0; //position on current line
+                let lineCount = 0; //current line on page
                 let newLine = false;
                 let text2Print = ''; //text to print
                 let leftOffset = 20; //amount current parts of string offset
@@ -50,9 +45,21 @@ class Start extends Phaser.Scene {
                         top: 5, 
                         bottom: 5
                     }
-                }                
+                }
+                //print prompt to skip to menu
+                this.skipPrompt = this.add.text(0, 400, '--------------------------------------------------\n\nPress F to skip', {
+                    fontFamily: 'Courier',
+                    fontSize: '32px',
+                    backgroundColor: '#000000',
+                    color: '#FFFFFF',
+                    align: 'center',
+                    padding: {
+                        top: 5, 
+                        bottom: 5
+                    }
+                });                
                     this.timer = this.time.addEvent({
-                        delay: txtTime,                // ms
+                        delay: this.txtTime,                // ms
                         callback: () => {
                             leftOffset+=(20);
                             if(leftOffset > game.config.width-21) { //breaking right bounds
@@ -64,6 +71,7 @@ class Start extends Phaser.Scene {
                                     leftOffset = 20;
                                 }
                                 linePos = 0;
+                                lineCount++;
                                 downOffset +=40;
                             }
                             //issue: adds the last letter of the word breaking bounds at the very lower right corner down too much.
@@ -83,11 +91,15 @@ class Start extends Phaser.Scene {
                                 linePos=0;
                                 leftOffset = 20;
                                 downOffset+=40;
-                                if(downOffset > game.config.height-21) { //breaking down bounds
+                                lineCount++;
+                                if(downOffset > game.config.height-141) { //breaking down bounds
                                     this.cameras.main.setBackgroundColor("#000000");
                                     leftOffset = 20;
                                     downOffset = 20;
                                     linePos=0;
+                                    lineCount = 0;
+                                    console.log("line count: " + lineCount + ": reset");
+                                    spaceArr = []; //empty array, new page
                                 }
 
                                 //reprint those letters on the next row and add RBTN to repeattimes
@@ -96,7 +108,7 @@ class Start extends Phaser.Scene {
                                 }
                                 repeatTimes-=rightBTestNum;
                             }
-                            if(downOffset > game.config.height-21) { //breaking down bounds
+                            if(downOffset > game.config.height-141) { //breaking down bounds
                                 this.cameras.main.setBackgroundColor("#000000");
                                 //this checks out
                                 if(testStr.charAt(repeatTimes) != ' ')
@@ -108,6 +120,9 @@ class Start extends Phaser.Scene {
                                 }
                                 downOffset = 20;
                                 linePos=0;
+                                lineCount = 0;
+                                console.log("line count: " + lineCount + ": reset");
+                                spaceArr = []; //empty array, new page
                             }
                             if(repeatTimes == testStr.length+2)
                             {
@@ -118,9 +133,26 @@ class Start extends Phaser.Scene {
                                 newLine = true;
                             }
                             if(!testStr.charAt(repeatTimes) && spcRptTimes<spaceStr.length && newLine == false) {
+                                let currLine = lineCount;
                                 text2Print = spaceStr.charAt(spcRptTimes);
-                                this.add.text(leftOffset,downOffset, text2Print, this.textConfig);
-                                spcRptTimes ++;
+                                console.log(testStr.charAt(lineCount*linePos));
+                                //not exactly sure if this completely works, but it's good enough
+                                if(!spaceArr.includes([lineCount, linePos]))
+                                {
+                                    this.add.text(leftOffset,downOffset, text2Print, this.textConfig);
+                                    spcRptTimes ++;
+                                    linePos++;
+                                }
+                                else {
+                                    while(lineCount == currLine && spaceArr.includes[lineCount, linePos])
+                                    {
+                                        this.add.text(leftOffset, downOffset, ' ', this.textConfig);
+                                        leftOffset+=20;
+                                        spcRptTimes++;
+                                        linePos++;
+                                    }
+                                }
+                                
                             }
                             else if(testStr.charAt(repeatTimes) && spcRptTimes<spaceStr.length && newLine == false) {
                                 text2Print = testStr.charAt(repeatTimes);
@@ -129,16 +161,22 @@ class Start extends Phaser.Scene {
                                 linePos++;
                             }
                             else if(newLine == true) {
+                                let lineCountAndLinePos1 = [lineCount, linePos];
                                 for(let i = 0; i<(45-linePos); i++)
                                 {
                                     this.add.text(leftOffset, downOffset, ' ', this.textConfig);
                                     leftOffset+=20;
+                                    let lineCountAndLinePos= [lineCount, 45-i];
+                                    spaceArr.push(lineCountAndLinePos);
+                                    console.log(spaceArr);
                                 }
+                                spaceArr.push(lineCountAndLinePos1);
                                 repeatTimes++;
                                 leftOffset = 20;
                                 downOffset+=40;
                                 newLine = false;
                                 linePos=0;
+                                lineCount++;
                             }
                             },
                         callbackScope: this,
@@ -161,7 +199,8 @@ class Start extends Phaser.Scene {
                         let timerNext = this.time.addEvent ({
                             delay: 1000,
                             callback: () => {
-                                this.add.text(0, 270, '--------------------------------------------------\n\nPress F to begin your journey', {
+                                this.skipPrompt.destroy();
+                                this.add.text(0, 400, '--------------------------------------------------\n\nPress F to begin your journey', {
                                     fontFamily: 'Courier',
                                     fontSize: '32px',
                                     backgroundColor: '#000000',
