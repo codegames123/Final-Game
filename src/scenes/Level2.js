@@ -425,6 +425,7 @@ class Level2 extends Phaser.Scene {
             this.enemy.getEnemy().destroy();
             this.enemy2.destroy();
             this.gameComplete = true;
+            this.pauseButton.destroy();
 
         }
         if (this.numDiskCollected < this.maxDisktoCollect) { // if less than max disk to collect, locks final disk
@@ -434,7 +435,8 @@ class Level2 extends Phaser.Scene {
 
         if (this.checkOverlap(this.player.getPlayer(), this.enemyFires)) { // if collided with enemy projectile, destroys projectile and spawns disk at spot
             this.enemyFires.destroy();
-            this.loseDiskVfxEffect.explode();
+            if(this.numDiskCollected > 0)
+                this.loseDiskVfxEffect.explode();
             this.addColliders();
 
         }
@@ -496,7 +498,8 @@ class Level2 extends Phaser.Scene {
             this.hitRate = this.time.now + 1000; // time until enemy hits again (1 second = 1000ms)
             if (this.checkOverlap(this.player.getPlayer(), enemy)) { // checks if player collided with enemy
                     console.log('hit');
-                    this.loseDiskVfxEffect.explode();
+                    if(this.numDiskCollected > 0)
+                        this.loseDiskVfxEffect.explode();
                     this.addColliders();
             }
         }
