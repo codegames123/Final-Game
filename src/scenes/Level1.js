@@ -173,6 +173,26 @@ class Level1 extends Phaser.Scene {
             yoyo: false,
             rotateToPath: true
         });
+
+        //this.pauseScene = new Pause(this, 'Level1Scene');
+        this.pauseButton = this.add.image(game.config.width /2 + 410, game.config.height/2 - 240, 'pauseButton').setScale(1.5).setInteractive()
+        .on('pointerdown', () => {
+            this.checkMusicPlayer();
+            this.scene.launch('pauseScene');
+            this.scene.pause();
+            //this.add.text(game.config.width/2, game.config.height/2, 'PAUSED')
+        })
+        .on('pointerover', () => {
+            
+        })
+        .on('pointerout', () => {
+            
+        }); ;
+        this.pauseButton.scrollFactorX = 0;
+        this.pauseButton.scrollFactorY = 0;
+
+
+
         // this.enemy2 = this.add.path(1192, 190); //(x,y)
         // this.enemy2.circleTo(70);
         // //this.enemy2.draw(graphics); // to see circle

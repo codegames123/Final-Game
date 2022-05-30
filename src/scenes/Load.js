@@ -15,6 +15,9 @@ class Load extends Phaser.Scene {
         this.load.image('sprite', './assets/Player_right.png'); // temporary
         this.load.image('notes', './assets/noteParticle1.png');
         this.load.image('notes2', './assets/noteParticle2.png');
+        this.load.image('pauseButton', './assets/PauseButton.png');
+        this.load.image('restartButton', './assets/restartButton.png');
+        this.load.image('playButton', './assets/playButton.png');
        // this.load.image('enemy', './assets/baby_4.png'); // temporary
         this.load.atlas('enemyRange', './assets/Enemy Sprites/muteshooter.png', './assets/Enemy Sprites/muteshooter.json');
         this.load.image('enemyMelee', './assets/Enemy Sprites/melee_muteman_2.png'); //temporary
