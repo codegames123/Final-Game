@@ -20,7 +20,7 @@ class Pause extends Phaser.Scene {
                 this.scene.start('Level2Scene');
             }    
         });
-        this.add.text(game.config.width/2 - 40, game.config.height/2 + 80, 'Menu', {fontSize:40}).setInteractive() // go to menu
+        this.add.text(game.config.width/2 - 40, game.config.height/2 + 80, 'Menu', {fontSize:40, fontFamily: 'Comic Sans MS'}).setInteractive() // go to menu
         .on('pointerdown', () => {
             this.scene.start('menuScene');
             if(currentScene == 1)

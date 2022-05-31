@@ -443,6 +443,7 @@ class Level1 extends Phaser.Scene {
             this.enemy.getEnemy().destroy();
             this.collectVfxEffect.explode();
             this.enemy2.destroy();
+            level1Completed = true;
             this.gameComplete = true;
             this.pauseButton.destroy();
 

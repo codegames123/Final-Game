@@ -10,7 +10,7 @@ class Tutorial extends Phaser.Scene {
            let txtTime = 60; //set timer duration
 
            //28 chars allowed per line
-           let testStr = 'Use ARROW KEYS to jump and move left or right. Use the SPACEBAR to jump. When you collect all of the disks, you win the level.@@As the bearer of this task, it is your job to collect the disks within the map. However, you must watch out for the enemies: The Muted Ones. Sometimes they\'ll hit you, sometimes they\'ll shoot. Make sure they don\'t steal the disks from you!@Good luck.@We believe in you.'; //create test string
+           let testStr = 'Use ARROW LEFT to move left or ARROW RIGHT to move right. Use SPACEBAR or ARROW UP to jump. When you collect all of the disks, you win the level.@@As the bearer of this task, it is your job to collect the disks within the map. However, you must watch out for the enemies: The Muted Ones. Sometimes they\'ll hit you, sometimes they\'ll shoot. Make sure they don\'t steal the disks from you!@Good luck.@We believe in you.'; //create test string
            console.log(testStr.length);
            let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ";
            /*let testArr = []; //arrays for text and spaces
@@ -152,7 +152,7 @@ class Tutorial extends Phaser.Scene {
                leftOffset = 20;
                downOffset = 120;  
         //click back to go back to menu
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Segoe Script', fontSize: 60, color: 'orange' }).setInteractive()
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'orange' }).setInteractive()
             .on('pointerdown', () =>  {
                 this.selectSound = this.sound.add('selectSound', { loop: false });
                 this.selectSound.play();

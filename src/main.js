@@ -1,5 +1,8 @@
+// global variables
 let cursors;
 let currentScene = 0;
+let level1Completed = false;
+let level2Completed = false
 
 //main game object
 let config = {
@@ -17,7 +20,7 @@ let config = {
             }
         }
     },
-    scene: [BootState,Load, Start, Menu, Tutorial, Level1, Level2, Pause]
+    scene: [BootState,Load, Start, Menu, Tutorial, LevelChoose, Level1, Level2, Pause]
 };
 
 let game = new Phaser.Game(config);

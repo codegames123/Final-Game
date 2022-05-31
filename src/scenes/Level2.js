@@ -424,6 +424,7 @@ class Level2 extends Phaser.Scene {
             this.nextLevelText.setVisible(true);
             this.enemy.getEnemy().destroy();
             this.enemy2.destroy();
+            level2Completed = true;
             this.gameComplete = true;
             this.pauseButton.destroy();
 

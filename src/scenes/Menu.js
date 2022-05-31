@@ -119,7 +119,7 @@ class Menu extends Phaser.Scene {
         // });
 
         //click how to play to go to how to Tutorial scene
-        const howtoPlay = this.add.text(game.config.width / 2 - 120, game.config.height / 2 + 100, 'How To Play', { fontFamily: 'Segoe Script', fontSize: 40, color: 'orange' }).setInteractive()
+        const howtoPlay = this.add.text(game.config.width / 2 - 120, game.config.height / 2 + 100, 'How To Play', { fontFamily: 'Comic Sans MS', fontSize: 40, color: 'orange' }).setInteractive()
             .on('pointerdown', () => {
                 this.selectSound.play();
                 this.scene.start('tutorialScene');
@@ -132,13 +132,27 @@ class Menu extends Phaser.Scene {
                 howtoPlay.setStyle({ fill: 'orange' })
             });
 
+        const levelChoose = this.add.text(game.config.width / 2 - 120, game.config.height / 2 + 180, 'Choose Level', { fontFamily: 'Comic Sans MS', fontSize: 40, color: 'orange' }).setInteractive()
+            .on('pointerdown', () => {
+                this.selectSound.play();
+                this.scene.start('levelChooseScene');
+                this.menuSong.stop();
+            })
+            .on('pointerover', () => {
+                levelChoose.setStyle({ fill: 'green' });
+            })
+            .on('pointerout', () => {
+                levelChoose.setStyle({ fill: 'orange' })
+            });
+
         //click play for level 1 scene
-        const clickPlay = this.add.text(game.config.width / 2 - 50, game.config.height / 2, 'Play', { fontFamily: 'Segoe Script', fontSize: 60, color: 'orange' }).setInteractive()
+        const clickPlay = this.add.text(game.config.width / 2 - 50, game.config.height / 2, 'Play', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'orange' }).setInteractive()
             .on('pointerdown', () => {
                 this.selectSound.play();
                 background.destroy();
                 howtoPlay.destroy();
                 clickPlay.destroy();
+                levelChoose.destroy();
                 blueTween.play();
                 // yellowTween.play();
                 //bottomTextTween.play();
