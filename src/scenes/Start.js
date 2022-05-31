@@ -47,7 +47,7 @@ class Start extends Phaser.Scene {
                     }
                 }
                 //print prompt to skip to menu
-                this.skipPrompt = this.add.text(0, 400, '--------------------------------------------------\n\nPress F to skip', {
+                this.prologuePrompt = this.add.text(0, 400, '--------------------------------------------------\n\nPrologue', {
                     fontFamily: 'Courier',
                     fontSize: '32px',
                     backgroundColor: '#000000',
@@ -57,7 +57,18 @@ class Start extends Phaser.Scene {
                         top: 5, 
                         bottom: 5
                     }
-                });                
+                });     
+                this.skipPrompt = this.add.text(game.config.width/2 + 220, game.config.height/2 + 230, 'Press "F" to Skip', {
+                    fontFamily: 'Courier',
+                    fontSize: '25px',
+                    backgroundColor: '#000000',
+                    color: '#39D0EE',
+                    align: 'center',
+                    padding: {
+                        top: 5, 
+                        bottom: 5
+                    }
+                });              
                     this.timer = this.time.addEvent({
                         delay: this.txtTime,                // ms
                         callback: () => {
@@ -199,12 +210,13 @@ class Start extends Phaser.Scene {
                         let timerNext = this.time.addEvent ({
                             delay: 1000,
                             callback: () => {
+                                this.prologuePrompt.destroy();
                                 this.skipPrompt.destroy();
                                 this.add.text(0, 400, '--------------------------------------------------\n\nPress F to begin your journey', {
                                     fontFamily: 'Courier',
                                     fontSize: '32px',
                                     backgroundColor: '#000000',
-                                    color: '#FFFFFF',
+                                    color: '#F0B714',
                                     align: 'center',
                                     padding: {
                                         top: 5, 

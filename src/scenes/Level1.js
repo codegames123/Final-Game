@@ -18,6 +18,8 @@ class Level1 extends Phaser.Scene {
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
 
+        currentScene = 1;
+
         //sets the gravity of the world
         this.physics.world.gravity.y = 2000;
 
@@ -181,17 +183,9 @@ class Level1 extends Phaser.Scene {
             this.scene.launch('pauseScene');
             this.scene.pause();
             //this.add.text(game.config.width/2, game.config.height/2, 'PAUSED')
-        })
-        .on('pointerover', () => {
-            
-        })
-        .on('pointerout', () => {
-            
-        }); ;
+        }); 
         this.pauseButton.scrollFactorX = 0;
         this.pauseButton.scrollFactorY = 0;
-
-
 
         // this.enemy2 = this.add.path(1192, 190); //(x,y)
         // this.enemy2.circleTo(70);
@@ -245,7 +239,7 @@ class Level1 extends Phaser.Scene {
         this.level1CompletedText.scrollFactorX = 0;
         this.level1CompletedText.scrollFactorY = 0;
         this.level1CompletedText.setVisible(false);
-        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level?', { fontFamily: 'Courier', fontSize: '25px', color: 'black', align: 'left' }).setInteractive()
+        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level!', { fontFamily: 'Courier', fontSize: '25px', color: 'black', align: 'left' }).setInteractive()
             .on('pointerdown', () => {
                 this.scene.start('Level2Scene');
                 this.song_full.stop();
@@ -304,13 +298,12 @@ class Level1 extends Phaser.Scene {
         this.progressText.scrollFactorY = 0;
 
         //controls
-        this.cursors = this.input.keyboard.createCursorKeys();
+        cursors = this.input.keyboard.createCursorKeys();
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // for menu
         keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L); // for next level (debugging)
 
         //collisions
@@ -465,9 +458,6 @@ class Level1 extends Phaser.Scene {
             this.diskCompleted.setVisible(false);
         }
 
-        if (keyM.isDown) { // (temporary) if m is pressed, switches back to menu scene
-            this.scene.start('menuScene');
-        }
         if (keyL.isDown) {
             this.scene.start('Level2Scene');
         }
@@ -522,7 +512,7 @@ class Level1 extends Phaser.Scene {
     }
     enemyHit(enemy) { // enemy hits player (for melee or range of player walks towards them)
         if (this.time.now > this.hitRate) {
-            this.hitRate = this.time.now + 1000; // time until enemy hits again (1 second = 1000ms)
+            this.hitRate = this.time.now + 500; // time until enemy hits again (1 second = 1000ms)
             if (this.checkOverlap(this.player.getPlayer(), enemy)) { // checks if player collided with enemy
                     console.log('hit');
                     if(this.numDiskCollected > 0)
@@ -540,31 +530,26 @@ class Level1 extends Phaser.Scene {
         if (this.songPopped === this.song_01) { // if song popped is first song
             console.log('disk 1 taken from enemy');
             this.song_01.stop();
-            this.song_01_isCollected = false;
             this.disk = this.physics.add.sprite(200, 300, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_02) {// if song popped is second song
             console.log('disk 2 taken from enemy');
             this.song_02.stop();
-            this.song_02_isCollected = false;
             this.disk2 = this.physics.add.sprite(500, 200, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_03) {// if song popped is third song
             console.log('disk 3 taken from enemy');
             this.song_03.stop();
-            this.song_03_isCollected = false;
             this.disk3 = this.physics.add.sprite(800, 350, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_04) {// if song popped is forth song
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
-            this.song_04_isCollected = false;
             this.disk4 = this.physics.add.sprite(1090, 190, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
-            this.song_05_isCollected = false;
             this.disk5 = this.physics.add.sprite(1150, 100, 'disk').setScale(0.03);
         }
         if (this.numDiskCollected > 0)

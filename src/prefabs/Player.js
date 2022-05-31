@@ -38,11 +38,11 @@ class Player extends Phaser.GameObjects.Sprite {
 
     update() {
         //left/right movement
-        if (keyA.isDown) {
+        if (cursors.left.isDown) {
             this.player.body.setAccelerationX(-this.ACCELERATION);
             //this.playerWalkSound.play();
             this.player.setFlip(true,false);
-        }else if (keyD.isDown) {
+        }else if (cursors.right.isDown) {
             this.player.resetFlip();
             this.player.body.setAccelerationX(this.ACCELERATION);
         }
@@ -50,16 +50,16 @@ class Player extends Phaser.GameObjects.Sprite {
             this.player.body.setAccelerationX(0); //stop accel, initiate drag
             this.player.body.setDragX(this.DRAG); //0-1; smaller = faster deceleration
         }
-        if(Phaser.Input.Keyboard.JustDown(keyA) || Phaser.Input.Keyboard.JustDown(keyD)) { //plays player walking sound if a or d is just down
+        if(Phaser.Input.Keyboard.JustDown(cursors.left) || Phaser.Input.Keyboard.JustDown(cursors.right)) { //plays player walking sound if a or d is just down
             this.playerWalkSound.play();
         }
-        if(Phaser.Input.Keyboard.JustUp(keyA) || Phaser.Input.Keyboard.JustUp(keyD)) { // stops if player no longer walking
+        if(Phaser.Input.Keyboard.JustUp(cursors.left) || Phaser.Input.Keyboard.JustUp(cursors.right)) { // stops if player no longer walking
             this.playerWalkSound.stop();
         }
         //jump
         //if (this.player.body.deltaY() > 0 && this.player.body.onFloor()) {
         if(this.player.body.blocked.down){
-            if(keyW.isDown || keySPACE.isDown)
+            if(cursors.up.isDown || keySPACE.isDown)
                 this.player.body.setVelocityY(this.JUMP_VELOCITY);
 
         }   

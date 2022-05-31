@@ -1,3 +1,7 @@
+let cursors;
+let currentScene = 0;
+
+//main game object
 let config = {
     type: Phaser.AUTO,
     width: 960,//840
@@ -13,9 +17,9 @@ let config = {
             }
         }
     },
-    scene: [Load, Start, Menu, Tutorial, Level1, Level2, Pause, Pause2]
+    scene: [Load, Start, Menu, Tutorial, Level1, Level2, Pause]
 };
 
 let game = new Phaser.Game(config);
 
-let keyA, keyS, keyD, keyW, keySPACE, keyM, keyF, keyL;
+let keyA, keyS, keyD, keyW, keySPACE, keyF, keyL;

@@ -17,6 +17,8 @@ class Level2 extends Phaser.Scene {
         this.progressBar.scrollFactorX = 0;
         this.progressBar.scrollFactorY = 0;*/
 
+        currentScene = 2;
+
         //sets the gravity of the world
         this.physics.world.gravity.y = 2000;
 
@@ -96,12 +98,12 @@ class Level2 extends Phaser.Scene {
         this.tweenPlay = true;
     
         //initilizes songs
-        this.song_01 = this.sound.add('lvl1_01', { loop: false });
-        this.song_02 = this.sound.add('lvl1_02', { loop: false });
-        this.song_03 = this.sound.add('lvl1_03', { loop: false });
-        this.song_04 = this.sound.add('lvl1_04', { loop: false });
-        this.song_05 = this.sound.add('lvl1_05', { loop: false });
-        this.song_full = this.sound.add('lvl1_full', { loop: false });
+        this.song_01 = this.sound.add('lvl2_01', { loop: false });
+        this.song_02 = this.sound.add('lvl2_02', { loop: false });
+        this.song_03 = this.sound.add('lvl2_03', { loop: false });
+        this.song_04 = this.sound.add('lvl2_04', { loop: false });
+        this.song_05 = this.sound.add('lvl2_05', { loop: false });
+        this.song_full = this.sound.add('lvl2_full', { loop: false });
 
         //initilizes SFX
         this.selectSound = this.sound.add('selectSound', { loop: false });
@@ -197,7 +199,7 @@ class Level2 extends Phaser.Scene {
         this.pauseButton = this.add.image(game.config.width /2 + 410, game.config.height/2 - 240, 'pauseButton').setScale(1.5).setInteractive()
         .on('pointerdown', () => {
             this.checkMusicPlayer();
-            this.scene.launch('pauseScene2');
+            this.scene.launch('pauseScene');
             this.scene.pause();
             //this.add.text(game.config.width/2, game.config.height/2, 'PAUSED')
         })
@@ -243,7 +245,7 @@ class Level2 extends Phaser.Scene {
         this.level1CompletedText.scrollFactorX = 0;
         this.level1CompletedText.scrollFactorY = 0;
         this.level1CompletedText.setVisible(false);
-        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level?', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' }).setInteractive()
+        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level!', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' }).setInteractive()
             .on('pointerdown', () => {
                 this.scene.start('Level2Scene');
                 this.song_full.stop();
@@ -299,13 +301,12 @@ class Level2 extends Phaser.Scene {
         this.progressText.scrollFactorY = 0;
 
         //controls
-        this.cursors = this.input.keyboard.createCursorKeys();
+        cursors = this.input.keyboard.createCursorKeys();
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // for menu
 
         //collisions
         this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), this.layer);
@@ -327,20 +328,19 @@ class Level2 extends Phaser.Scene {
             if (!this.gameComplete) {
                 if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
-                    this.enemyHit(this.enemy.getEnemy())
+                    this.enemyHit(this.enemy.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy.getEnemy());
-                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17);
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
                 } else {
-                    this.crosshair.setVisible(false);
+                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
                     //console.log('in range');
                 }
             }
             if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy2.x, this.enemy2.y) < 200) { // gets distance of player and enemy
-                this.enemyHit(this.enemy2)
+                this.enemyHit(this.enemy2) // melee enemy
                 //console.log('in range');
             }
         }
-
         //progress bar options
         //display appropriate progress sprite with opacity animation and destroy previous
         //sprites on screen to save memory
@@ -439,10 +439,6 @@ class Level2 extends Phaser.Scene {
                 this.loseDiskVfxEffect.explode();
             this.addColliders();
 
-        }
-
-        if (keyM.isDown) { // (temporary) if m is pressed, switches back to menu scene
-            this.scene.start('menuScene');
         }
 
         //this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
