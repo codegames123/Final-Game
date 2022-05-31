@@ -17,7 +17,7 @@ let config = {
             }
         }
     },
-    scene: [Load, Start, Menu, Tutorial, Level1, Level2, Pause]
+    scene: [BootState,Load, Start, Menu, Tutorial, Level1, Level2, Pause]
 };
 
 let game = new Phaser.Game(config);

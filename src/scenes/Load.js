@@ -23,7 +23,7 @@ class Load extends Phaser.Scene {
         this.load.image('enemyMelee', './assets/Enemy Sprites/melee_muteman_2.png'); //temporary
         this.load.image('enemyMelee2', './assets/Enemy Sprites/melee_muteman_right.png'); //temporary
         this.load.image('background', './assets/menu_background.jpg'); //temporary
-        this.load.image('disk', './assets/disc.png'); //temporary
+        //this.load.image('disk', './assets/disc.png'); //temporary
         this.load.image('enemyShoot', './assets/apple_core_4.png'); //temporary
         
 
@@ -57,15 +57,13 @@ class Load extends Phaser.Scene {
         this.load.audio('playerWalkSound', './assets/SFX/Player_walk.wav');
         this.load.audio('selectSound', './assets/SFX/select_sound.wav');
 
-
+        this.add.sprite(game.config.width/2, game.config.height/2, 'disk').setScale(0.9);
         //prints message indicating player that game is loading
-        this.add.text(game.config.width/2 + 310, game.config.height/2 + 230, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '30px', color: 'white', align: 'left' });
+        this.add.text(game.config.width/2 -50, game.config.height/2, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '30px', color: 'white', align: 'left' });
+        
     }
 
     create(){
-        
         this.scene.start('startScene');
-
     }
-
 }
