@@ -10,7 +10,6 @@ class Level1 extends Phaser.Scene {
     }
     preload() {
         this.load.tilemapTiledJSON('map', './assets/level1tilemap.json'); // temporary 
-        //this.load.atlas('crosshair', './assets/crosshairSprite.png', './assets/crosshairAnim.json');
     }
     create() {
         const centerX = this.cameras.main.centerX;
@@ -18,10 +17,9 @@ class Level1 extends Phaser.Scene {
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
 
-        currentScene = 1;
+        currentScene = 1; // sets current scene (1 for level 1)
 
-        //sets the gravity of the world
-        this.physics.world.gravity.y = 2000;
+        this.physics.world.gravity.y = 2000;//sets the gravity of the world
 
         this.diskStack = [];//stack array for disks 
 
@@ -72,7 +70,6 @@ class Level1 extends Phaser.Scene {
             onCompleteScope: this   // maintain scene context
         });
         
-        //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
         let topText = this.add.text(w + 300, h / 2 , "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
         topText.setShadow(0, 3, '#FF47B6', true, true);
         topText.setStroke('#10F9F9', 2);
@@ -135,11 +132,36 @@ class Level1 extends Phaser.Scene {
             frameRate: 10,
             repeat: -1 
         });
+        this.anims.create({ 
+            key: 'playerIdleAnim', 
+            frames: this.anims.generateFrameNames('playerIdle', {      
+                prefix: 'stand_by',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4 
+            }), 
+            frameRate: 5,
+            repeat: -1 
+        });
+        this.anims.create({ 
+            key: 'playerWalkAnim', 
+            frames: this.anims.generateFrameNames('playerWalk', {      
+                prefix: 'walk right',
+                start: 1,
+                end: 4,
+                suffix: '',
+                zeroPad: 4 
+            }), 
+            frameRate: 10,
+            repeat: -1 
+        });
 
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);//put in new player (scene,x,y,image, frame, layer)
         this.player.getPlayer().setCollideWorldBounds(true);
         this.player.create(); // sets velocity
+        this.player.getPlayer().anims.play('playerIdleAnim');
 
         this.crosshair = this.add.sprite(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair'); // crosshair for range enemy
         this.crosshair.play('crosshairAnim');
@@ -265,7 +287,6 @@ class Level1 extends Phaser.Scene {
 
         //particle system
         this.collectVfxManager = this.add.particles('notes');
-
         this.collectVfxEffect = this.collectVfxManager.createEmitter({
             follow: this.player.getPlayer(),
             quantity: 7,
@@ -276,7 +297,6 @@ class Level1 extends Phaser.Scene {
         });
 
         this.loseDiskVfxManager = this.add.particles('disk');
-
         this.loseDiskVfxEffect = this.loseDiskVfxManager.createEmitter({
             follow: this.player.getPlayer(),
             quantity: 1,
@@ -500,6 +520,7 @@ class Level1 extends Phaser.Scene {
         if (this.time.now > this.fireRate) {
             this.fireRate = this.time.now + 1000; // time until enemy shoots again (1 second = 1000ms)
             this.enemyFires = this.enemyFire.getFirstDead();
+            this.enemyFires.setScale(0.7).setSize(45, 45).setOffset(5, 5);//setSize(left-/right+,up+/down-)
             if (this.enemyFires) {
                 this.crosshair.setVisible(true);
                 console.log('fire');

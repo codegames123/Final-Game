@@ -480,8 +480,10 @@ class Level2 extends Phaser.Scene {
         if (this.time.now > this.fireRate) {
             this.fireRate = this.time.now + 1000;
             this.enemyFires = this.enemyFire.getFirstDead();
+            this.enemyFires.setScale(0.7).setSize(45, 45).setOffset(5, 5);//setSize(left-/right+,up+/down-)
             if (this.enemyFires) {
                 this.crosshair.setVisible(true);
+                this.enemyShootSound.play();
                 this.enemyFires.body.reset(enemy.x, enemy.y);
                 this.enemyFires.setVisible(true);
                 this.physics.moveToObject(this.enemyFires, this.player.getPlayer(), 300);
