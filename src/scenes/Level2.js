@@ -4,7 +4,7 @@ class Level2 extends Phaser.Scene {
 
     }
     preload() {
-        //level 2 tilemap here
+        this.load.tilemapTiledJSON('map2', './assets/level2tilemap.json'); // temporary 
     }
     create() {
         const centerX = this.cameras.main.centerX;
@@ -27,8 +27,8 @@ class Level2 extends Phaser.Scene {
         //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
 
         //temporary tilemap, will change using tilemap editor
-        const map = this.make.tilemap({ key: 'map' });
-        const tileset = map.addTilesetImage('test_tiles', 'ground_1x1');
+        const map = this.make.tilemap({ key: 'map2' });
+        const tileset = map.addTilesetImage('rockTiles', 'level2tiles');
         this.layer = map.createLayer('Ground', tileset);
 
         //map.setCollisionBetween(1, 12);
