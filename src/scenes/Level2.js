@@ -38,12 +38,12 @@ class Level2 extends Phaser.Scene {
         this.physics.world.bounds.setTo(0, 0, map.widthInPixels, map.heightInPixels);
 
         //collision debugger
-        const debugGraphics = this.add.graphics().setAlpha(0.45); // collision debugger for tilemap
-        this.layer.renderDebug(debugGraphics, {
-            tileColor: new Phaser.Display.Color(40, 255, 48, 255), // Color of non-colliding tiles (green)
-            collidingTileColor: new Phaser.Display.Color(90), // Color of colliding tiles (the platforms, red)
-            faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-        });
+        // const debugGraphics = this.add.graphics().setAlpha(0.45); // collision debugger for tilemap
+        // this.layer.renderDebug(debugGraphics, {
+        //     tileColor: new Phaser.Display.Color(40, 255, 48, 255), // Color of non-colliding tiles (green)
+        //     collidingTileColor: new Phaser.Display.Color(90), // Color of colliding tiles (the platforms, red)
+        //     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+        // });
 
         //tween system
         let gfx = this.make.graphics().fillStyle(0x0000ff).fillRect(0, 0, -w, h/4);

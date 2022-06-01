@@ -47,7 +47,7 @@ class Start extends Phaser.Scene {
                     }
                 }
                 //print prompt to skip to menu
-                this.prologuePrompt = this.add.text(0, 400, '--------------------------------------------------\n\nPrologue', {
+                this.prologuePrompt = this.add.text(0, 400, '__________________________________________________\n\nPrologue', {
                     fontFamily: 'Courier',
                     fontSize: '32px',
                     backgroundColor: '#000000',

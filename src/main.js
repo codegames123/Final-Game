@@ -2,7 +2,7 @@
 let cursors;
 let currentScene = 0;
 let level1Completed = false;
-let level2Completed = false
+let level2Completed = false;
 
 //main game object
 let config = {
