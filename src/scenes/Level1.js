@@ -245,12 +245,12 @@ class Level1 extends Phaser.Scene {
         this.maxDisktoCollect = 5;
 
         //disks
-        this.disk = this.physics.add.sprite(200, 300, 'disk').setScale(0.03);
-        this.disk2 = this.physics.add.sprite(500, 200, 'disk').setScale(0.03);
-        this.disk3 = this.physics.add.sprite(800, 350, 'disk').setScale(0.03);
-        this.disk4 = this.physics.add.sprite(1050, 130, 'disk').setScale(0.03);
+        this.disk = this.physics.add.sprite(726, 347, 'disk').setScale(0.03);
+        this.disk2 = this.physics.add.sprite(1494, 303, 'disk').setScale(0.03);
+        this.disk3 = this.physics.add.sprite(2189, 153, 'disk').setScale(0.03);
+        this.disk4 = this.physics.add.sprite(3795, 221, 'disk').setScale(0.03);
         this.disk5 = this.physics.add.sprite(1150, 100, 'disk').setScale(0.03);
-        this.diskCompleted = this.physics.add.sprite(1300, 300, 'disk').setScale(0.03);
+        this.diskCompleted = this.physics.add.sprite(4619, 209, 'disk').setScale(0.03);
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
 
@@ -553,27 +553,27 @@ class Level1 extends Phaser.Scene {
         if (this.songPopped === this.song_01) { // if song popped is first song
             console.log('disk 1 taken from enemy');
             this.song_01.stop();
-            this.disk = this.physics.add.sprite(200, 300, 'disk').setScale(0.03);
+            this.disk = this.physics.add.sprite(726, 347, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_02) {// if song popped is second song
             console.log('disk 2 taken from enemy');
             this.song_02.stop();
-            this.disk2 = this.physics.add.sprite(500, 200, 'disk').setScale(0.03);
+            this.disk2 = this.physics.add.sprite(1494, 303, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_03) {// if song popped is third song
             console.log('disk 3 taken from enemy');
             this.song_03.stop();
-            this.disk3 = this.physics.add.sprite(800, 350, 'disk').setScale(0.03);
+            this.disk3 = this.physics.add.sprite(2189, 153, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_04) {// if song popped is forth song
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
-            this.disk4 = this.physics.add.sprite(1090, 190, 'disk').setScale(0.03);
+            this.disk4 = this.physics.add.sprite(3795, 221, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
-            this.disk5 = this.physics.add.sprite(1150, 100, 'disk').setScale(0.03);
+            this.disk5 = this.physics.add.sprite(4619, 209, 'disk').setScale(0.03);
         }
         if (this.numDiskCollected > 0)
             this.numDiskCollected--;
