@@ -168,18 +168,16 @@ class Level1 extends Phaser.Scene {
         this.crosshair.setVisible(false);
 
         //puts in enemy (scene,x,y,image,frame)
-        this.enemy = new Enemy(this, 600, 100, 'enemyRange', 0);
+        this.enemy = new Enemy(this, 663, 33, 'enemyRange', 0);
         this.enemy.getEnemy().play('enemyAnim');
 
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
 
         //second enemy but in sentry mode
-        this.enemy2 = this.add.path(1060, 130);// makes square path
-        this.enemy2.lineTo(1180,130);
-        this.enemy2.lineTo(1180,250);
-        this.enemy2.lineTo(1060,250);
-        this.enemy2.lineTo(1060,130);
+        this.enemy2 = this.add.path(1461, 313);// makes square path
+        this.enemy2.lineTo(1553,313);
+        this.enemy2.lineTo(1461,313);
         this.enemy2.draw(graphics); // to see the path (draws the white lines)
         let s = this.enemy2.getStartPoint();
         this.enemy2 = this.add.follower(this.enemy2,s.x,s.y,'enemyMelee2').setScale(0.3);
@@ -190,12 +188,57 @@ class Level1 extends Phaser.Scene {
             from: 0,         
             to: 1,
             delay: 0,
-            duration: 10000,
+            duration: 2000,
             ease: 'Power0',
             hold: 0,
             repeat: -1,
             yoyo: false,
-            rotateToPath: true
+            rotateToPath: false
+        });
+
+        this.enemy3 = new Enemy(this, 3123, 423, 'enemyRange', 0);
+        this.enemy3.getEnemy().play('enemyAnim');
+
+        this.enemy4 = this.add.path(4177, 507);// makes square path
+        this.enemy4.lineTo(4327,507);
+        this.enemy4.lineTo(4177,507);
+        this.enemy4.draw(graphics); // to see the path (draws the white lines)
+        s = this.enemy4.getStartPoint();
+        this.enemy4 = this.add.follower(this.enemy4,s.x,s.y,'enemyMelee2').setScale(0.3);
+        this.physics.world.enable(this.enemy4);
+        this.enemy4.body.setAllowGravity(false);
+        this.enemy4.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy4.startFollow({
+            from: 0,         
+            to: 1,
+            delay: 0,
+            duration: 2000,
+            ease: 'Power0',
+            hold: 0,
+            repeat: -1,
+            yoyo: false,
+            rotateToPath: false
+        });
+
+        this.enemy5 = this.add.path(4388, 507);// makes square path
+        this.enemy5.lineTo(4499,507);
+        this.enemy5.lineTo(4388,507);
+        this.enemy5.draw(graphics); // to see the path (draws the white lines)
+        s = this.enemy5.getStartPoint();
+        this.enemy5 = this.add.follower(this.enemy5,s.x,s.y,'enemyMelee2').setScale(0.3);
+        this.physics.world.enable(this.enemy5);
+        this.enemy5.body.setAllowGravity(false);
+        this.enemy5.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy5.startFollow({
+            from: 0,         
+            to: 1,
+            delay: 0,
+            duration: 2000,
+            ease: 'Power0',
+            hold: 0,
+            repeat: -1,
+            yoyo: false,
+            rotateToPath: false
         });
 
         //this.pauseScene = new Pause(this, 'Level1Scene');
@@ -337,6 +380,7 @@ class Level1 extends Phaser.Scene {
         this.physics.add.collider(this.diskCompleted, this.layer);
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
         this.physics.add.collider(this.enemy2, this.layer);
+        this.physics.add.collider(this.enemy3.getEnemy(), this.layer);
 
         this.gameComplete = false;
     }
@@ -354,9 +398,27 @@ class Level1 extends Phaser.Scene {
                     this.crosshair.setVisible(false); //if out of range crosshair invisible again
                     //console.log('in range');
                 }
+
+                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 200) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyHit(this.enemy3.getEnemy()) //melee and range enemy
+                    this.enemyShoot(this.enemy3.getEnemy());
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
+                } else {
+                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
+                    //console.log('in range');
+                }
             }
             if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy2.x, this.enemy2.y) < 200) { // gets distance of player and enemy
                 this.enemyHit(this.enemy2) // melee enemy
+                //console.log('in range');
+            }
+            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy4.x, this.enemy4.y) < 200) { // gets distance of player and enemy
+                this.enemyHit(this.enemy4) // melee enemy
+                //console.log('in range');
+            }
+            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy5.x, this.enemy5.y) < 200) { // gets distance of player and enemy
+                this.enemyHit(this.enemy5) // melee enemy
                 //console.log('in range');
             }
         }
