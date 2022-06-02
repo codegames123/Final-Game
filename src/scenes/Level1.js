@@ -27,7 +27,7 @@ class Level1 extends Phaser.Scene {
 
         //temporary tilemap, will change using tilemap editor
         const map = this.make.tilemap({ key: 'map' }); //makes tilemap from json above
-        const tileset = map.addTilesetImage('test_tiles', 'ground_1x1'); // test_tiles sets the position of the tiles from level1tilemap.json and ground_1x1 are the tiles
+        const tileset = map.addTilesetImage('neonTiles', 'level1tiles'); // test_tiles sets the position of the tiles from level1tilemap.json and ground_1x1 are the tiles
         this.layer = map.createLayer('Ground', tileset); // 'Ground' is the name of the Tile Layer from Tiled. Also in level1tilemap.json
 
         this.layer.setCollisionByProperty({ collides: true }); // sets tile custom properties 'collides' to true 
@@ -308,6 +308,7 @@ class Level1 extends Phaser.Scene {
 
         //camera settings
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        //this.cameras.main.setZoom(2);
         this.cameras.main.startFollow(this.player.getPlayer());
 
         //progress bar

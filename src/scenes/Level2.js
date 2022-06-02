@@ -291,6 +291,7 @@ class Level2 extends Phaser.Scene {
 
         //camera settings
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        //this.cameras.main.setZoom(1.2);
         this.cameras.main.startFollow(this.player.getPlayer());
 
         //progress bar

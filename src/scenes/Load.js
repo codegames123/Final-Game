@@ -15,6 +15,7 @@ class Load extends Phaser.Scene {
         this.load.image('menuBackground', './assets/menu_background.jpg');//temporary menu background (will change later)
         this.load.image('curtains', './assets/curtains.png');//temporary tween
         this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
+        this.load.image('level1tiles', './assets/level1tiles.png'); // temporary
         this.load.image('level2tiles', './assets/level2tiles.png'); // temporary
         this.load.image('sprite', './assets/Player_right.png'); // temporary
         this.load.image('notes', './assets/UI/noteParticle1.png');
