@@ -393,47 +393,29 @@ class Level2 extends Phaser.Scene {
                     this.enemyHit(this.enemy.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy.getEnemy(), 2000);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else {
-                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
-                    //console.log('in range');
-                }
-                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 80) { // gets distance of player and enemy
+                } else if(this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 80) {
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy3.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy3.getEnemy(), 2000);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else {
-                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
-                    //console.log('in range');
-                }
-                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy4.getEnemy().x, this.enemy4.getEnemy().y) < 210) { // gets distance of player and enemy
+                } else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy4.getEnemy().x, this.enemy4.getEnemy().y) < 210) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy4.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy4.getEnemy(), 2000);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else {
-                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
-                    //console.log('in range');
-                }
-                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy7.getEnemy().x, this.enemy7.getEnemy().y) < 170) { // gets distance of player and enemy
+                } 
+                else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy7.getEnemy().x, this.enemy7.getEnemy().y) < 170) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy7.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy7.getEnemy(), 2000);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else {
-                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
-                    //console.log('in range');
                 }
-                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy8.getEnemy().x, this.enemy8.getEnemy().y) < 180) { // gets distance of player and enemy
+                else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy8.getEnemy().x, this.enemy8.getEnemy().y) < 180) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy8.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy8.getEnemy(), 2000);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else {
-                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
-                    //console.log('in range');
-                }
-                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy9.getEnemy().x, this.enemy9.getEnemy().y) < 240) { // gets distance of player and enemy
+                } else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy9.getEnemy().x, this.enemy9.getEnemy().y) < 240) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy9.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy9.getEnemy(), 900);

@@ -157,6 +157,8 @@ class Level1 extends Phaser.Scene {
             repeat: -1 
         });
 
+        
+
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);//put in new player (scene,x,y,image, frame, layer)
         this.player.getPlayer().setCollideWorldBounds(true);
@@ -252,23 +254,6 @@ class Level1 extends Phaser.Scene {
         this.pauseButton.scrollFactorX = 0;
         this.pauseButton.scrollFactorY = 0;
 
-        // this.enemy2 = this.add.path(1192, 190); //(x,y)
-        // this.enemy2.circleTo(70);
-        // //this.enemy2.draw(graphics); // to see circle
-        // let s = this.enemy2.getStartPoint();
-        // this.enemy2 = this.add.follower(this.enemy2, s.x, s.y, 'enemy').setScale(0.2);
-        // this.physics.world.enable(this.enemy2);
-        // this.enemy2.body.setAllowGravity(false);
-        // this.enemy2.body.setSize(230, 300).setOffset(50, 5)
-        // this.enemy2.startFollow({
-        //     duration: 15000,
-        //     from: 0,
-        //     to: 1,
-        //     rotateToPath: true,
-        //     startAt: 0,
-        //     repeat: -1
-        // });
-
         //enemy shooting system
         this.enemyFire = this.physics.add.group();
         //this.enemyFire = new ProjectilesGroup(this);
@@ -293,7 +278,7 @@ class Level1 extends Phaser.Scene {
         this.disk3 = this.physics.add.sprite(2189, 153, 'disk').setScale(0.03);
         this.disk4 = this.physics.add.sprite(3795, 221, 'disk').setScale(0.03);
         this.disk5 = this.physics.add.sprite(1150, 100, 'disk').setScale(0.03);
-        this.diskCompleted = this.physics.add.sprite(4619, 209, 'disk').setScale(0.03);
+        this.diskCompleted = this.physics.add.sprite(4924, 485, 'disk').setScale(0.03);
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
 
@@ -394,17 +379,12 @@ class Level1 extends Phaser.Scene {
                     this.enemyHit(this.enemy.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy.getEnemy());
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else {
-                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
-                    //console.log('in range');
-                }
-
-                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 200) { // gets distance of player and enemy
+                } else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 200) {
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy3.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy3.getEnemy());
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else {
+                }else {
                     this.crosshair.setVisible(false); //if out of range crosshair invisible again
                     //console.log('in range');
                 }
