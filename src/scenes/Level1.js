@@ -23,8 +23,8 @@ class Level1 extends Phaser.Scene {
 
         this.diskStack = [];//stack array for disks 
 
-        //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
-
+        this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'level1BG');
+        
         //temporary tilemap, will change using tilemap editor
         const map = this.make.tilemap({ key: 'map' }); //makes tilemap from json above
         const tileset = map.addTilesetImage('neonTiles', 'level1tiles'); // test_tiles sets the position of the tiles from level1tilemap.json and ground_1x1 are the tiles
@@ -371,6 +371,8 @@ class Level1 extends Phaser.Scene {
     }
     
     update() {
+        //tile scroll for background
+        console.log('curr x position' + this.player.getLocalPoint(this.player.x, this.player.y));
         if (!this.tweenPlay) { // if tween isnt playing
             this.player.update(); // allows player movement
             if (!this.gameComplete) {
