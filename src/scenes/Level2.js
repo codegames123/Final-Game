@@ -54,7 +54,7 @@ class Level2 extends Phaser.Scene {
         gfx.destroy();
 
         //level 1 tween
-        let whiteRect = this.add.image(w, h /2 , 'whiterect').setOrigin(0);
+        /*let whiteRect = this.add.image(w, h /2 , 'whiterect').setOrigin(0);
 
         let rectRightTween = this.tweens.add({
             delay: 375,
@@ -71,7 +71,7 @@ class Level2 extends Phaser.Scene {
 
             },
             onCompleteScope: this   // maintain scene context
-        });
+        });*/
         
         //let topText = this.add.text(w / 2 + 70, h / 2 - 300, "Level 1", { fontfamily: 'papyrus', fontSize: 40 }).setOrigin(1, 0);
         let topText = this.add.text(w + 300, h / 2 , "Level 2", { fontfamily: 'papyrus', fontSize: 40, color: 'white' }).setOrigin(1, 0);
@@ -94,7 +94,7 @@ class Level2 extends Phaser.Scene {
             onCompleteScope: this   // maintain scene context
         });
         topTextTween.play(); //plays tween "Level 1"
-        rectRightTween.play();
+        //rectRightTween.play();
         this.tweenPlay = true;
     
         //initilizes songs
