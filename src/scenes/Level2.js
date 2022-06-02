@@ -143,24 +143,23 @@ class Level2 extends Phaser.Scene {
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);
         this.player.getPlayer().setCollideWorldBounds(true);
         this.player.create(); // sets velocity
+        console.log('x: ' + p1Spawn.x, ' y: ' + p1Spawn.y );
 
         this.crosshair = this.add.sprite(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair');
         this.crosshair.play('crosshairAnim');
         this.crosshair.setVisible(false);
 
         //puts in enemy (scene,x,y,image,frame)
-        this.enemy = new Enemy(this, 600, 100, 'enemyRange', 0);
+        this.enemy = new Enemy(this, 803, 744, 'enemyRange', 0);
         this.enemy.getEnemy().play('enemyAnim');
 
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
 
         //second enemy but in sentry mode
-        this.enemy2 = this.add.path(1060, 130);
-        this.enemy2.lineTo(1180,130);
-        this.enemy2.lineTo(1180,250);
-        this.enemy2.lineTo(1060,250);
-        this.enemy2.lineTo(1060,130);
+        this.enemy2 = this.add.path(1613, 409);
+        this.enemy2.lineTo(1878,409);
+        this.enemy2.lineTo(1613,409);
         this.enemy2.draw(graphics); // to see the path
         let s = this.enemy2.getStartPoint();
         this.enemy2 = this.add.follower(this.enemy2,s.x,s.y,'enemyMelee2').setScale(0.3);
@@ -169,15 +168,72 @@ class Level2 extends Phaser.Scene {
         this.enemy2.body.setSize(230, 300).setOffset(50, 5)
         this.enemy2.startFollow({
             from: 0,         
-            to: 1,
+            to: 2,
             delay: 0,
             duration: 10000,
             ease: 'Power0',
             hold: 0,
             repeat: -1,
             yoyo: false,
-            rotateToPath: true
+            rotateToPath: false
         });
+
+        this.enemy3 = new Enemy(this, 1411, 260, 'enemyRange', 0);
+        this.enemy3.getEnemy().play('enemyAnim');
+
+        this.enemy4 = new Enemy(this, 2723, 272, 'enemyRange', 0);
+        this.enemy4.getEnemy().play('enemyAnim');
+
+        this.enemy5 = this.add.path(3168, 277);
+        this.enemy5.lineTo(3396,277);
+        this.enemy5.lineTo(3168,277);
+        this.enemy5.draw(graphics); // to see the path
+        let d = this.enemy5.getStartPoint();
+        this.enemy5 = this.add.follower(this.enemy5,d.x,d.y,'enemyMelee2').setScale(0.3);
+        this.physics.world.enable(this.enemy5);
+        this.enemy5.body.setAllowGravity(false);
+        this.enemy5.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy5.startFollow({
+            from: 0,         
+            to: 2,
+            delay: 0,
+            duration: 10000,
+            ease: 'Power0',
+            hold: 0,
+            repeat: -1,
+            yoyo: false,
+            rotateToPath: false
+        });
+
+        this.enemy6 = this.add.path(4194, 478);
+        this.enemy6.lineTo(4281,478);
+        this.enemy6.lineTo(4194,478);
+        this.enemy6.draw(graphics); // to see the path
+        d = this.enemy6.getStartPoint();
+        this.enemy6 = this.add.follower(this.enemy6,d.x,d.y,'enemyMelee2').setScale(0.3);
+        this.physics.world.enable(this.enemy6);
+        this.enemy6.body.setAllowGravity(false);
+        this.enemy6.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy6.startFollow({
+            from: 0,         
+            to: 1,
+            delay: 0,
+            duration: 5000,
+            ease: 'Power0',
+            hold: 0,
+            repeat: -1,
+            yoyo: false,
+            rotateToPath: false
+        });
+
+        this.enemy7 = new Enemy(this, 4550, 375, 'enemyRange', 0);
+        this.enemy7.getEnemy().play('enemyAnim');
+
+        this.enemy8 = new Enemy(this, 3710, 179, 'enemyRange', 0);
+        this.enemy8.getEnemy().play('enemyAnim');
+
+        this.enemy9 = new Enemy(this, 3371, 439, 'enemyRange', 0);
+        this.enemy9.getEnemy().play('enemyAnim');
         // this.enemy2 = this.add.path(1192, 190); //(x,y)
         // this.enemy2.circleTo(70);
         // //this.enemy2.draw(graphics); // to see circle
@@ -231,12 +287,12 @@ class Level2 extends Phaser.Scene {
         this.maxDisktoCollect = 5;
 
         //disks
-        this.disk = this.physics.add.sprite(200, 300, 'disk').setScale(0.03);
-        this.disk2 = this.physics.add.sprite(500, 200, 'disk').setScale(0.03);
-        this.disk3 = this.physics.add.sprite(800, 350, 'disk').setScale(0.03);
-        this.disk4 = this.physics.add.sprite(1050, 130, 'disk').setScale(0.03);
-        this.disk5 = this.physics.add.sprite(1150, 100, 'disk').setScale(0.03);
-        this.diskCompleted = this.physics.add.sprite(1300, 300, 'disk').setScale(0.03);
+        this.disk = this.physics.add.sprite(849, 588, 'disk').setScale(0.03);
+        this.disk2 = this.physics.add.sprite(2153, 218, 'disk').setScale(0.03);
+        this.disk3 = this.physics.add.sprite(2668, 94, 'disk').setScale(0.03);
+        this.disk4 = this.physics.add.sprite(3780, 606, 'disk').setScale(0.03);
+        this.disk5 = this.physics.add.sprite(4642, 117, 'disk').setScale(0.03);
+        this.diskCompleted = this.physics.add.sprite(4944, 559, 'disk').setScale(0.03);
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
 
@@ -318,6 +374,11 @@ class Level2 extends Phaser.Scene {
         this.physics.add.collider(this.disk5, this.layer);
         this.physics.add.collider(this.diskCompleted, this.layer);
         this.physics.add.collider(this.enemy.getEnemy(), this.layer);
+        this.physics.add.collider(this.enemy3.getEnemy(), this.layer);
+        this.physics.add.collider(this.enemy4.getEnemy(), this.layer);
+        this.physics.add.collider(this.enemy7.getEnemy(), this.layer);
+        this.physics.add.collider(this.enemy8.getEnemy(), this.layer);
+        this.physics.add.collider(this.enemy9.getEnemy(), this.layer);
         //this.physics.add.collider(this.enemy2, this.layer);
 
         this.gameComplete = false;
@@ -330,15 +391,68 @@ class Level2 extends Phaser.Scene {
                 if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy.getEnemy()) //melee and range enemy
-                    this.enemyShoot(this.enemy.getEnemy());
+                    this.enemyShoot(this.enemy.getEnemy(), 2000);
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
+                } else {
+                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
+                    //console.log('in range');
+                }
+                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 80) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyHit(this.enemy3.getEnemy()) //melee and range enemy
+                    this.enemyShoot(this.enemy3.getEnemy(), 2000);
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
+                } else {
+                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
+                    //console.log('in range');
+                }
+                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy4.getEnemy().x, this.enemy4.getEnemy().y) < 210) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyHit(this.enemy4.getEnemy()) //melee and range enemy
+                    this.enemyShoot(this.enemy4.getEnemy(), 2000);
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
+                } else {
+                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
+                    //console.log('in range');
+                }
+                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy7.getEnemy().x, this.enemy7.getEnemy().y) < 170) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyHit(this.enemy7.getEnemy()) //melee and range enemy
+                    this.enemyShoot(this.enemy7.getEnemy(), 2000);
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
+                } else {
+                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
+                    //console.log('in range');
+                }
+                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy8.getEnemy().x, this.enemy8.getEnemy().y) < 180) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyHit(this.enemy8.getEnemy()) //melee and range enemy
+                    this.enemyShoot(this.enemy8.getEnemy(), 2000);
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
+                } else {
+                    this.crosshair.setVisible(false); //if out of range crosshair invisible again
+                    //console.log('in range');
+                }
+                if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy9.getEnemy().x, this.enemy9.getEnemy().y) < 240) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyHit(this.enemy9.getEnemy()) //melee and range enemy
+                    this.enemyShoot(this.enemy9.getEnemy(), 900);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
                 } else {
                     this.crosshair.setVisible(false); //if out of range crosshair invisible again
                     //console.log('in range');
                 }
             }
-            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy2.x, this.enemy2.y) < 200) { // gets distance of player and enemy
+            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy2.x, this.enemy2.y) < 100) { // gets distance of player and enemy
                 this.enemyHit(this.enemy2) // melee enemy
+                //console.log('in range');
+            }
+            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy5.x, this.enemy5.y) < 100) { // gets distance of player and enemy
+                this.enemyHit(this.enemy5) // melee enemy
+                //console.log('in range');
+            }
+            if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy6.x, this.enemy6.y) < 100) { // gets distance of player and enemy
+                this.enemyHit(this.enemy6) // melee enemy
                 //console.log('in range');
             }
         }
@@ -477,9 +591,9 @@ class Level2 extends Phaser.Scene {
     enemyFollows(enemy, player, speed) { // enemy follows the player
         this.physics.moveToObject(enemy, player, speed);
     }
-    enemyShoot(enemy) { // enemy shoots at player
+    enemyShoot(enemy, firerate) { // enemy shoots at player
         if (this.time.now > this.fireRate) {
-            this.fireRate = this.time.now + 1000;
+            this.fireRate = this.time.now + firerate;
             this.enemyFires = this.enemyFire.getFirstDead();
             this.enemyFires.setScale(0.7).setSize(45, 45).setOffset(5, 5);//setSize(left-/right+,up+/down-)
             if (this.enemyFires) {
@@ -495,7 +609,7 @@ class Level2 extends Phaser.Scene {
     }
     enemyHit(enemy) { // enemy hits player (for melee or range of player walks towards them)
         if (this.time.now > this.hitRate) {
-            this.hitRate = this.time.now + 1000; // time until enemy hits again (1 second = 1000ms)
+            this.hitRate = this.time.now + 400; // time until enemy hits again (1 second = 1000ms)
             if (this.checkOverlap(this.player.getPlayer(), enemy)) { // checks if player collided with enemy
                     console.log('hit');
                     if(this.numDiskCollected > 0)
@@ -513,27 +627,27 @@ class Level2 extends Phaser.Scene {
         if (this.songPopped === this.song_01) { // if song popped is first song
             console.log('disk 1 taken from enemy');
             this.song_01.stop();
-            this.disk = this.physics.add.sprite(200, 300, 'disk').setScale(0.03);
+            this.disk = this.physics.add.sprite(849, 588, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_02) {// if song popped is second song
             console.log('disk 2 taken from enemy');
             this.song_02.stop();
-            this.disk2 = this.physics.add.sprite(500, 200, 'disk').setScale(0.03);
+            this.disk2 = this.physics.add.sprite(2153, 218, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_03) {// if song popped is third song
             console.log('disk 3 taken from enemy');
             this.song_03.stop();
-            this.disk3 = this.physics.add.sprite(800, 350, 'disk').setScale(0.03);
+            this.disk3 = this.physics.add.sprite(2668, 94, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_04) {// if song popped is forth song
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
-            this.disk4 = this.physics.add.sprite(1090, 190, 'disk').setScale(0.03);
+            this.disk4 = this.physics.add.sprite(3780, 606, 'disk').setScale(0.03);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
-            this.disk5 = this.physics.add.sprite(1150, 100, 'disk').setScale(0.03);
+            this.disk5 = this.physics.add.sprite(4642, 117, 'disk').setScale(0.03);
         }
         if (this.numDiskCollected > 0)
             this.numDiskCollected--;
