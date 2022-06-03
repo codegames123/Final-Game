@@ -4,7 +4,7 @@ class Level2 extends Phaser.Scene {
 
     }
     preload() {
-        this.load.tilemapTiledJSON('map2', './assets/level2tilemap.json'); // temporary 
+        this.load.tilemapTiledJSON('map2', './assets/Tilemaps/level2tilemap.json'); // loads tilemap
     }
     create() {
         const centerX = this.cameras.main.centerX;
@@ -148,19 +148,20 @@ class Level2 extends Phaser.Scene {
         this.player.getPlayer().setCollideWorldBounds(true);
         this.player.create(); // sets velocity
         this.player.getPlayer().anims.play('playerIdleAnim');
-        
+
+        //crosshair for ranged enemies
         this.crosshair = this.add.sprite(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair');
         this.crosshair.play('crosshairAnim');
         this.crosshair.setVisible(false);
 
-        //puts in enemy (scene,x,y,image,frame)
-        this.enemy = new Enemy(this, 803, 744, 'enemyRange', 0);
-        this.enemy.getEnemy().play('enemyAnim');
-
+        //graphics for path
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
 
-        //second enemy but in sentry mode
+        //spawns all enemies in this level
+        this.enemy = new Enemy(this, 803, 744, 'enemyRange', 0);
+        this.enemy.getEnemy().play('enemyAnim');
+        
         this.enemy2 = this.add.path(1613, 409);
         this.enemy2.lineTo(1959,409);
         this.enemy2.lineTo(1613,409);
@@ -260,7 +261,7 @@ class Level2 extends Phaser.Scene {
             rotateToPath: false
         });
         
-        //this.pauseScene = new Pause(this, 'Level1Scene');
+        //pause button system
         this.pauseButton = this.add.image(game.config.width /2 + 410, game.config.height/2 - 240, 'pauseButton').setScale(1.5).setInteractive()
         .on('pointerdown', () => {
             this.checkMusicPlayer();
@@ -279,7 +280,6 @@ class Level2 extends Phaser.Scene {
 
         //enemy shooting system
         this.enemyFire = this.physics.add.group();
-        //this.enemyFire = new ProjectilesGroup(this);
         this.enemyFire.createMultiple({
             frameQuantity: 50,
             active: false,
@@ -339,7 +339,6 @@ class Level2 extends Phaser.Scene {
 
         //particle system
         this.collectVfxManager = this.add.particles('notes2');
-
         this.collectVfxEffect = this.collectVfxManager.createEmitter({
             follow: this.player.getPlayer(),
             quantity: 7,

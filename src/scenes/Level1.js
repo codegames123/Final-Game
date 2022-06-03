@@ -9,7 +9,7 @@ class Level1 extends Phaser.Scene {
 
     }
     preload() {
-        this.load.tilemapTiledJSON('map', './assets/level1tilemap.json'); // temporary 
+        this.load.tilemapTiledJSON('map', './assets/Tilemaps/level1tilemap.json'); //loads tilemap
     }
     create() {
         const centerX = this.cameras.main.centerX;
@@ -182,24 +182,26 @@ class Level1 extends Phaser.Scene {
             repeat: -1 
         });
 
+        //spawns player
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);//put in new player (scene,x,y,image, frame, layer)
         this.player.getPlayer().setCollideWorldBounds(true);
         this.player.create(); // sets velocity
         this.player.getPlayer().anims.play('playerIdleAnim');
 
+        //crosshair for ranged enemies
         this.crosshair = this.add.sprite(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair'); // crosshair for range enemy
         this.crosshair.play('crosshairAnim');
         this.crosshair.setVisible(false);
 
-        //puts in enemy (scene,x,y,image,frame)
-        this.enemy = new Enemy(this, 663, 33, 'enemyRange', 0);
-        this.enemy.getEnemy().play('enemyAnim');
-
+        //for path
         let graphics = this.add.graphics();
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
 
-        //second enemy but in sentry mode
+        //all enemies in the level
+        this.enemy = new Enemy(this, 663, 33, 'enemyRange', 0);
+        this.enemy.getEnemy().play('enemyAnim');
+
         this.enemy2 = this.add.path(1980, 249);// makes square path
         this.enemy2.lineTo(2152,249);
         this.enemy2.lineTo(1980,249);
@@ -297,20 +299,18 @@ class Level1 extends Phaser.Scene {
         this.enemy8 = new Enemy(this, 3422, 495, 'enemyRange', 0);
         this.enemy8.getEnemy().play('enemyAnim');
 
-        //this.pauseScene = new Pause(this, 'Level1Scene');
+        //pause button system
         this.pauseButton = this.add.image(game.config.width /2 + 410, game.config.height/2 - 240, 'pauseButton').setScale(1.5).setInteractive()
         .on('pointerdown', () => {
             this.checkMusicPlayer();
             this.scene.launch('pauseScene');
             this.scene.pause();
-            //this.add.text(game.config.width/2, game.config.height/2, 'PAUSED')
         }); 
         this.pauseButton.scrollFactorX = 0;
         this.pauseButton.scrollFactorY = 0;
 
         //enemy shooting system
         this.enemyFire = this.physics.add.group();
-        //this.enemyFire = new ProjectilesGroup(this);
         this.enemyFire.createMultiple({
             frameQuantity: 50,
             active: false,
@@ -318,6 +318,7 @@ class Level1 extends Phaser.Scene {
             key: 'enemyShoot'
         })
 
+        //time variables
         this.fireRate = 0;
         this.hitRate = 0;
         this.nextFire = 0;
@@ -367,7 +368,7 @@ class Level1 extends Phaser.Scene {
         // this.progressUI.scrollFactorX = 0; 
         // this.progressUI.scrollFactorY = 0;
 
-        //particle system
+        //particle systems
         this.collectVfxManager = this.add.particles('notes');
         this.collectVfxEffect = this.collectVfxManager.createEmitter({
             follow: this.player.getPlayer(),
