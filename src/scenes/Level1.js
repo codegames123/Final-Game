@@ -23,8 +23,8 @@ class Level1 extends Phaser.Scene {
 
         this.diskStack = [];//stack array for disks 
 
-        this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'level1BG');
-        
+        //this.background = this.add.tileSprite(game.config.width/2, game.config.height/2, game.config.width, game.config.height + 321, 'background');
+
         //temporary tilemap, will change using tilemap editor
         const map = this.make.tilemap({ key: 'map' }); //makes tilemap from json above
         const tileset = map.addTilesetImage('neonTiles', 'level1tiles'); // test_tiles sets the position of the tiles from level1tilemap.json and ground_1x1 are the tiles
@@ -52,23 +52,23 @@ class Level1 extends Phaser.Scene {
         gfx.destroy();
 
         //level 1 tween
-        /*let whiteRect = this.add.image(w, h /2 , 'whiterect').setOrigin(0);
-        let rectRightTween = this.tweens.add({
-            delay: 375,
-            targets: whiteRect,
-            x: w-390,
-            ease: 'Linear',
-            duration: 250,
-            repeat: 0,
-            yoyo: true,
-            hold: 1650,
-            paused: true,
-            onComplete: function () {
-                whiteRect.destroy();
+        // let whiteRect = this.add.image(w, h /2 , 'whiterect').setOrigin(0);
+        // let rectRightTween = this.tweens.add({
+        //     delay: 375,
+        //     targets: whiteRect,
+        //     x: w-390,
+        //     ease: 'Linear',
+        //     duration: 250,
+        //     repeat: 0,
+        //     yoyo: true,
+        //     hold: 1650,
+        //     paused: true,
+        //     onComplete: function () {
+        //         whiteRect.destroy();
 
-            },
-            onCompleteScope: this   // maintain scene context
-        });*/
+        //     },
+        //     onCompleteScope: this   // maintain scene context
+        // });
         
         let topText = this.add.text(w + 300, h / 2 , "Level 1", { fontfamily: 'papyrus', fontSize: 40, color: 'black' }).setOrigin(1, 0);
         topText.setShadow(0, 3, '#FF47B6', true, true);
@@ -168,8 +168,6 @@ class Level1 extends Phaser.Scene {
             frameRate: 15,
             repeat: -1 
         });
-
-        
 
         const p1Spawn = map.findObject("Object Layer 1", obj => obj.name === "playerSpawn"); // gets player spawn from tiled
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);//put in new player (scene,x,y,image, frame, layer)
@@ -436,7 +434,6 @@ class Level1 extends Phaser.Scene {
     }
     
     update() {
-        //tile scroll for background
         if (!this.tweenPlay) { // if tween isnt playing
             this.player.update(); // allows player movement
             if (!this.gameComplete) {
