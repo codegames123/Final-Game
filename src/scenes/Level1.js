@@ -24,6 +24,9 @@ class Level1 extends Phaser.Scene {
             })
         })
 
+        this.ROOMWIDTH = 960;
+        this.ROOMHEIGHT = 540;
+
         currentScene = 1; // sets current scene (1 for level 1)
 
         this.physics.world.gravity.y = 2000;//sets the gravity of the world
@@ -387,9 +390,9 @@ class Level1 extends Phaser.Scene {
 
         //camera settings
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-        //this.cameras.main.setZoom(1.1);
+        //this.cameras.main.setZoom(1.2);
         this.cameras.main.startFollow(this.player.getPlayer());
-
+    
         //progress bar
         this.progressText = this.add.text(game.config.width / 2 + 25, game.config.height / 2 - 250, 'Progress ', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' });
         this.progressText.setShadow(0, 3, '#FF47B6', true, true);
