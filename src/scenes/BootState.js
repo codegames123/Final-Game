@@ -3,7 +3,7 @@ class BootState extends Phaser.Scene {
         super('bootState');
     }
     preload() {
-        this.load.image('disk', './assets/disc.png'); //temporary
+        this.load.image('finalDisk', './assets/Collectable Sprites/Final_disk.png'); 
     }
     create() {
         

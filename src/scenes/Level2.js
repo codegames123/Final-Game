@@ -165,7 +165,7 @@ class Level2 extends Phaser.Scene {
         this.enemy2 = this.add.follower(this.enemy2,s.x,s.y,'enemyMelee2').setScale(0.3);
         this.physics.world.enable(this.enemy2);
         this.enemy2.body.setAllowGravity(false);
-        this.enemy2.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy2.body.setSize(160, 250).setOffset(50, 10);
         this.enemy2.startFollow({
             from: 0,         
             to: 2,
@@ -192,7 +192,7 @@ class Level2 extends Phaser.Scene {
         this.enemy5 = this.add.follower(this.enemy5,d.x,d.y,'enemyMelee2').setScale(0.3);
         this.physics.world.enable(this.enemy5);
         this.enemy5.body.setAllowGravity(false);
-        this.enemy5.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy5.body.setSize(160, 250).setOffset(50, 10);
         this.enemy5.startFollow({
             from: 0,         
             to: 2,
@@ -213,7 +213,7 @@ class Level2 extends Phaser.Scene {
         this.enemy6 = this.add.follower(this.enemy6,d.x,d.y,'enemyMelee2').setScale(0.3);
         this.physics.world.enable(this.enemy6);
         this.enemy6.body.setAllowGravity(false);
-        this.enemy6.body.setSize(230, 300).setOffset(50, 5)
+        this.enemy6.body.setSize(160, 250).setOffset(50, 10);
         this.enemy6.startFollow({
             from: 0,         
             to: 1,
@@ -287,12 +287,12 @@ class Level2 extends Phaser.Scene {
         this.maxDisktoCollect = 5;
 
         //disks
-        this.disk = this.physics.add.sprite(849, 588, 'disk').setScale(0.03);
-        this.disk2 = this.physics.add.sprite(2153, 218, 'disk').setScale(0.03);
-        this.disk3 = this.physics.add.sprite(2668, 94, 'disk').setScale(0.03);
-        this.disk4 = this.physics.add.sprite(3780, 606, 'disk').setScale(0.03);
-        this.disk5 = this.physics.add.sprite(4642, 117, 'disk').setScale(0.03);
-        this.diskCompleted = this.physics.add.sprite(4944, 559, 'disk').setScale(0.03);
+        this.disk = this.physics.add.sprite(849, 588, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
+        this.disk2 = this.physics.add.sprite(2153, 218, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
+        this.disk3 = this.physics.add.sprite(2668, 94, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
+        this.disk4 = this.physics.add.sprite(3780, 606, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
+        this.disk5 = this.physics.add.sprite(4642, 117, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
+        this.diskCompleted = this.physics.add.sprite(4944, 559, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
 

@@ -10,6 +10,7 @@ class Load extends Phaser.Scene {
         this.load.atlas('playerIdle', './assets/Player Sprites/stand_by.png', './assets/Player Sprites/stand_by.json');
         this.load.atlas('playerWalk', './assets/Player Sprites/walk_right.png', './assets/Player Sprites/walk_right.json' );
         this.load.atlas('enemyRange', './assets/Enemy Sprites/muteshooter.png', './assets/Enemy Sprites/muteshooter.json');
+        this.load.atlas('enemyMeleeShoot', './assets/Enemy Sprites/muteman.png', './assets/Enemy Sprites/muteman1.json');
 
         //loads all sprites and background
         this.load.image('menuBackground', './assets/menu_background.jpg');//temporary menu background (will change later)
@@ -21,6 +22,13 @@ class Load extends Phaser.Scene {
         this.load.image('notes', './assets/UI/noteParticle1.png');
         this.load.image('notes2', './assets/UI/noteParticle2.png');
 
+        this.load.image('blueDisc', './assets/Collectable Sprites/blue_disc.png'); 
+        this.load.image('redDisc', './assets/Collectable Sprites/disc.png'); 
+        this.load.image('greenDisc', './assets/Collectable Sprites/green_disc.png'); 
+        this.load.image('pinkDisk', './assets/Collectable Sprites/pink_disc.png'); 
+        this.load.image('turquioseDisc', './assets/Collectable Sprites/turquoise_disc.png'); 
+        this.load.image('yellowDisc', './assets/Collectable Sprites/yellow_disc.png'); 
+
         //loads pause UI
         this.load.image('pauseButton', './assets/UI/PauseButton.png');
         this.load.image('restartButton', './assets/UI/restartButton.png');
@@ -30,6 +38,7 @@ class Load extends Phaser.Scene {
         this.load.image('enemyMelee', './assets/Enemy Sprites/melee_muteman_2.png'); //temporary
         this.load.image('enemyMelee2', './assets/Enemy Sprites/melee_muteman_right.png'); //temporary
         this.load.image('enemyShoot', './assets/Enemy Sprites/mute_2.png'); //temporary
+        
         
         //loads menu background
         this.load.image('background', './assets/menu_background.jpg'); //temporary
@@ -63,9 +72,9 @@ class Load extends Phaser.Scene {
         this.load.audio('playerWalkSound', './assets/SFX/Player_walk.wav');
         this.load.audio('selectSound', './assets/SFX/select_sound.wav');
 
-        this.add.sprite(game.config.width/2, game.config.height/2, 'disk').setScale(0.9);
+        this.add.sprite(game.config.width/2, game.config.height/2, 'finalDisk').setScale(0.85);
         //prints message indicating player that game is loading
-        this.add.text(game.config.width/2 -50, game.config.height/2, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '30px', color: 'white', align: 'left' });
+        this.add.text(game.config.width/2 -5, game.config.height/2, 'Loading...', { fontFamily: 'Segoe Script', fontSize: '30px', color: 'white', align: 'left' });
         
     }
 
