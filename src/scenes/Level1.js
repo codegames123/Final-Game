@@ -17,6 +17,13 @@ class Level1 extends Phaser.Scene {
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
 
+        this.cameras.main.fadeIn(1000, 0, 0, 0)
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+            this.time.delayedCall(1000, () => {
+                this.scene.start('Level1Scene')
+            })
+        })
+
         currentScene = 1; // sets current scene (1 for level 1)
 
         this.physics.world.gravity.y = 2000;//sets the gravity of the world
@@ -239,27 +246,6 @@ class Level1 extends Phaser.Scene {
             rotateToPath: false
         });
 
-        // this.enemy5 = this.add.path(4388, 507);// makes square path
-        // this.enemy5.lineTo(4499,507);
-        // this.enemy5.lineTo(4388,507);
-        // this.enemy5.draw(graphics); // to see the path (draws the white lines)
-        // s = this.enemy5.getStartPoint();
-        // this.enemy5 = this.add.follower(this.enemy5,s.x,s.y,'enemyMelee2').setScale(0.3);
-        // this.physics.world.enable(this.enemy5);
-        // this.enemy5.body.setAllowGravity(false);
-        // this.enemy5.body.setSize(160, 250).setOffset(50, 10);
-        // this.enemy5.startFollow({
-        //     from: 0,         
-        //     to: 1,
-        //     delay: 0,
-        //     duration: 2000,
-        //     ease: 'Power0',
-        //     hold: 0,
-        //     repeat: -1,
-        //     yoyo: false,
-        //     rotateToPath: false
-        // });
-
         this.enemy6 = this.add.path(2334, 489);// makes square path
         this.enemy6.lineTo(2460,489);
         this.enemy6.lineTo(2334,489);
@@ -295,7 +281,7 @@ class Level1 extends Phaser.Scene {
             to: 1,
             delay: 0,
             duration: 4000,
-            ease: 'Back',
+            ease: 'Quart.easeInOut',
             hold: 0,
             repeat: -1,
             yoyo: false,
@@ -667,27 +653,27 @@ class Level1 extends Phaser.Scene {
         if (this.songPopped === this.song_01) { // if song popped is first song
             console.log('disk 1 taken from enemy');
             this.song_01.stop();
-            this.disk = this.physics.add.sprite(726, 347, 'disk').setScale(0.03);
+            this.disk = this.physics.add.sprite(726, 347, 'blueDisc').setScale(0.03);
         }
         if (this.songPopped === this.song_02) {// if song popped is second song
             console.log('disk 2 taken from enemy');
             this.song_02.stop();
-            this.disk2 = this.physics.add.sprite(1494, 303, 'disk').setScale(0.03);
+            this.disk2 = this.physics.add.sprite(1494, 303, 'greenDisc').setScale(0.03);
         }
         if (this.songPopped === this.song_03) {// if song popped is third song
             console.log('disk 3 taken from enemy');
             this.song_03.stop();
-            this.disk3 = this.physics.add.sprite(2189, 153, 'disk').setScale(0.03);
+            this.disk3 = this.physics.add.sprite(2526, 207, 'pinkDisk').setScale(0.03);
         }
         if (this.songPopped === this.song_04) {// if song popped is forth song
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
-            this.disk4 = this.physics.add.sprite(3795, 221, 'disk').setScale(0.03);
+            this.disk4 = this.physics.add.sprite(3795, 221, 'turquioseDisc').setScale(0.03);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
-            this.disk5 = this.physics.add.sprite(4392, 183, 'disk').setScale(0.03);
+            this.disk5 = this.physics.add.sprite(4392, 183, 'redDisc').setScale(0.03);
         }
         if (this.numDiskCollected > 0)
             this.numDiskCollected--;

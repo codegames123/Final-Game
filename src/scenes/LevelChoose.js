@@ -38,7 +38,7 @@ class LevelChoose extends Phaser.Scene {
                 level2.setStyle({ fill: 'white' })
             });
 
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'orange' }).setInteractive()
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
             .on('pointerdown', () => {
                 this.selectSound.play();
                 this.scene.start('menuScene');
@@ -47,7 +47,7 @@ class LevelChoose extends Phaser.Scene {
                 clickBack.setStyle({ fill: 'green' });
             })
             .on('pointerout', () => {
-                clickBack.setStyle({ fill: 'orange' })
+                clickBack.setStyle({ fill: 'white' })
             });
     }
 }

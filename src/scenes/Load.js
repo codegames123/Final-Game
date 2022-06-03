@@ -14,7 +14,7 @@ class Load extends Phaser.Scene {
 
         //loads all sprites and background
         this.load.image('level1BG', './assets/lvl1_Background.png');
-        this.load.image('menuBackground', './assets/menu_background.jpg');//temporary menu background (will change later)
+        this.load.image('menuBackground', './assets/Menu Assets/MenuBackground.png');//menu background
         this.load.image('curtains', './assets/curtains.png');//temporary tween
         this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
         this.load.image('level1tiles', './assets/level1tiles.png'); // temporary
@@ -46,8 +46,8 @@ class Load extends Phaser.Scene {
         
         //music may take a while to load due to uncompressed wav format
         //dialogue music
-        this.load.audio('dialogueMusic', './assets/Menu Music/Menu_music 1.wav');
-        this.load.audio('menuMusic', './assets/Menu Music/Menu_music_fixed.wav');
+        this.load.audio('dialogueMusic', './assets/Menu Assets/Menu_music 1.wav');
+        this.load.audio('menuMusic', './assets/Menu Assets/Menu_music_fixed.wav');
 
         //level 1 music 
         this.load.audio('lvl1_01', './assets/Level1Music/TechnoLVL1_01_fixed.wav');

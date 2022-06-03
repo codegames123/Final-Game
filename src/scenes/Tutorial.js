@@ -152,7 +152,7 @@ class Tutorial extends Phaser.Scene {
                leftOffset = 20;
                downOffset = 120;  
         //click back to go back to menu
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'orange' }).setInteractive()
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
             .on('pointerdown', () =>  {
                 this.selectSound = this.sound.add('selectSound', { loop: false });
                 this.selectSound.play();
@@ -161,7 +161,7 @@ class Tutorial extends Phaser.Scene {
                 clickBack.setStyle({fill: 'green'});
             })
             .on('pointerout', () => {
-                clickBack.setStyle({fill: 'orange'})
+                clickBack.setStyle({fill: 'white'})
             });
     }
 }

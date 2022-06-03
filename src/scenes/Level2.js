@@ -12,10 +12,12 @@ class Level2 extends Phaser.Scene {
         const w = this.cameras.main.width;
         const h = this.cameras.main.height;
 
-        /*this.progressBar = this.makeBar(game.config.width / 2 + 150, game.config.height / 2 - 260, 0x2ecc71); // this.makeBar(x,y,color)
-        this.setValue(this.progressBar, 0); // setValue(this, width);
-        this.progressBar.scrollFactorX = 0;
-        this.progressBar.scrollFactorY = 0;*/
+        this.cameras.main.fadeIn(1000, 0, 0, 0)
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+            this.time.delayedCall(1000, () => {
+                this.scene.start('Level2Scene')
+            })
+        })
 
         currentScene = 2;
 
@@ -158,7 +160,7 @@ class Level2 extends Phaser.Scene {
 
         //second enemy but in sentry mode
         this.enemy2 = this.add.path(1613, 409);
-        this.enemy2.lineTo(1878,409);
+        this.enemy2.lineTo(1959,409);
         this.enemy2.lineTo(1613,409);
         this.enemy2.draw(graphics); // to see the path
         let s = this.enemy2.getStartPoint();
@@ -168,10 +170,10 @@ class Level2 extends Phaser.Scene {
         this.enemy2.body.setSize(160, 250).setOffset(50, 10);
         this.enemy2.startFollow({
             from: 0,         
-            to: 2,
+            to: 1,
             delay: 0,
-            duration: 10000,
-            ease: 'Power0',
+            duration: 5000,
+            ease: 'Back.easeOut',
             hold: 0,
             repeat: -1,
             yoyo: false,
@@ -184,33 +186,33 @@ class Level2 extends Phaser.Scene {
         this.enemy4 = new Enemy(this, 2723, 272, 'enemyRange', 0);
         this.enemy4.getEnemy().play('enemyAnim');
 
-        this.enemy5 = this.add.path(3168, 277);
-        this.enemy5.lineTo(3396,277);
+        this.enemy5 = this.add.path(3396, 277);
         this.enemy5.lineTo(3168,277);
+        this.enemy5.lineTo(3396,277);
         this.enemy5.draw(graphics); // to see the path
         let d = this.enemy5.getStartPoint();
-        this.enemy5 = this.add.follower(this.enemy5,d.x,d.y,'enemyMelee2').setScale(0.3);
+        this.enemy5 = this.add.follower(this.enemy5,d.x,d.y,'enemyMelee').setScale(0.3);
         this.physics.world.enable(this.enemy5);
         this.enemy5.body.setAllowGravity(false);
         this.enemy5.body.setSize(160, 250).setOffset(50, 10);
         this.enemy5.startFollow({
             from: 0,         
-            to: 2,
+            to: 1,
             delay: 0,
-            duration: 10000,
-            ease: 'Power0',
+            duration: 3000,
+            ease: 'Quad',
             hold: 0,
             repeat: -1,
             yoyo: false,
             rotateToPath: false
         });
 
-        this.enemy6 = this.add.path(4194, 478);
-        this.enemy6.lineTo(4281,478);
-        this.enemy6.lineTo(4194,478);
+        this.enemy6 = this.add.path(4281, 488);
+        this.enemy6.lineTo(4194,488);
+        this.enemy6.lineTo(4281,488);
         this.enemy6.draw(graphics); // to see the path
         d = this.enemy6.getStartPoint();
-        this.enemy6 = this.add.follower(this.enemy6,d.x,d.y,'enemyMelee2').setScale(0.3);
+        this.enemy6 = this.add.follower(this.enemy6,d.x,d.y,'enemyMelee').setScale(0.3);
         this.physics.world.enable(this.enemy6);
         this.enemy6.body.setAllowGravity(false);
         this.enemy6.body.setSize(160, 250).setOffset(50, 10);
@@ -218,8 +220,8 @@ class Level2 extends Phaser.Scene {
             from: 0,         
             to: 1,
             delay: 0,
-            duration: 5000,
-            ease: 'Power0',
+            duration: 4000,
+            ease: 'Quart.easeOut',
             hold: 0,
             repeat: -1,
             yoyo: false,
@@ -229,28 +231,33 @@ class Level2 extends Phaser.Scene {
         this.enemy7 = new Enemy(this, 4550, 375, 'enemyRange', 0);
         this.enemy7.getEnemy().play('enemyAnim');
 
-        this.enemy8 = new Enemy(this, 3710, 179, 'enemyRange', 0);
+        this.enemy8 = new Enemy(this, 3581, 101, 'enemyRange', 0);
         this.enemy8.getEnemy().play('enemyAnim');
 
         this.enemy9 = new Enemy(this, 3371, 439, 'enemyRange', 0);
         this.enemy9.getEnemy().play('enemyAnim');
-        // this.enemy2 = this.add.path(1192, 190); //(x,y)
-        // this.enemy2.circleTo(70);
-        // //this.enemy2.draw(graphics); // to see circle
-        // let s = this.enemy2.getStartPoint();
-        // this.enemy2 = this.add.follower(this.enemy2, s.x, s.y, 'enemy').setScale(0.2);
-        // this.physics.world.enable(this.enemy2);
-        // this.enemy2.body.setAllowGravity(false);
-        // this.enemy2.body.setSize(230, 300).setOffset(50, 5)
-        // this.enemy2.startFollow({
-        //     duration: 15000,
-        //     from: 0,
-        //     to: 1,
-        //     rotateToPath: true,
-        //     startAt: 0,
-        //     repeat: -1
-        // });
 
+        this.enemy10 = this.add.path(4545, 612);
+        this.enemy10.circleTo(50);
+        //this.enemy10.draw(graphics); // to see the path
+        d = this.enemy10.getStartPoint();
+        this.enemy10 = this.add.follower(this.enemy10,d.x,d.y,'enemyMeleeShoot').setScale(0.23);
+        this.physics.world.enable(this.enemy10);
+        this.enemy10.body.setAllowGravity(false);
+        this.enemy10.body.setSize(160, 250).setOffset(50, 10);
+        this.enemy10.play('mutemanAnim')
+        this.enemy10.startFollow({
+            from: 0,         
+            to: 1,
+            delay: 0,
+            duration: 6000,
+            ease: 'Circ.easeInOut',
+            hold: 0,
+            repeat: -1,
+            yoyo: false,
+            rotateToPath: false
+        });
+        
         //this.pauseScene = new Pause(this, 'Level1Scene');
         this.pauseButton = this.add.image(game.config.width /2 + 410, game.config.height/2 - 240, 'pauseButton').setScale(1.5).setInteractive()
         .on('pointerdown', () => {
@@ -287,12 +294,12 @@ class Level2 extends Phaser.Scene {
         this.maxDisktoCollect = 5;
 
         //disks
-        this.disk = this.physics.add.sprite(849, 588, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
-        this.disk2 = this.physics.add.sprite(2153, 218, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
-        this.disk3 = this.physics.add.sprite(2668, 94, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
-        this.disk4 = this.physics.add.sprite(3780, 606, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
-        this.disk5 = this.physics.add.sprite(4642, 117, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
-        this.diskCompleted = this.physics.add.sprite(4944, 559, 'disk').setScale(0.03).setScale(0.03).setCircle(600, 300,290);;
+        this.disk = this.physics.add.sprite(849, 588, 'blueDisc').setScale(0.03).setCircle(600, 300,290);;
+        this.disk2 = this.physics.add.sprite(2153, 218, 'greenDisc').setScale(0.03).setCircle(600, 300,290);;
+        this.disk3 = this.physics.add.sprite(2668, 94, 'pinkDisk').setScale(0.03).setCircle(600, 300,290);;
+        this.disk4 = this.physics.add.sprite(3780, 606, 'turquioseDisc').setScale(0.03).setCircle(600, 300,290);;
+        this.disk5 = this.physics.add.sprite(4642, 117, 'redDisc').setScale(0.03).setCircle(600, 300,290);;
+        this.diskCompleted = this.physics.add.sprite(4944, 559, 'finalDisk').setScale(0.04).setSize(1200,1200);
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
 
@@ -393,7 +400,7 @@ class Level2 extends Phaser.Scene {
                     this.enemyHit(this.enemy.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy.getEnemy(), 2000);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } else if(this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 80) {
+                } else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 90) {
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy3.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy3.getEnemy(), 2000);
@@ -403,7 +410,7 @@ class Level2 extends Phaser.Scene {
                     this.enemyHit(this.enemy4.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy4.getEnemy(), 2000);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
-                } 
+                }
                 else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy7.getEnemy().x, this.enemy7.getEnemy().y) < 170) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy7.getEnemy()) //melee and range enemy
@@ -419,6 +426,11 @@ class Level2 extends Phaser.Scene {
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy9.getEnemy()) //melee and range enemy
                     this.enemyShoot(this.enemy9.getEnemy(), 900);
+                    this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
+                } else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy10.x, this.enemy10.y) < 150) { // gets distance of player and enemy
+                    //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
+                    this.enemyHit(this.enemy10) //melee and range enemy
+                    this.enemyShoot(this.enemy10, 900);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
                 } else {
                     this.crosshair.setVisible(false); //if out of range crosshair invisible again
@@ -609,27 +621,27 @@ class Level2 extends Phaser.Scene {
         if (this.songPopped === this.song_01) { // if song popped is first song
             console.log('disk 1 taken from enemy');
             this.song_01.stop();
-            this.disk = this.physics.add.sprite(849, 588, 'disk').setScale(0.03);
+            this.disk = this.physics.add.sprite(849, 588, 'blueDisc').setScale(0.03);
         }
         if (this.songPopped === this.song_02) {// if song popped is second song
             console.log('disk 2 taken from enemy');
             this.song_02.stop();
-            this.disk2 = this.physics.add.sprite(2153, 218, 'disk').setScale(0.03);
+            this.disk2 = this.physics.add.sprite(2153, 218, 'greenDisc').setScale(0.03);
         }
         if (this.songPopped === this.song_03) {// if song popped is third song
             console.log('disk 3 taken from enemy');
             this.song_03.stop();
-            this.disk3 = this.physics.add.sprite(2668, 94, 'disk').setScale(0.03);
+            this.disk3 = this.physics.add.sprite(2668, 94, 'pinkDisk').setScale(0.03);
         }
         if (this.songPopped === this.song_04) {// if song popped is forth song
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
-            this.disk4 = this.physics.add.sprite(3780, 606, 'disk').setScale(0.03);
+            this.disk4 = this.physics.add.sprite(3780, 606, 'turquioseDisc').setScale(0.03);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
-            this.disk5 = this.physics.add.sprite(4642, 117, 'disk').setScale(0.03);
+            this.disk5 = this.physics.add.sprite(4642, 117, 'redDisc').setScale(0.03);
         }
         if (this.numDiskCollected > 0)
             this.numDiskCollected--;
