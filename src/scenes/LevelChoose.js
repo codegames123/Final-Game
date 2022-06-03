@@ -5,8 +5,10 @@ class LevelChoose extends Phaser.Scene {
 
     create() {
         //Top Text
-        this.add.text(game.config.width / 2 - 180, game.config.height / 2 - 260, "Level Select", { fontFamily: 'Segoe Script', fontSize: 60 });
-        this.add.text(game.config.width / 2 - 340, game.config.height / 2 - 190, "Select LEVEL # to replay level or Musical Note to replay entire level song", { fontFamily: 'Courier' });
+        let topText = this.add.text(game.config.width / 2 - 180, game.config.height / 2 - 260, "Level Select", { fontFamily: 'Segoe Script', fontSize: 60 });
+        topText.setShadow(0, 3, '#FF47B6', true, true);
+        topText.setStroke('#10F9F9', 2);
+        this.add.text(40, game.config.height / 2 - 170, "Select LEVEL # to replay level or Musical Note to replay entire level song", { fontFamily: 'Courier', fontSize: 20 });
         
         //Initilizes songs and SFX
         this.level1Song = this.sound.add('lvl1_full', { loop: false });
@@ -20,9 +22,9 @@ class LevelChoose extends Phaser.Scene {
         this.lvl2Image.setVisible(false);
 
         //Incomplete Text
-        this.incompleteText1 = this.add.text(game.config.width / 2 - 240, game.config.height / 2 - 60, 'Incomplete', { fontSize: 20, fontFamily: 'Comic Sans MS', color: 'red' })
+        this.incompleteText1 = this.add.text(game.config.width / 2 - 260, game.config.height / 2 - 60, 'Incomplete', { fontSize: 20, fontFamily: 'Courier', fontStyle: 'bold', stroke: '#ffffff', strokeThickness: 2, color: 'purple', shadow: {offsetY: -4, color: '#ffffff', blur: 4, stroke: true} });
         this.incompleteText1.setVisible(false);
-        this.incompleteText2 = this.add.text(game.config.width / 2 + 100, game.config.height / 2 - 60, 'Incomplete', { fontSize: 20, fontFamily: 'Comic Sans MS', color: 'red' })
+        this.incompleteText2 = this.add.text(game.config.width / 2 + 100, game.config.height / 2 - 60, 'Incomplete', { fontSize: 20, fontFamily: 'Courier', fontStyle: 'bold', stroke: '#ffffff', strokeThickness: 2, color: '#C93300FF', shadow: {offsetY: -4, color: '#ffffff', blur: 4, stroke: true} })
         this.incompleteText2.setVisible(false);
 
         //Level 1 musical note
@@ -47,9 +49,11 @@ class LevelChoose extends Phaser.Scene {
             })
             .on('pointerover', () => {
                 this.lvl1Image.setVisible(true);
+                this.lvl1note.setAlpha(0.5);
             })
             .on('pointerout', () => {
                 this.lvl1Image.setVisible(false);
+                this.lvl1note.setAlpha(1);
             });
 
         //Level 2 musical note
@@ -74,13 +78,15 @@ class LevelChoose extends Phaser.Scene {
             })
             .on('pointerover', () => {
                 this.lvl2Image.setVisible(true);
+                this.lvl2note.setAlpha(0.5);
             })
             .on('pointerout', () => {
                 this.lvl2Image.setVisible(false);
+                this.lvl2note.setAlpha(1);
             });
 
         //Level 1 Text
-        const level1 = this.add.text(game.config.width / 2 - 250, game.config.height / 2 - 100, 'LEVEL 1', { fontSize: 30, fontFamily: 'Comic Sans MS', color: 'white' }).setInteractive()
+        const level1 = this.add.text(game.config.width / 2 - 250, game.config.height / 2 - 100, 'LEVEL 1', { fontSize: 30, fontFamily: 'Courier', color: 'white', fontStyle: 'bold'}).setInteractive()
             .on('pointerdown', () => {
                 if (level1Completed) { // if level 1 is complete, lets player go to that level
                     this.level1Song.stop();
@@ -101,7 +107,7 @@ class LevelChoose extends Phaser.Scene {
             });
 
         //Level 2 musical note
-        const level2 = this.add.text(game.config.width / 2 + 100, game.config.height / 2 - 100, 'LEVEL 2', { fontSize: 30, fontFamily: 'Comic Sans MS', color: 'white' }).setInteractive()
+        const level2 = this.add.text(game.config.width / 2 + 100, game.config.height / 2 - 100, 'LEVEL 2', { fontSize: 30, fontFamily: 'Courier', color: 'white', fontStyle: 'bold' }).setInteractive()
             .on('pointerdown', () => {
                 if (level2Completed) { // if level 2 is complete, lets player go to that level
                     this.selectSound.play();
@@ -113,14 +119,14 @@ class LevelChoose extends Phaser.Scene {
                     this.incompleteText2.setVisible(true);
             })
             .on('pointerover', () => {
-                level2.setStyle({ fill: 'brown' });
+                level2.setStyle({ fill: '#C93300FF' });
             })
             .on('pointerout', () => {
                 level2.setStyle({ fill: 'white' })
             });
 
         //Back text
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Courier', fontSize: 60, color: '#FF47B6' }).setInteractive()
             .on('pointerdown', () => {
                 this.selectSound.play();
                 this.level1Song.stop();
@@ -128,10 +134,12 @@ class LevelChoose extends Phaser.Scene {
                 this.scene.start('menuScene');
             })
             .on('pointerover', () => {
-                clickBack.setStyle({ fill: 'green' });
+                clickBack.setStyle({ fill: '#10F9F9' });
+                clickBack.setShadow(0, 3, '#FF47B6', true, true);
             })
             .on('pointerout', () => {
-                clickBack.setStyle({ fill: 'white' })
+                clickBack.setStyle({ fill: '#FF47B6' });
+                clickBack.setShadow(0, 3, '#10F9F9', true, true);
             });
     }
 }
