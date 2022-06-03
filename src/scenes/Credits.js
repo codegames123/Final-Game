@@ -3,7 +3,7 @@ class Credits extends Phaser.Scene {
         super("creditsScene");
     }
     create(){
-        this.add.text(game.config.width/2 - 230, game.config.height/2 - 290, "Credits", {fontFamily: 'Segoe Script', fontSize: 60});
+        this.add.text(game.config.width/2 - 100, game.config.height/2 - 270, "Credits", {fontFamily: 'Segoe Script', fontSize: 60});
         //this.selectSound = this.sound.add('selectSound', { loop: false });
             //this.scale.setGameSize(640, 480);
            //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print
@@ -152,7 +152,7 @@ class Credits extends Phaser.Scene {
                leftOffset = 20;
                downOffset = 120;  
         //click back to go back to menu
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Menu', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
             .on('pointerdown', () =>  {
                 this.selectSound = this.sound.add('selectSound', { loop: false });
                 this.selectSound.play();
