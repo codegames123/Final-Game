@@ -200,9 +200,9 @@ class Level1 extends Phaser.Scene {
         graphics.lineStyle(2, 0xFFFFFF, 0.75);
 
         //second enemy but in sentry mode
-        this.enemy2 = this.add.path(1461, 313);// makes square path
-        this.enemy2.lineTo(1562,313);
-        this.enemy2.lineTo(1461,313);
+        this.enemy2 = this.add.path(1980, 249);// makes square path
+        this.enemy2.lineTo(2152,249);
+        this.enemy2.lineTo(1980,249);
         //this.enemy2.draw(graphics); // to see the path (draws the white lines)
         let s = this.enemy2.getStartPoint();
         this.enemy2 = this.add.follower(this.enemy2,s.x,s.y,'enemyMelee2').setScale(0.3);
