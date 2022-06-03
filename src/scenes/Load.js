@@ -13,13 +13,10 @@ class Load extends Phaser.Scene {
         this.load.atlas('enemyMeleeShoot', './assets/Enemy Sprites/muteman.png', './assets/Enemy Sprites/muteman1.json');
 
         //loads all sprites and background
-        this.load.image('level1BG', './assets/lvl1_Background.png');
         this.load.image('menuBackground', './assets/Menu Assets/MenuBackground.png');//menu background
-        this.load.image('curtains', './assets/curtains.png');//temporary tween
-        this.load.image('ground_1x1', './assets/ground_1x1.png'); // temporary
-        this.load.image('level1tiles', './assets/level1tiles.png'); // temporary
-        this.load.image('level2tiles', './assets/level2tiles.png'); // temporary
-        this.load.image('sprite', './assets/Player_right.png'); // temporary
+        this.load.image('level1background', './assets/Tilemaps/lvl1_Background.png'); // temporary
+        this.load.image('level1tiles', './assets/Tilemaps/level1tiles.png'); // temporary
+        this.load.image('level2tiles', './assets/Tilemaps/level2tiles.png'); // temporary
         this.load.image('notes', './assets/UI/noteParticle1.png');
         this.load.image('notes2', './assets/UI/noteParticle2.png');
 
@@ -39,10 +36,6 @@ class Load extends Phaser.Scene {
         this.load.image('enemyMelee', './assets/Enemy Sprites/melee_muteman_2.png'); //temporary
         this.load.image('enemyMelee2', './assets/Enemy Sprites/melee_muteman_right.png'); //temporary
         this.load.image('enemyShoot', './assets/Enemy Sprites/mute_2.png'); //temporary
-        
-        
-        //loads menu background
-        this.load.image('background', './assets/menu_background.jpg'); //temporary
         
         //music may take a while to load due to uncompressed wav format
         //dialogue music

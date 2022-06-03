@@ -20,7 +20,7 @@ let config = {
             }
         }
     },
-    scene: [BootState,Load, Start, Menu, Tutorial, LevelChoose, Level1, Level2, Pause]
+    scene: [BootState,Load, Start, Menu, Tutorial, LevelChoose, Level1, Level2, Pause, Credits]
 };
 
 let game = new Phaser.Game(config);

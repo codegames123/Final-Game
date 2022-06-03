@@ -294,11 +294,11 @@ class Level2 extends Phaser.Scene {
         this.maxDisktoCollect = 5;
 
         //disks
-        this.disk = this.physics.add.sprite(849, 588, 'blueDisc').setScale(0.03).setCircle(600, 300,290);;
-        this.disk2 = this.physics.add.sprite(2153, 218, 'greenDisc').setScale(0.03).setCircle(600, 300,290);;
-        this.disk3 = this.physics.add.sprite(2668, 94, 'pinkDisk').setScale(0.03).setCircle(600, 300,290);;
-        this.disk4 = this.physics.add.sprite(3780, 606, 'turquioseDisc').setScale(0.03).setCircle(600, 300,290);;
-        this.disk5 = this.physics.add.sprite(4642, 117, 'redDisc').setScale(0.03).setCircle(600, 300,290);;
+        this.disk = this.physics.add.sprite(849, 588, 'blueDisc').setScale(0.03).setCircle(600, 300,290);
+        this.disk2 = this.physics.add.sprite(2153, 218, 'greenDisc').setScale(0.03).setCircle(600, 300,290);
+        this.disk3 = this.physics.add.sprite(2668, 94, 'pinkDisk').setScale(0.03).setCircle(600, 300,290);
+        this.disk4 = this.physics.add.sprite(3780, 606, 'turquioseDisc').setScale(0.03).setCircle(600, 300,290);
+        this.disk5 = this.physics.add.sprite(4642, 117, 'redDisc').setScale(0.03).setCircle(600, 300,290);
         this.diskCompleted = this.physics.add.sprite(4944, 559, 'finalDisk').setScale(0.04).setSize(1200,1200);
         this.diskCompleted.setActive(false);
         this.diskCompleted.setVisible(false);
@@ -308,9 +308,9 @@ class Level2 extends Phaser.Scene {
         this.level1CompletedText.scrollFactorX = 0;
         this.level1CompletedText.scrollFactorY = 0;
         this.level1CompletedText.setVisible(false);
-        this.nextLevelText = this.add.text(game.config.width / 2 - 100, game.config.height / 2 + 50, 'Next Level!', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' }).setInteractive()
+        this.nextLevelText = this.add.text(game.config.width / 2 - 50, game.config.height / 2 + 50, 'End!', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' }).setInteractive()
             .on('pointerdown', () => {
-                this.scene.start('Level2Scene');
+                this.scene.start('creditsScene');
                 this.song_full.stop();
             })
             .on('pointerover', () => {
@@ -398,7 +398,7 @@ class Level2 extends Phaser.Scene {
                 if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy.getEnemy().x, this.enemy.getEnemy().y) < 200) { // gets distance of player and enemy
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
                     this.enemyHit(this.enemy.getEnemy()) //melee and range enemy
-                    this.enemyShoot(this.enemy.getEnemy(), 2000);
+                    this.enemyShoot(this.enemy.getEnemy(), 700);
                     this.crosshair.setPosition(this.player.getPlayer().x, this.player.getPlayer().y).setScale(0.17); // crosshair to indicate enemy is aiming at player
                 } else if (this.getDistance(this.player.getPlayer().x, this.player.getPlayer().y, this.enemy3.getEnemy().x, this.enemy3.getEnemy().y) < 90) {
                     //this.enemyFollows(this.enemy.getEnemy(), this.player.getPlayer(), 100); // if player is in range of enemy, enemy starts following player
@@ -603,7 +603,7 @@ class Level2 extends Phaser.Scene {
     }
     enemyHit(enemy) { // enemy hits player (for melee or range of player walks towards them)
         if (this.time.now > this.hitRate) {
-            this.hitRate = this.time.now + 400; // time until enemy hits again (1 second = 1000ms)
+            this.hitRate = this.time.now + 300; // time until enemy hits again (1 second = 1000ms)
             if (this.checkOverlap(this.player.getPlayer(), enemy)) { // checks if player collided with enemy
                     console.log('hit');
                     if(this.numDiskCollected > 0)
@@ -621,27 +621,27 @@ class Level2 extends Phaser.Scene {
         if (this.songPopped === this.song_01) { // if song popped is first song
             console.log('disk 1 taken from enemy');
             this.song_01.stop();
-            this.disk = this.physics.add.sprite(849, 588, 'blueDisc').setScale(0.03);
+            this.disk = this.physics.add.sprite(849, 588, 'blueDisc').setScale(0.03).setCircle(600, 300,290);
         }
         if (this.songPopped === this.song_02) {// if song popped is second song
             console.log('disk 2 taken from enemy');
             this.song_02.stop();
-            this.disk2 = this.physics.add.sprite(2153, 218, 'greenDisc').setScale(0.03);
+            this.disk2 = this.physics.add.sprite(2153, 218, 'greenDisc').setScale(0.03).setCircle(600, 300,290);
         }
         if (this.songPopped === this.song_03) {// if song popped is third song
             console.log('disk 3 taken from enemy');
             this.song_03.stop();
-            this.disk3 = this.physics.add.sprite(2668, 94, 'pinkDisk').setScale(0.03);
+            this.disk3 = this.physics.add.sprite(2668, 94, 'pinkDisk').setScale(0.03).setCircle(600, 300,290);
         }
         if (this.songPopped === this.song_04) {// if song popped is forth song
             console.log('disk 4 taken from enemy');
             this.song_04.stop();
-            this.disk4 = this.physics.add.sprite(3780, 606, 'turquioseDisc').setScale(0.03);
+            this.disk4 = this.physics.add.sprite(3780, 606, 'turquioseDisc').setScale(0.03).setCircle(600, 300,290);
         }
         if (this.songPopped === this.song_05) {// if song popped is fifth song
             console.log('disk 5 taken from enemy');
             this.song_05.stop();
-            this.disk5 = this.physics.add.sprite(4642, 117, 'redDisc').setScale(0.03);
+            this.disk5 = this.physics.add.sprite(4642, 117, 'redDisc').setScale(0.03).setCircle(600, 300,290);;
         }
         if (this.numDiskCollected > 0)
             this.numDiskCollected--;
