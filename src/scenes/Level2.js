@@ -162,7 +162,7 @@ class Level2 extends Phaser.Scene {
         this.enemy2 = this.add.path(1613, 409);
         this.enemy2.lineTo(1959,409);
         this.enemy2.lineTo(1613,409);
-        this.enemy2.draw(graphics); // to see the path
+        //this.enemy2.draw(graphics); // to see the path
         let s = this.enemy2.getStartPoint();
         this.enemy2 = this.add.follower(this.enemy2,s.x,s.y,'enemyMelee2').setScale(0.3);
         this.physics.world.enable(this.enemy2);
@@ -189,7 +189,7 @@ class Level2 extends Phaser.Scene {
         this.enemy5 = this.add.path(3396, 277);
         this.enemy5.lineTo(3168,277);
         this.enemy5.lineTo(3396,277);
-        this.enemy5.draw(graphics); // to see the path
+        //this.enemy5.draw(graphics); // to see the path
         let d = this.enemy5.getStartPoint();
         this.enemy5 = this.add.follower(this.enemy5,d.x,d.y,'enemyMelee').setScale(0.3);
         this.physics.world.enable(this.enemy5);
@@ -210,7 +210,7 @@ class Level2 extends Phaser.Scene {
         this.enemy6 = this.add.path(4281, 488);
         this.enemy6.lineTo(4194,488);
         this.enemy6.lineTo(4281,488);
-        this.enemy6.draw(graphics); // to see the path
+        //this.enemy6.draw(graphics); // to see the path
         d = this.enemy6.getStartPoint();
         this.enemy6 = this.add.follower(this.enemy6,d.x,d.y,'enemyMelee').setScale(0.3);
         this.physics.world.enable(this.enemy6);
