@@ -13,9 +13,13 @@ class LevelChoose extends Phaser.Scene {
         this.level2Song = this.sound.add('lvl2_full', { loop: false });
         this.selectSound = this.sound.add('selectSound', { loop: false }); // initilizes select sound
 
-        //Incomplete Text
+        //map level images
         this.lvl1Image = this.add.image(game.config.width / 2, game.config.height / 2 + 150, 'level1background').setScale(0.2);
         this.lvl1Image.setVisible(false);
+        this.lvl2Image = this.add.image(game.config.width / 2, game.config.height / 2 + 150, 'level2background').setScale(0.2);
+        this.lvl2Image.setVisible(false);
+
+        //Incomplete Text
         this.incompleteText1 = this.add.text(game.config.width / 2 - 240, game.config.height / 2 - 60, 'Incomplete', { fontSize: 20, fontFamily: 'Comic Sans MS', color: 'red' })
         this.incompleteText1.setVisible(false);
         this.incompleteText2 = this.add.text(game.config.width / 2 + 100, game.config.height / 2 - 60, 'Incomplete', { fontSize: 20, fontFamily: 'Comic Sans MS', color: 'red' })
@@ -69,10 +73,10 @@ class LevelChoose extends Phaser.Scene {
                     this.incompleteText2.setVisible(true);
             })
             .on('pointerover', () => {
-                //this.lvl1Image.setVisible(true);
+                this.lvl2Image.setVisible(true);
             })
             .on('pointerout', () => {
-                //this.lvl1Image.setVisible(false);
+                this.lvl2Image.setVisible(false);
             });
 
         //Level 1 Text

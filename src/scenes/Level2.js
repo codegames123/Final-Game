@@ -31,6 +31,8 @@ class Level2 extends Phaser.Scene {
         //temporary tilemap, will change using tilemap editor
         const map = this.make.tilemap({ key: 'map2' });
         const tileset = map.addTilesetImage('rockTiles', 'level2tiles');
+        const backgroundSet = map.addTilesetImage('l2_background','level2background') //l1_background is from Tiled in the Tilesets. level1background is from Load.js.
+        const backgroundLayer = map.createLayer("Background", backgroundSet,0,0); // "Background" is the name of the layer in Tiled
         this.layer = map.createLayer('Ground', tileset);
 
         //map.setCollisionBetween(1, 12);
@@ -145,8 +147,8 @@ class Level2 extends Phaser.Scene {
         this.player = new Player(this, p1Spawn.x, p1Spawn.y, 'sprite', 0, this.layer);
         this.player.getPlayer().setCollideWorldBounds(true);
         this.player.create(); // sets velocity
-        console.log('x: ' + p1Spawn.x, ' y: ' + p1Spawn.y );
-
+        this.player.getPlayer().anims.play('playerIdleAnim');
+        
         this.crosshair = this.add.sprite(this.player.getPlayer().x, this.player.getPlayer().y, 'crosshair');
         this.crosshair.play('crosshairAnim');
         this.crosshair.setVisible(false);
