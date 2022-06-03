@@ -16,7 +16,7 @@ class LevelChoose extends Phaser.Scene {
         //map level images
         this.lvl1Image = this.add.image(game.config.width / 2, game.config.height / 2 + 150, 'level1background').setScale(0.2);
         this.lvl1Image.setVisible(false);
-        this.lvl2Image = this.add.image(game.config.width / 2, game.config.height / 2 + 150, 'level2background').setScale(0.2);
+        this.lvl2Image = this.add.image(game.config.width / 2, game.config.height / 2 + 150, 'level2backgroundOrange').setScale(0.2);
         this.lvl2Image.setVisible(false);
 
         //Incomplete Text
@@ -114,9 +114,11 @@ class LevelChoose extends Phaser.Scene {
             })
             .on('pointerover', () => {
                 level2.setStyle({ fill: 'brown' });
+                this.lvl2Image.setVisible(true);
             })
             .on('pointerout', () => {
                 level2.setStyle({ fill: 'white' })
+                this.lvl2Image.setVisible(false);
             });
 
         //Back text

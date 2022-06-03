@@ -16,6 +16,7 @@ class Load extends Phaser.Scene {
         this.load.image('menuBackground', './assets/Menu Assets/MenuBackground.png');//menu background
         this.load.image('level1background', './assets/Tilemaps/lvl1_Background.png'); 
         this.load.image('level2background', './assets/Tilemaps/Level_2_Background.png'); 
+        this.load.image('level2backgroundOrange', './assets/Tilemaps/Level_2_Background_Orange.png'); 
         this.load.image('level1tiles', './assets/Tilemaps/level1tiles.png'); 
         this.load.image('level2tiles', './assets/Tilemaps/level2tiles.png'); 
         this.load.image('notes', './assets/UI/noteParticle1.png');
