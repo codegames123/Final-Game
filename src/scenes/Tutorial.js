@@ -3,7 +3,9 @@ class Tutorial extends Phaser.Scene {
         super("tutorialScene");
     }
     create(){
-        this.add.text(game.config.width/2 - 230, game.config.height/2 - 260, "HOW TO PLAY", {fontFamily: 'Courier', fontSize: 60});
+        let topText = this.add.text(game.config.width/2 - 230, game.config.height/2 - 260, "HOW TO PLAY", {fontFamily: 'Courier', fontSize: 60});
+        topText.setShadow(0, 4, '#3B413C', true, true);
+        topText.setStroke('black', 6);
         this.selectSound = this.sound.add('selectSound', { loop: false });
             //this.scale.setGameSize(640, 480);
            //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print

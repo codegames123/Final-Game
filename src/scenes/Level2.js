@@ -373,6 +373,7 @@ class Level2 extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C); // for credits (debugging)
 
         //collisions
         this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), this.layer);
@@ -552,7 +553,9 @@ class Level2 extends Phaser.Scene {
             this.addColliders();
 
         }
-
+        if (keyC.isDown) {
+            this.scene.start('creditsScene');
+        }
         //this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
 
     }
