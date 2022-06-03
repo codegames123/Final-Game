@@ -306,7 +306,9 @@ class Level2 extends Phaser.Scene {
         this.diskCompleted.setVisible(false);
 
         //Displays if level 1 completed
-        this.level1CompletedText = this.add.text(game.config.width / 2 - 150, game.config.height / 2, 'Level 2 Completed!', { fontFamily: 'Courier', fontSize: '25px', color: 'red', align: 'left' })
+        this.level1CompletedText = this.add.text(game.config.width / 2 - 150, game.config.height / 2, 'Level 2 Completed!', { fontFamily: 'Courier', fontSize: '25px', color: 'white', align: 'left' })
+        this.level1CompletedText.setShadow(0, 3, '#FF47B6', true, true);
+        this.level1CompletedText.setStroke('#10F9F9', 2);
         this.level1CompletedText.scrollFactorX = 0;
         this.level1CompletedText.scrollFactorY = 0;
         this.level1CompletedText.setVisible(false);
@@ -316,10 +318,14 @@ class Level2 extends Phaser.Scene {
                 this.song_full.stop();
             })
             .on('pointerover', () => {
-                this.nextLevelText.setStyle({ fill: 'green' });
+                this.nextLevelText.setStyle({ fill: 'black' });
+                this.nextLevelText.setShadow(0, 3, '#FF47B6', true, true);
+                this.nextLevelText.setStroke('#10F9F9', 2);
             })
             .on('pointerout', () => {
-                this.nextLevelText.setStyle({ fill: 'orange' })
+                this.nextLevelText.setStyle({ fill: 'white' });
+                this.nextLevelText.setShadow(0, 3, '#FF47B6', true, true);
+                this.nextLevelText.setStroke('#10F9F9', 2);
             });;
         this.nextLevelText.scrollFactorX = 0;
         this.nextLevelText.scrollFactorY = 0;
@@ -408,6 +414,7 @@ class Level2 extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C); // for credits (debugging)
 
         //collisions
         this.tilesCollide = this.physics.add.collider(this.player.getPlayer(), this.layer);
@@ -588,7 +595,9 @@ class Level2 extends Phaser.Scene {
             this.addColliders();
 
         }
-
+        if (keyC.isDown) {
+            this.scene.start('creditsScene');
+        }
         //this.progressUI.text = 'Disk Collected: ' + this.numDiskCollected + ' / ' + this.maxDisktoCollect; //updates numCollected text
 
     }

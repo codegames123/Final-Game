@@ -3,14 +3,16 @@ class Credits extends Phaser.Scene {
         super("creditsScene");
     }
     create(){
-        this.add.text(game.config.width/2 - 100, game.config.height/2 - 270, "Credits", {fontFamily: 'Segoe Script', fontSize: 60});
+        let topText = this.add.text(game.config.width/2 - 100, game.config.height/2 - 270, "Credits", {fontFamily: 'Courier', fontSize: 60, color: 'gray'});
+        topText.setShadow(0, -3, 'white', true, true);
+        topText.setStroke('gray', 2);
         //this.selectSound = this.sound.add('selectSound', { loop: false });
             //this.scale.setGameSize(640, 480);
            //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print
            let txtTime = 60; //set timer duration
 
            //28 chars allowed per line
-           let testStr = 'The Muted Ones now successfully evaded, the meadows and mountains are serenaded by the return of the joyful sounds so long absent.@The people come together again through this universal language.@The Muted Ones, so many generations removed that many barely held onto their ancestors’ forced silence, now enjoy the music, too.@You showed them all where variety in melody and meter, sweet and exciting, brash and energizing, mellow and electrifying, can bring a certain unity to those once divided.@Shared together, for now, they are at peace.@My dear @(-)@Where will you go next?@I sense you’ve somewhere else to be now.@Please take care.@From the shadows, if we call, I know you’ll come again.@Let peace be with you, old friend.@@END'; //create test string
+           let testStr = 'The Muted Ones now successfully evaded, the meadows and mountains are serenaded by the return of the joyful sounds so long absent.@The people come together again through this universal language.@The Muted Ones, so many generations removed that many barely held onto their ancestors’ forced silence, now enjoy the music, too.@You showed them all where variety in melody and meter, sweet and exciting, brash and energizing, mellow and electrifying, can bring a certain unity to those once divided.@Shared together, for now, they are at peace.@My dear @(-)@Where will you go next?@I sense you’ve somewhere else to be now.@Please take care.@From the shadows, if we call, I know you’ll come again.@Let peace be with you, old friend.@@@@@@@@@END'; //create test string
            console.log(testStr.length);
            let spaceStr = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ";
            /*let testArr = []; //arrays for text and spaces
@@ -152,16 +154,20 @@ class Credits extends Phaser.Scene {
                leftOffset = 20;
                downOffset = 120;  
         //click back to go back to menu
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Menu', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Menu', { fontFamily: 'Courier', fontSize: 60, color: 'gray' }).setInteractive()
             .on('pointerdown', () =>  {
                 this.selectSound = this.sound.add('selectSound', { loop: false });
                 this.selectSound.play();
                 this.scene.start('menuScene');})
             .on('pointerover', () => {
-                clickBack.setStyle({fill: 'green'});
+                clickBack.setStyle({fill: 'gray'});
+                clickBack.setShadow(0, -3, 'white', true, true);
+                clickBack.setStroke('gray', 5);
             })
             .on('pointerout', () => {
-                clickBack.setStyle({fill: 'white'})
+                clickBack.setStyle({fill: 'gray'});
+                clickBack.setShadow(0, 0, 'white', true, true);
+                clickBack.setStroke('gray', 0);
             });
     }
 }

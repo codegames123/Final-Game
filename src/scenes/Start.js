@@ -179,7 +179,6 @@ class Start extends Phaser.Scene {
                                     leftOffset+=20;
                                     let lineCountAndLinePos= [lineCount, 45-i];
                                     spaceArr.push(lineCountAndLinePos);
-                                    console.log(spaceArr);
                                 }
                                 spaceArr.push(lineCountAndLinePos1);
                                 repeatTimes++;

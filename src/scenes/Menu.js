@@ -32,35 +32,35 @@ class Menu extends Phaser.Scene {
         // });
 
         //click how to play to go to how to Tutorial scene
-        const howtoPlay = this.add.text(game.config.width / 2 - 370, game.config.height / 2 + 100, 'How To Play', { fontFamily: 'Comic Sans MS', fontSize: 40, color: '#57B4B4' }).setInteractive()
+        const howtoPlay = this.add.text(game.config.width / 2 - 370, game.config.height / 2 + 100, 'How To Play', { fontFamily: 'Courier', fontStyle: 'bold', stroke: '#000000', strokeThickness: 6, fontSize: 40, color: 'white', shadow: {offsetY: -4, color: 'black', blur: 4, stroke: true} }).setInteractive()
             .on('pointerdown', () => {
                 this.selectSound.play();
                 this.scene.start('tutorialScene');
                 this.menuSong.stop();
             })
             .on('pointerover', () => {
-                howtoPlay.setStyle({ fill: 'green' });
+                howtoPlay.setStyle({ fill: '#C93300FF' });
             })
             .on('pointerout', () => {
-                howtoPlay.setStyle({ fill: '#57B4B4' })
+                howtoPlay.setStyle({ fill: 'white' })
             });
 
-        const levelChoose = this.add.text(game.config.width / 2 + 150, game.config.height / 2 + 100, 'Level Select', { fontFamily: 'Comic Sans MS', fontSize: 40, color: '#57B4B4' }).setInteractive()
+        const levelChoose = this.add.text(game.config.width / 2 + 150, game.config.height / 2 + 100, 'Level Select', { fontFamily: 'Courier', fontStyle: 'bold', stroke: '#000000', strokeThickness: 6, fontSize: 40, color: 'white', shadow: {offsetY: -4, color: 'black', blur: 4, stroke: true} }).setInteractive()
             .on('pointerdown', () => {
                 this.selectSound.play();
                 this.scene.start('levelChooseScene');
                 this.menuSong.stop();
             })
             .on('pointerover', () => {
-                levelChoose.setStyle({ fill: 'green' });
+                levelChoose.setStyle({ fill: '#C93300FF' });
             })
             .on('pointerout', () => {
-                levelChoose.setStyle({ fill: '#57B4B4' })
+                levelChoose.setStyle({ fill: 'white' })
             });
 
         
         //click play for level 1 scene
-        const clickPlay = this.add.text(game.config.width / 2 - 50, game.config.height / 2 - 80, 'Play', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
+        const clickPlay = this.add.text(game.config.width / 2 - 50, game.config.height / 2 - 80, 'Play', { fontFamily: 'Courier', fontStyle: 'bold', stroke: '#000000', strokeThickness: 4, fontSize: 60, color: '#C93300FF', shadow: {offsetY: -4, color: 'black', blur: 4, stroke: true} }).setInteractive()
             .on('pointerdown', () => {
                 this.selectSound.play();
                 background.destroy();
@@ -75,10 +75,10 @@ class Menu extends Phaser.Scene {
                 })
             })
             .on('pointerover', () => {
-                clickPlay.setStyle({ fill: 'green' });
+                clickPlay.setStyle({ fill: 'white' });
             })
             .on('pointerout', () => {
-                clickPlay.setStyle({ fill: 'white' })
+                clickPlay.setStyle({ fill: '#C93300FF' })
             });
     }
     // update(){

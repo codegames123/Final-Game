@@ -3,7 +3,9 @@ class Tutorial extends Phaser.Scene {
         super("tutorialScene");
     }
     create(){
-        this.add.text(game.config.width/2 - 230, game.config.height/2 - 260, "HOW TO PLAY", {fontFamily: 'Segoe Script', fontSize: 60});
+        let topText = this.add.text(game.config.width/2 - 230, game.config.height/2 - 260, "HOW TO PLAY", {fontFamily: 'Courier', fontSize: 60});
+        topText.setShadow(0, 4, '#3B413C', true, true);
+        topText.setStroke('black', 6);
         this.selectSound = this.sound.add('selectSound', { loop: false });
             //this.scale.setGameSize(640, 480);
            //attempt 2: 2 strings, an empty and a full. after certain time add letter to empty from full and print
@@ -152,16 +154,16 @@ class Tutorial extends Phaser.Scene {
                leftOffset = 20;
                downOffset = 120;  
         //click back to go back to menu
-        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Comic Sans MS', fontSize: 60, color: 'white' }).setInteractive()
+        const clickBack = this.add.text(game.config.width / 2 + 300, game.config.height / 2 + 200, 'Back', { fontFamily: 'Courier', fontSize: 60, color: '#C93300FF' }).setInteractive()
             .on('pointerdown', () =>  {
                 this.selectSound = this.sound.add('selectSound', { loop: false });
                 this.selectSound.play();
                 this.scene.start('menuScene');})
             .on('pointerover', () => {
-                clickBack.setStyle({fill: 'green'});
+                clickBack.setStyle({fill: 'white'});
             })
             .on('pointerout', () => {
-                clickBack.setStyle({fill: 'white'})
+                clickBack.setStyle({fill: '#C93300FF'})
             });
     }
 }
